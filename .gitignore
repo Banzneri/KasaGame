@@ -1,0 +1,9 @@
+KasaGame/Library/
+
+KasaGame/Temp/
+
+*.sln
+
+*.csproj
+
+KasaGame/.vs/
