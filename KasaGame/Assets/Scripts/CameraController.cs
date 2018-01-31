@@ -44,9 +44,15 @@ public class CameraController : MonoBehaviour
         currentOffset = initialOffset;
     }
 
+    private void Update()
+    {
+        
+    }
+
     private void LateUpdate()
     {
-        transform.position = target.position + currentOffset;
+        Vector3 lookAt = new Vector3(target.position.x, target.position.y + 1, target.position.z);
+        transform.position = lookAt + currentOffset;
 
         float movementX = Input.GetAxis("Mouse X") * angularSpeed * Time.deltaTime;
         float movementY = Input.GetAxis("Mouse Y") * angularSpeed * Time.deltaTime;
@@ -57,18 +63,35 @@ public class CameraController : MonoBehaviour
 
         if (!Mathf.Approximately(trueX, 0f) || !Mathf.Approximately(trueY, 0f))
         {
+            transform.RotateAround(lookAt, Vector3.up, trueX);
             Vector3 direction = new Vector3(transform.right.x, Vector3.left.y, transform.right.z);
-            transform.RotateAround(target.position, Vector3.up, trueX);
-            float nextY = transform.position.y - trueY;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
-            bool yRotateLocked = nextY < minCameraHeight + target.transform.position.y || nextY > maxCameraHeight + target.transform.position.y;
+            float xAngle = transform.eulerAngles.x;
+            float yAngle = transform.eulerAngles.y;
 
-            if (!yRotateLocked)
+            if (!(xAngle < 2 && trueY > 0) && !(xAngle > 50 && trueY < 0))
             {
-                transform.RotateAround(target.position, -direction, trueY);
+                transform.RotateAround(lookAt, -direction, trueY);
+                if (xAngle < 2 || xAngle > 300)
+                {
+                    Debug.Log("AAA");
+                    transform.rotation = Quaternion.Euler(2, yAngle, 0);
+                }
+                else if (xAngle > 50)
+                {
+                    transform.rotation = Quaternion.Euler(50, yAngle, 0);
+                }
             }
 
-            currentOffset = transform.position - target.position;
+            if (transform.position.y < target.position.y + 1)
+            {
+                transform.position = new Vector3(transform.position.x, target.position.y + 1, transform.position.z);
+            }
+
+            Debug.Log(xAngle);
+
+            transform.LookAt(lookAt);
+            currentOffset = transform.position - lookAt;
         }
         HandleObstacles();
         HandleZooming();
@@ -92,7 +115,6 @@ public class CameraController : MonoBehaviour
     void HandleZooming()
     {
         float zoom = (-Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomSpeed + cameraDistance;
-        Debug.Log(zoom);
 
         if (zoom < maxCameraDistance && zoom > minCameraDistance)
         {

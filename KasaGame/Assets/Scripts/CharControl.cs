@@ -43,8 +43,6 @@ public class CharControl : MonoBehaviour {
             moveDirection.y = -Mathf.Abs(horizontalMove.magnitude) - 0.001f;
         }
 
-        Debug.Log(controller.isGrounded);
-
         controller.Move(moveDirection * Time.deltaTime);
         animator.SetBool("Grounded", controller.isGrounded);
     }

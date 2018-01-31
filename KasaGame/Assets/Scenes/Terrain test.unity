@@ -606,7 +606,7 @@ MonoBehaviour:
   maxCameraHeight: 12
   minCameraHeight: 2
   cameraDistance: 20
-  minCameraDistance: 12
+  minCameraDistance: 6
   maxCameraDistance: 20
   zoomSpeed: 2000
   initialOffset: {x: 15.206879, y: 8.799998, z: -0.56181335}
@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 1863561457}
   - component: {fileID: 1863561456}
   - component: {fileID: 1863561455}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Terrain
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
