@@ -31,13 +31,8 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-<<<<<<< HEAD
     m_Controller: {fileID: 0}
   - m_Name: IsGrounded
-=======
-    m_Controller: {fileID: 9100000}
-  - m_Name: Grounded
->>>>>>> bac6a10ee07753c5778088ae76f2dcf50b3301d4
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -48,7 +43,6 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-<<<<<<< HEAD
     m_Controller: {fileID: 0}
   - m_Name: IsStrafing
     m_Type: 4
@@ -80,9 +74,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-=======
-    m_Controller: {fileID: 9100000}
->>>>>>> bac6a10ee07753c5778088ae76f2dcf50b3301d4
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
