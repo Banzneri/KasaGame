@@ -88,8 +88,6 @@ public class CameraController : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, target.position.y + 1, transform.position.z);
             }
 
-            Debug.Log(xAngle);
-
             transform.LookAt(lookAt);
             currentOffset = transform.position - lookAt;
         }
