@@ -98,7 +98,9 @@ namespace Invector.CharacterController
             isGrounded,
             isStrafing,
             isSprinting,
-            isSliding;
+            isSliding,
+            isMovable,
+            isFlying;
 
         // action bools
         [HideInInspector]
@@ -164,6 +166,7 @@ namespace Invector.CharacterController
 
             // access components
             animator = GetComponent<Animator>();
+            isMovable = true;
 
             // slides the character through walls and edges
             frictionPhysics = new PhysicMaterial();
@@ -213,10 +216,18 @@ namespace Invector.CharacterController
 
         void ControlLocomotion()
         {
-            if (freeLocomotionConditions)
-                FreeMovement();     // free directional movement
-            else
-                StrafeMovement();   // move forward, backwards, strafe left and right
+            if (!isFlying)
+            {
+                if (freeLocomotionConditions)
+                    FreeMovement();     // free directional movement
+                else
+                    StrafeMovement();   // move forward, backwards, strafe left and right
+            }
+
+            if (isGrounded)
+            {
+                isFlying = false;
+            }
         }
 
         void StrafeMovement()

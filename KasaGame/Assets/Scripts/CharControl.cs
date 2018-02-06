@@ -50,7 +50,8 @@ public class CharControl : MonoBehaviour {
         moveDirection.y -= gravity;
         Vector2 horizontalMove = new Vector2(moveDirection.x, moveDirection.z);
 
-        if (-Mathf.Abs(horizontalMove.magnitude) < moveDirection.y && moveDirection.y < 0 && controller.isGrounded)
+        if (-Mathf.Abs(horizontalMove.magnitude) < moveDirection.y && 
+            moveDirection.y < 0 && controller.isGrounded)
         {
             moveDirection.y = -Mathf.Abs(horizontalMove.magnitude) - 0.001f;
         }

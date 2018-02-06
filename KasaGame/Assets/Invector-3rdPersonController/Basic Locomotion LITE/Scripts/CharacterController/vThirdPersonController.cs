@@ -9,6 +9,7 @@ namespace Invector.CharacterController
         {
 #if !UNITY_EDITOR
                 Cursor.visible = false;
+
 #endif
         }
 
