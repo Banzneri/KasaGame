@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/thirdpersoncontrollertest.unity
+    guid: 394df1b3b43d09a4e98c2a4cd5e81ecf
