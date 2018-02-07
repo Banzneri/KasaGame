@@ -52,6 +52,7 @@ public class VerticalMoveTrap : MonoBehaviour {
 
             if (delayCounter > delay)
             {
+                GetComponent<AudioSource>().Play();
                 goingUp = true;
                 delayCounter = 0f;
             }

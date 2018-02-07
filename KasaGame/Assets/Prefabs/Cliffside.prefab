@@ -67,7 +67,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4898083345629694}
-  - component: {fileID: 64280719920539880}
   m_Layer: 10
   m_Name: Cliffside
   m_TagString: Obstacle
@@ -107,21 +106,21 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1393282778254056}
-  m_LocalRotation: {x: -0.6646246, y: 0.24140055, z: 0.24140055, w: 0.6646246}
-  m_LocalPosition: {x: -49.3, y: -6.9452333, z: 9}
+  m_LocalRotation: {x: -0.49892002, y: 0.50107765, z: 0.50107765, w: 0.49892002}
+  m_LocalPosition: {x: -34.59642, y: -6.9452324, z: 51.26233}
   m_LocalScale: {x: 5.507092, y: 8.5863905, z: 1.977341}
   m_Children: []
   m_Father: {fileID: 4898083345629694}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 39.923}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 90.247}
 --- !u!4 &4898083345629694
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491231448870380}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 87.1, y: 0.68430567, z: 148}
+  m_LocalRotation: {x: -0, y: 0.69971114, z: -0, w: 0.714426}
+  m_LocalPosition: {x: 140.6, y: 47.5, z: 188.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4547503349183372}
@@ -129,7 +128,7 @@ Transform:
   - {fileID: 4441997790330552}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 88.80801, z: 0}
 --- !u!23 &23707124913583974
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -171,20 +170,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1393282778254056}
   m_Mesh: {fileID: 4300000, guid: 0841330dd34e6cc439e0b00e7a471170, type: 3}
---- !u!64 &64280719920539880
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1491231448870380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: e324a5ac90cc610409a2235d212bb52f, type: 3}
 --- !u!64 &64469064553790594
 MeshCollider:
   m_ObjectHideFlags: 1
