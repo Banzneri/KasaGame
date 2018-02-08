@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:KasaGame/Assets/Scenes/etc.meta
 guid: 291f75c5798db464b944e897a919d4aa
 folderAsset: yes
 timeCreated: 1517470421
+=======
+guid: 229a766e993b4564681463571381d53a
+folderAsset: yes
+timeCreated: 1516985880
+>>>>>>> bac6a10ee07753c5778088ae76f2dcf50b3301d4:KasaGame/Assets/Materials.meta
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
