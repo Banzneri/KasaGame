@@ -57,7 +57,7 @@ public class CharControl : MonoBehaviour {
         }
 
         controller.Move(moveDirection * Time.deltaTime);
-        animator.SetBool("Grounded", controller.isGrounded);
+        animator.SetBool("IsGrounded", controller.isGrounded);
     }
 
     void UpdateAnimator(CharacterController controller)
