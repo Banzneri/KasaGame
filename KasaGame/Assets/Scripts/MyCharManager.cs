@@ -18,6 +18,8 @@ public class MyCharManager : MonoBehaviour {
 	private float _jumpCounter = 0f;
 	private Rigidbody _rigidbody;
 	private Color[] _originalColors;
+
+	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
 	// Use this for initialization
 
@@ -73,6 +75,12 @@ public class MyCharManager : MonoBehaviour {
 		{
 			ReturnOriginalColor();
 		}
+	}
+
+	private bool IsWalking() 
+	{
+
+		return false;
 	}
 
 	private void ReturnOriginalColor() {

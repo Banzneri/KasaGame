@@ -66,6 +66,7 @@ public class VerticalMoveTrap : MonoBehaviour {
         {
             Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
             controller.isFlying = true;
+            controller.isMovable = false;
             rigidbody.AddForce(Vector3.up * 1.5f, ForceMode.VelocityChange);
             controller.speed = -0.5f;
             Debug.Log("Collision");

@@ -100,7 +100,8 @@ namespace Invector.CharacterController
             isSprinting,
             isSliding,
             isMovable,
-            isFlying;
+            isFlying,
+            isWalking;
 
         // action bools
         [HideInInspector]
@@ -203,6 +204,12 @@ namespace Invector.CharacterController
             ControlLocomotion();
         }
 
+        public Boolean IsWalking() 
+        {
+
+            return false;
+        }
+
         #region Locomotion 
 
         protected bool freeLocomotionConditions
@@ -225,6 +232,7 @@ namespace Invector.CharacterController
             } 
             else if (isGrounded)
             {
+                isMovable = true;
                 isFlying = false;
             }
         }
