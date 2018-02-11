@@ -4,34 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
-	private RawImage[] hearts; 
+	private GameObject[] hearts; 
 	private MyCharManager player;
+
+	private float heartCount = 3f;
 
 	// Use this for initialization
 	void Start () {
-		hearts = GameObject.FindObjectsOfType<RawImage>();
+		hearts = GameObject.FindGameObjectsWithTag("Heart");
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (player.Health == 2)
+		if (player.Health == 2f && heartCount > 2f)
 		{
-			if (hearts[0].enabled)
-			{
-				hearts[0].enabled = false;
-			}
+			heartCount = 2f;
+			GameObject image = GameObject.Find("3heart");
+			image.SetActive(false);
 		}
-		else if (player.Health == 1)
+		else if (player.Health == 1f && heartCount > 1f)
 		{
-			if (hearts[1].enabled)
-			{
-				hearts[1].enabled = false;
-			}
+			heartCount = 1f;
+			GameObject image = GameObject.Find("2heart");
+			image.SetActive(false);
 		}
 		
-		if (player.Health == 3)
+		if (player.Health == 3f && heartCount < 3)
 		{
+			heartCount = 3;
 			RefreshHearts();
 		}
 	}
@@ -40,9 +41,9 @@ public class UIManager : MonoBehaviour {
 	{
 		for (int i = 0; i < hearts.Length; i++)
 		{
-			if (!hearts[i].enabled)
+			if (!hearts[i].activeSelf)
 			{
-				hearts[i].enabled = true;
+				hearts[i].SetActive(true);
 			}		
 		}
 	}
