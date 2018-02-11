@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour {
+public class MovingPlatform : MonoBehaviour, IActionObject {
 	[SerializeField] private Transform startLocation;
 	[SerializeField] private Transform endLocation;
 	[SerializeField] private float speed;
 	[SerializeField] private float waitTime;
+    [SerializeField] private bool automatic;
 
-	private Vector3 currentDestination;
+    private Vector3 currentDestination;
 	private float waitCounter = 0;
 
 	// Use this for initialization
@@ -21,7 +23,7 @@ public class MovingPlatform : MonoBehaviour {
 		Vector3 trajectory = Vector3.MoveTowards(transform.position, currentDestination, speed * Time.deltaTime);
 		transform.position = trajectory;
 
-		if (transform.position == startLocation.position)
+		if (transform.position == startLocation.position && automatic)
 		{
 			if (waitCounter == 0)
 			{
@@ -35,7 +37,7 @@ public class MovingPlatform : MonoBehaviour {
 				GetComponent<AudioSource>().Play();
 			}
 		} 
-		else if (transform.position == endLocation.position)
+		else if (transform.position == endLocation.position && automatic)
 		{
 			if (waitCounter == 0)
 			{
@@ -66,4 +68,18 @@ public class MovingPlatform : MonoBehaviour {
 			other.gameObject.transform.parent = null;
 		}		
 	}
+
+    public void Action()
+    {
+        if (transform.position == startLocation.position && !automatic)
+        { 
+                currentDestination = endLocation.position;
+                GetComponent<AudioSource>().Play(); 
+        }
+        else if (transform.position == endLocation.position && !automatic)
+        {
+                currentDestination = startLocation.position;
+                GetComponent<AudioSource>().Play();
+        }
+    }
 }

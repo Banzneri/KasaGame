@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Key : MonoBehaviour {
 
-    public bool inTrigger;
+    private bool inTrigger;
     public Door doorReference;
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +33,7 @@ public class Key : MonoBehaviour {
     {
         if (inTrigger)
         {
-            GUI.Box(new Rect(450, 400, 200, 25), "Press E to take key");
+            GUI.Box(new Rect(450, 400, 200, 25), "Press E to pick up");
         }   
     }
 }

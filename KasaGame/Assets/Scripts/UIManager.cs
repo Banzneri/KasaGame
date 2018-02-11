@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
-	private GameObject[] hearts; 
+    public Door goldDoor;
+    [SerializeField] private Image goldKey;
+
+    private GameObject[] hearts; 
 	private MyCharManager player;
 
 	private float heartCount = 3f;
@@ -35,7 +38,17 @@ public class UIManager : MonoBehaviour {
 			heartCount = 3;
 			RefreshHearts();
 		}
-	}
+
+        //Displaying gold key
+        if (goldDoor.doorKey == false)
+        {
+            goldKey.enabled = false;
+        }
+        else
+        {
+            goldKey.enabled = true;
+        }
+    }
 
 	void RefreshHearts() 
 	{
