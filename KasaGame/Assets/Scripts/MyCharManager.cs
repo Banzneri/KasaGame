@@ -21,7 +21,7 @@ public class MyCharManager : MonoBehaviour {
 
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
-	// Use this for initialization
+	// Use this for initiapyusization
 
 	public float Health 
 	{
