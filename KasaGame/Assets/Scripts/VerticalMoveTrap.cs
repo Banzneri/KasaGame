@@ -8,20 +8,20 @@ public class VerticalMoveTrap : MonoBehaviour {
     [SerializeField] private float delay = 2f;
     [SerializeField] private float initialDelay = 1f;
 
-    private float minY;
-    private float maxY;
+    private Vector3 minY;
+    private Vector3 maxY;
     private bool goingUp = false;
     private bool goingDown = true;
     private float delayCounter = 0f;
     private float initialDelayCounter = 0f;
 
 	void Start () {
-        minY = transform.position.y - transform.localScale.y;
-        maxY = transform.position.y;
+        minY = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+        maxY = transform.position;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (initialDelayCounter < initialDelay)
         {
             initialDelayCounter += Time.deltaTime;
@@ -32,9 +32,9 @@ public class VerticalMoveTrap : MonoBehaviour {
             delayCounter += Time.deltaTime;
             if (goingUp)
             {
-                float y = transform.position.y + speed * Time.deltaTime;
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-                if (transform.position.y > maxY)
+                Vector3 movement = Vector3.MoveTowards(transform.position, maxY, Time.deltaTime * speed);
+                transform.position = movement;
+                if (transform.position == maxY)
                 {
                     goingDown = true;
                     goingUp = false;
@@ -42,9 +42,9 @@ public class VerticalMoveTrap : MonoBehaviour {
             }
             else if (goingDown)
             {
-                float y = transform.position.y - speed * Time.deltaTime;
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-                if (transform.position.y < minY)
+                Vector3 movement = Vector3.MoveTowards(transform.position, minY, Time.deltaTime * speed);
+                transform.position = movement;
+                if (transform.position == minY)
                 {
                     goingDown = false;
                 }
@@ -62,13 +62,26 @@ public class VerticalMoveTrap : MonoBehaviour {
     private void OnCollisionStay(Collision collision)
     {
         vThirdPersonController controller = collision.gameObject.GetComponent<vThirdPersonController>();
-        if (collision.gameObject.tag.Equals("Player") && !controller.isFlying)
+        if (collision.gameObject.tag.Equals("Player"))
         {
             Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
             controller.isFlying = true;
-            rigidbody.AddForce(Vector3.up * 2.5f, ForceMode.VelocityChange);
+            rigidbody.AddForce(Vector3.up * 1.5f, ForceMode.VelocityChange);
             controller.speed = -0.5f;
             Debug.Log("Collision");
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        MyCharManager player = other.gameObject.GetComponent<MyCharManager>();
+
+        if (other.gameObject.tag.Equals("Player") && !player.GetComponent<vThirdPersonController>().isFlying)
+        {
+            if (goingDown || goingUp)
+            {
+                player.TakeDamage();   
+            }
         }
     }
 }

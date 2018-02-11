@@ -3,32 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateGear : MonoBehaviour {
-    public bool rotating = false;
     public GameObject player;
     public float riseAmount = 2;
+    public Transform spawnPoint;
+
+    public bool isActivated = false;
 
     private Vector3 riseLocation;
     private Vector3 originalLocation;
     private bool rising = false;
-    private Light light;
+    private Light _light;
     private float t = 0f;
 
     private void Start()
     {
-        light = GetComponentInChildren<Light>();
+        _light = GetComponentInChildren<Light>();
+        player = GameObject.FindGameObjectWithTag("Player");
         riseLocation = new Vector3(transform.position.x, transform.position.y + riseAmount, transform.position.z);
     }
 
     // Update is called once per frame
     void Update () {
-        if (rotating)
+        if (isActivated)
         {
+            if (!rising)
+            {
+                Activate();
+            }
             transform.Rotate(0, 0, 3f);
         }
         if (rising)
         {
             transform.position = Vector3.Lerp(transform.position, riseLocation, 0.01f);
-            light.GetComponent<VolumetricLight>().ScatteringCoef = Mathf.Lerp(0, 0.2f, t);
+            _light.GetComponent<VolumetricLight>().ScatteringCoef = Mathf.Lerp(0, 1f, t);
             t += 0.5f * Time.deltaTime;
 
             if (transform.position == riseLocation)
@@ -44,13 +51,19 @@ public class RotateGear : MonoBehaviour {
         if (Vector3.Distance(transform.position, player.transform.position) < 5)
         {
             Debug.Log("Press e");
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !isActivated)
             {
-                light.enabled = true;
-                rotating = true;
+                _light.enabled = true;
                 rising = true;
+                isActivated = true;
             }
         }
+    }
+
+    void Activate() {
+        _light.enabled = true;
+        rising = true;
+        isActivated = true;
     }
 
 }

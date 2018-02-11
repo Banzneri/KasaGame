@@ -222,9 +222,8 @@ namespace Invector.CharacterController
                     FreeMovement();     // free directional movement
                 else
                     StrafeMovement();   // move forward, backwards, strafe left and right
-            }
-
-            if (isGrounded)
+            } 
+            else if (isGrounded)
             {
                 isFlying = false;
             }

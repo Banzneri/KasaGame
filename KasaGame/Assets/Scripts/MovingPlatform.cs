@@ -23,19 +23,30 @@ public class MovingPlatform : MonoBehaviour {
 
 		if (transform.position == startLocation.position)
 		{
+			if (waitCounter == 0)
+			{
+				GetComponent<AudioSource>().Stop();
+			}
 			waitCounter += Time.deltaTime;
 			if (waitCounter > waitTime)
 			{
 				currentDestination = endLocation.position;
 				waitCounter = 0;
+				GetComponent<AudioSource>().Play();
 			}
-		} else if (transform.position == endLocation.position)
+		} 
+		else if (transform.position == endLocation.position)
 		{
+			if (waitCounter == 0)
+			{
+				GetComponent<AudioSource>().Stop();
+			}
 			waitCounter += Time.deltaTime;
 			if (waitCounter > waitTime)
 			{
 				currentDestination = startLocation.position;
-				waitCounter = 0;	
+				waitCounter = 0;
+				GetComponent<AudioSource>().Play();
 			}
 		}
 	}
