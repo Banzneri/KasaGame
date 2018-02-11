@@ -20,6 +20,11 @@ public class MyCharManager : MonoBehaviour {
 	private Color[] _originalColors;
 	private SkinnedMeshRenderer _renderer;
 	// Use this for initialization
+
+	public float Health 
+	{
+		get { return _currentHealth; }
+	}
 	void Start () {
 		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
