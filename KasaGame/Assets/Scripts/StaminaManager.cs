@@ -6,6 +6,8 @@ using Invector.CharacterController;
 
 public class StaminaManager : MonoBehaviour {
 	[SerializeField] private Scrollbar scrollbar;
+	[SerializeField] private float staminaUse = 100f;
+	[SerializeField] private float staminaRegen = 20f;
 	private MyCharManager player;
 
 	private bool regenerating = false;
@@ -52,7 +54,7 @@ public class StaminaManager : MonoBehaviour {
 		if (sprinting && !regenerating && !player.GetComponent<vThirdPersonController>().isJumping && !reachedZero)
 		{
 			Debug.Log("Sprting");
-			curStam -= dt * 100;
+			curStam -= dt * staminaUse;
 
 			if (curStam < 0f)
 			{
@@ -64,7 +66,7 @@ public class StaminaManager : MonoBehaviour {
 		}
 		if (regenerating)
 		{
-			curStam += dt * 20f;
+			curStam += dt * staminaRegen;
 
 			if (curStam > player.MaxStamina) 
 			{ 

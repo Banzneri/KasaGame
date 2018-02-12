@@ -12,6 +12,7 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private float _extraFallSpeed = 0.8f;
 	[SerializeField] private float _maxStamina = 100f;
 	[SerializeField] private float _currentStamina = 100f;
+	[SerializeField] private bool _blinks = true;
 	private GameObject[] checkpoints;
 	private float _damageCooldownCounter = 0f;
 	private float _immunityBlinkCounter = 0f;
@@ -20,6 +21,7 @@ public class MyCharManager : MonoBehaviour {
 	private float _jumpCounter = 0f;
 	private Rigidbody _rigidbody;
 	private Color[] _originalColors;
+	private float _yBeforeJump = 0f;
 
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
@@ -32,11 +34,8 @@ public class MyCharManager : MonoBehaviour {
 	public float MaxStamina { get { return _maxStamina; } }
 
 	void Start () {
-		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-		Color color1 = _renderer.materials[0].color;
-		Color color2 = _renderer.materials[1].color;
-		_originalColors = new Color[] { new Color(color1.r, color1.g, color1.b), new Color(color2.r, color2.g, color2.b) };
+		if (_blinks) InitBlinking();
 		_rigidbody = GetComponent<Rigidbody>();
 	}
 	
@@ -47,19 +46,19 @@ public class MyCharManager : MonoBehaviour {
 		HandleJumpFrames();
 	}
 
-	void LateUpdate()
+	private void InitBlinking()
 	{
-		if (true)
-		{
-			
-		}
+		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+		Color color1 = _renderer.materials[0].color;
+		Color color2 = _renderer.materials[1].color;
+		_originalColors = new Color[] { new Color(color1.r, color1.g, color1.b), new Color(color2.r, color2.g, color2.b) };
 	}
 
 	private void HandleDamageCooldown() 
 	{
 		if (_immuneToDamage)
 		{
-			Color materialColor = _renderer.materials[0].color;
+			
 			Debug.Log("ImmuneToDamage");
 			_damageCooldownCounter += Time.deltaTime;
 			_immunityBlinkCounter += Time.deltaTime;
@@ -68,22 +67,22 @@ public class MyCharManager : MonoBehaviour {
 			{
 				_immuneToDamage = false;
 				_damageCooldownCounter = 0f;
-				ReturnOriginalColor();
+				if (_blinks) ReturnOriginalColor();
 			}
-			if (_immunityBlinkCounter > _immunityBlinkRate)
-			{
-				if (materialColor == Color.red)
-				{
-					ReturnOriginalColor();
-				} else
-				{
-					_renderer.materials[0].color = Color.red;
-					_renderer.materials[1].color = Color.red;
-				}
-				_immunityBlinkCounter = 0f;
-			}
+			else if (_blinks) HandleBlinking();
 		}
-		else if (_renderer.materials[0].color == Color.red)
+	}
+
+	private void HandleBlinking()
+	{
+		Color materialColor = _renderer.materials[0].color;
+		if (_immunityBlinkCounter > _immunityBlinkRate)
+		{
+			if (materialColor == Color.red) ReturnOriginalColor();
+			else ChangeToBlinkColor();
+			_immunityBlinkCounter = 0f;
+		}
+		if (!_immuneToDamage && _renderer.materials[0].color == Color.red)
 		{
 			ReturnOriginalColor();
 		}
@@ -98,6 +97,12 @@ public class MyCharManager : MonoBehaviour {
 	private void ReturnOriginalColor() {
 		_renderer.materials[0].color = _originalColors[0];
 		_renderer.materials[1].color = _originalColors[1];
+	}
+
+	private void ChangeToBlinkColor() 
+	{
+		_renderer.materials[0].color = Color.red;
+		_renderer.materials[1].color = Color.red;
 	}
 
 	private void HandleFallSpeed()
@@ -159,10 +164,11 @@ public class MyCharManager : MonoBehaviour {
 		vThirdPersonController controller = GetComponent<vThirdPersonController>();
 		if (Input.GetButtonDown("Jump") && controller.isGrounded)
 		{
+			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
 		}
 
-		if (Input.GetButtonUp("Jump") || _jumpCounter > _jumpFrames)
+		if (Input.GetButtonUp("Jump"))
 		{
 			_pressingJump = false;
 			_jumpCounter = 0f;
@@ -176,8 +182,19 @@ public class MyCharManager : MonoBehaviour {
 				Vector3 vel = _rigidbody.velocity;
 				vel.y += 1f;
 				_rigidbody.velocity = vel;
-				Debug.Log(transform.position.y);
 			}
+			else
+			{
+				_pressingJump = false;
+				_jumpCounter = 0f;
+				Vector3 vel = _rigidbody.velocity;
+				vel.y = 8.5f;
+				_rigidbody.velocity = vel;
+				Vector3 pos = _rigidbody.position;
+				pos.y = _yBeforeJump + 1f;
+				_rigidbody.position = pos;
+			}
+			Debug.Log(_rigidbody.position.y);
 		}
 	}
 }
