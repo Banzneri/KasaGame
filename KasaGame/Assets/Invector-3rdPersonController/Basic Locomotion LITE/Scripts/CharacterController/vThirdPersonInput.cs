@@ -103,9 +103,11 @@ namespace Invector.CharacterController
 
         protected virtual void SprintInput()
         {
-            if (Input.GetKeyDown(sprintInput))
+            if (Input.GetKeyDown(sprintInput) && !cc.isJumping) {
                 cc.Sprint(true);
-            else if(Input.GetKeyUp(sprintInput))
+                Debug.Log("notjumping");
+            }
+            else if(Input.GetKeyUp(sprintInput ))
                 cc.Sprint(false);
         }
 

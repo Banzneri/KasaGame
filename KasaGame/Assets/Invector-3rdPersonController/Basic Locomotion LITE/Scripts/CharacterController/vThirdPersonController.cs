@@ -15,7 +15,10 @@ namespace Invector.CharacterController
 
         public virtual void Sprint(bool value)
         {                                   
-            isSprinting = value;            
+            if (!isJumping)
+            {
+                isSprinting = value;   
+            }            
         }
 
         public virtual void Strafe()

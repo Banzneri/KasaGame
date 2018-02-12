@@ -10,6 +10,8 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private float _immunityBlinkRate = 0.3f;
 	[SerializeField] private float _jumpFrames = 0.05f;
 	[SerializeField] private float _extraFallSpeed = 0.8f;
+	[SerializeField] private float _maxStamina = 100f;
+	[SerializeField] private float _currentStamina = 100f;
 	private GameObject[] checkpoints;
 	private float _damageCooldownCounter = 0f;
 	private float _immunityBlinkCounter = 0f;
@@ -23,10 +25,12 @@ public class MyCharManager : MonoBehaviour {
 	private SkinnedMeshRenderer _renderer;
 	// Use this for initiapyusization
 
-	public float Health 
-	{
-		get { return _currentHealth; }
-	}
+	public float Health { get { return _currentHealth; } 
+							set {_currentHealth = value; } }
+	public float CurrentStamina { get { return _currentStamina; } 
+							set {_currentStamina = value; } }
+	public float MaxStamina { get { return _maxStamina; } }
+
 	void Start () {
 		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -43,11 +47,19 @@ public class MyCharManager : MonoBehaviour {
 		HandleJumpFrames();
 	}
 
+	void LateUpdate()
+	{
+		if (true)
+		{
+			
+		}
+	}
+
 	private void HandleDamageCooldown() 
 	{
 		if (_immuneToDamage)
 		{
-			Color materialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color;
+			Color materialColor = _renderer.materials[0].color;
 			Debug.Log("ImmuneToDamage");
 			_damageCooldownCounter += Time.deltaTime;
 			_immunityBlinkCounter += Time.deltaTime;
@@ -65,8 +77,8 @@ public class MyCharManager : MonoBehaviour {
 					ReturnOriginalColor();
 				} else
 				{
-					GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = Color.red;
-					GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = Color.red;
+					_renderer.materials[0].color = Color.red;
+					_renderer.materials[1].color = Color.red;
 				}
 				_immunityBlinkCounter = 0f;
 			}
@@ -100,6 +112,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public void ReturnToClosestCheckpoint() {
 		List<GameObject> activeCheckpoints = new List<GameObject>();
+
 		for (int i = 0; i < checkpoints.Length; i++)
 		{
 			if (checkpoints[i].GetComponent<RotateGear>().isActivated)
@@ -112,20 +125,14 @@ public class MyCharManager : MonoBehaviour {
 
 		foreach (GameObject point in activeCheckpoints)
 		{
-			if (closestActiveCheckPoint == point)
-			{
-				continue;
-			}
+			if (closestActiveCheckPoint == point) { continue; }
 
 			Vector3 curClosestCheckPoint = closestActiveCheckPoint.transform.position;
 			Vector3 maybeClosestCheckPoint = point.transform.position;
 			float curDistance = Vector3.Distance(transform.position, curClosestCheckPoint);
 			float newDistance = Vector3.Distance(transform.position, maybeClosestCheckPoint);
 			
-			if (newDistance < curDistance)
-			{
-				closestActiveCheckPoint = point;
-			}
+			if (newDistance < curDistance) { closestActiveCheckPoint = point; }
 		}
 
 		transform.position = closestActiveCheckPoint.GetComponent<RotateGear>().spawnPoint.position;
