@@ -103,7 +103,7 @@ namespace Invector.CharacterController
 
         protected virtual void SprintInput()
         {
-            if (Input.GetKeyDown(sprintInput) && !cc.isJumping) {
+            if (Input.GetKeyDown(sprintInput) && cc.isGrounded) {
                 cc.Sprint(true);
                 Debug.Log("notjumping");
             }

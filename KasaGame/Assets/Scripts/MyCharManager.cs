@@ -25,6 +25,7 @@ public class MyCharManager : MonoBehaviour {
 
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
+	private vThirdPersonController cc;
 	// Use this for initiapyusization
 
 	public float Health { get { return _currentHealth; } 
@@ -37,6 +38,7 @@ public class MyCharManager : MonoBehaviour {
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
 		if (_blinks) InitBlinking();
 		_rigidbody = GetComponent<Rigidbody>();
+		cc = GetComponent<vThirdPersonController>();
 	}
 	
 	// Update is called once per frame
@@ -116,6 +118,7 @@ public class MyCharManager : MonoBehaviour {
 	}
 
 	public void ReturnToClosestCheckpoint() {
+		Camera.main.GetComponent<DarkenScreen>().FadeOut();
 		List<GameObject> activeCheckpoints = new List<GameObject>();
 
 		for (int i = 0; i < checkpoints.Length; i++)
@@ -130,14 +133,14 @@ public class MyCharManager : MonoBehaviour {
 
 		foreach (GameObject point in activeCheckpoints)
 		{
-			if (closestActiveCheckPoint == point) { continue; }
+			if (closestActiveCheckPoint == point) continue;
 
 			Vector3 curClosestCheckPoint = closestActiveCheckPoint.transform.position;
 			Vector3 maybeClosestCheckPoint = point.transform.position;
 			float curDistance = Vector3.Distance(transform.position, curClosestCheckPoint);
 			float newDistance = Vector3.Distance(transform.position, maybeClosestCheckPoint);
 			
-			if (newDistance < curDistance) { closestActiveCheckPoint = point; }
+			if (newDistance < curDistance) closestActiveCheckPoint = point;
 		}
 
 		transform.position = closestActiveCheckPoint.GetComponent<RotateGear>().spawnPoint.position;
@@ -161,8 +164,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public void HandleJumpFrames() 
 	{
-		vThirdPersonController controller = GetComponent<vThirdPersonController>();
-		if (Input.GetButtonDown("Jump") && controller.isGrounded)
+		if (Input.GetButtonDown("Jump") && cc.isGrounded)
 		{
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;

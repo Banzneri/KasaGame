@@ -29,7 +29,7 @@ public class StaminaManager : MonoBehaviour {
 
 	void LateUpdate()
 	{
-		if (regenerating)
+		if (reachedZero)
 		{
 			player.GetComponent<vThirdPersonController>().isSprinting = false;
 		}
@@ -37,10 +37,11 @@ public class StaminaManager : MonoBehaviour {
 
 	public void HandleStamina() 
 	{
+		vThirdPersonController cc = player.GetComponent<vThirdPersonController>();
 		float curStam = player.CurrentStamina;
 		float dt = Time.deltaTime;
 
-		if (Input.GetKeyDown(KeyCode.LeftShift) && !reachedZero	)
+		if (Input.GetKeyDown(KeyCode.LeftShift) && !reachedZero && cc.isGrounded)
 		{
 			sprinting = true;
 			regenerating = false;
@@ -51,7 +52,7 @@ public class StaminaManager : MonoBehaviour {
 			regenerating = true;
 		}
 
-		if (sprinting && !regenerating && !player.GetComponent<vThirdPersonController>().isJumping && !reachedZero)
+		if (sprinting && !regenerating && !reachedZero)
 		{
 			Debug.Log("Sprting");
 			curStam -= dt * staminaUse;

@@ -223,7 +223,7 @@ namespace Invector.CharacterController
 
         void ControlLocomotion()
         {
-            if (!isFlying)
+            if (!isFlying && isMovable)
             {
                 if (freeLocomotionConditions)
                     FreeMovement();     // free directional movement
