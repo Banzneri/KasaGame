@@ -26,13 +26,15 @@ public class MyCharManager : MonoBehaviour {
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
 	private vThirdPersonController cc;
-	// Use this for initiapyusization
+	private float _deathWait = 2f;
+	private float _deathCounter = 0f;
 
 	public float Health { get { return _currentHealth; } 
 							set {_currentHealth = value; } }
 	public float CurrentStamina { get { return _currentStamina; } 
 							set {_currentStamina = value; } }
 	public float MaxStamina { get { return _maxStamina; } }
+	public bool Immune { get { return _immuneToDamage; } }
 
 	void Start () {
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -46,6 +48,7 @@ public class MyCharManager : MonoBehaviour {
 		HandleDamageCooldown();
 		HandleFallSpeed();
 		HandleJumpFrames();
+		HandleDying();
 	}
 
 	private void InitBlinking()
@@ -60,8 +63,6 @@ public class MyCharManager : MonoBehaviour {
 	{
 		if (_immuneToDamage)
 		{
-			
-			Debug.Log("ImmuneToDamage");
 			_damageCooldownCounter += Time.deltaTime;
 			_immunityBlinkCounter += Time.deltaTime;
 
@@ -118,7 +119,6 @@ public class MyCharManager : MonoBehaviour {
 	}
 
 	public void ReturnToClosestCheckpoint() {
-		Camera.main.GetComponent<DarkenScreen>().FadeOut();
 		List<GameObject> activeCheckpoints = new List<GameObject>();
 
 		for (int i = 0; i < checkpoints.Length; i++)
@@ -149,20 +149,53 @@ public class MyCharManager : MonoBehaviour {
 	public void TakeDamage() {
 		if (!_immuneToDamage)
 		{
-			_currentHealth--;
+			if (_currentHealth > 0f)
+			{
+				_currentHealth--;	
+			}
 			_immuneToDamage = true;
 		}
-		if (_currentHealth == 0)
+		if (_currentHealth == 0f && _deathCounter == 0f)
 		{	
-			_damageCooldownCounter = 0f;
-			_immunityBlinkCounter = 0f;
-			_immuneToDamage = false;
-			_currentHealth = _maxHealth;
-			ReturnToClosestCheckpoint();
+			Die();
+			GetComponent<Animator>().SetTrigger("Die");
+			GetComponent<Animator>().SetBool("Alive", false);
 		}
 	}
 
-	public void HandleJumpFrames() 
+	public void HandleDying()
+	{
+		if (_currentHealth == 0)
+		{
+			_deathCounter += Time.deltaTime;
+			if (_deathCounter > _deathWait)
+			{
+				Respawn();
+			}
+		}
+	}
+
+	public void Die()
+	{
+		_currentHealth = 0f;
+		cc.isMovable = false;
+		cc.speed = 0f;
+		Camera.main.GetComponent<DarkenScreen>().FadeOut();
+		_damageCooldownCounter = 0f;
+		_immunityBlinkCounter = 0f;
+		_immuneToDamage = false;
+	}
+
+	private void Respawn()
+	{
+		cc.isMovable = true;
+		_deathCounter = 0f;
+		_currentHealth = _maxHealth;
+		ReturnToClosestCheckpoint();
+		//GetComponent<Animator>().SetTrigger("Resurrect");
+	}
+
+	public void HandleJumpFrames()
 	{
 		if (Input.GetButtonDown("Jump") && cc.isGrounded)
 		{
@@ -196,7 +229,6 @@ public class MyCharManager : MonoBehaviour {
 				pos.y = _yBeforeJump + 1f;
 				_rigidbody.position = pos;
 			}
-			Debug.Log(_rigidbody.position.y);
 		}
 	}
 }

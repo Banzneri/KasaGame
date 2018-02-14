@@ -59,29 +59,23 @@ public class VerticalMoveTrap : MonoBehaviour {
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        vThirdPersonController controller = collision.gameObject.GetComponent<vThirdPersonController>();
-        if (collision.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag.Equals("Player"))
         {
+            MyCharManager player = other.gameObject.GetComponent<MyCharManager>();
+            vThirdPersonController controller = other.gameObject.GetComponent<vThirdPersonController>();
             Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
-            controller.isFlying = true;
-            controller.isMovable = false;
-            rigidbody.AddForce(Vector3.up * 1.5f, ForceMode.VelocityChange);
-            controller.speed = -0.5f;
-            Debug.Log("Collision");
-        }
-    }
 
-    void OnCollisionEnter(Collision other)
-    {
-        MyCharManager player = other.gameObject.GetComponent<MyCharManager>();
-
-        if (other.gameObject.tag.Equals("Player") && !player.GetComponent<vThirdPersonController>().isFlying)
-        {
-            if (goingDown || goingUp)
+            if (!player.Immune && player.Health > 0)
             {
-                player.TakeDamage();   
+                if (goingDown || goingUp)
+                {
+                    controller.isFlying = true;
+                    rigidbody.velocity = Vector3.zero;
+                    rigidbody.AddForce(Vector3.up * 10 , ForceMode.VelocityChange);
+                    player.TakeDamage();   
+                }
             }
         }
     }

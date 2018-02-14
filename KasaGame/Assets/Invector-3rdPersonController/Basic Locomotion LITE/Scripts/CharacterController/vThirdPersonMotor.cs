@@ -232,7 +232,6 @@ namespace Invector.CharacterController
             } 
             else if (isGrounded)
             {
-                isMovable = true;
                 isFlying = false;
             }
         }

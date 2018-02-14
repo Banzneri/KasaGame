@@ -54,7 +54,6 @@ public class StaminaManager : MonoBehaviour {
 
 		if (sprinting && !regenerating && !reachedZero)
 		{
-			Debug.Log("Sprting");
 			curStam -= dt * staminaUse;
 
 			if (curStam < 0f)

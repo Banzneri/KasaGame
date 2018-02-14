@@ -18,7 +18,7 @@ public class DeathPlane : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player")
 		{
-			other.gameObject.GetComponent<MyCharManager>().ReturnToClosestCheckpoint();
+			other.gameObject.GetComponent<MyCharManager>().Die();
 		}
 	}
 }
