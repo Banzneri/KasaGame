@@ -5,9 +5,21 @@ using UnityEngine;
 
 public class Button : MonoBehaviour, ITriggerObject<IActionObject> {
     [SerializeField]
-    private GameObject inspectorObject; //This is needed for actionObject to show up in the inspector
-    private IActionObject actionObject; //The object this button triggers. (door, platform etc.)
+    public GameObject[] actionObjects;
+    //public IActionObject[] actionObjects;
+    //public List<IActionObject> listaaa = new List<IActionObject>();
     private bool inTrigger;
+
+   /* void Wake()
+    {
+        for(int i = 0; i < inspectorGameObjects.Length; i++)
+        {
+            actionObjects[i] = inspectorGameObjects[i].GetComponent<IActionObject>();
+        }
+
+        //actionObject = inspectorObject.GetComponent<IActionObject>();//
+        if (actionObjects == null) inspectorGameObjects = null;
+    }*/
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,20 +33,17 @@ public class Button : MonoBehaviour, ITriggerObject<IActionObject> {
 
     private void Update()
     {
-        if(inTrigger)
+        if (inTrigger)
         {
             if(Input.GetButtonDown("action"))
             {
-                Trigger(actionObject);
+                for(int i = 0; i < actionObjects.Length; i++)
+                {
+                    Trigger(actionObjects[i].GetComponent<IActionObject>());
+                    Debug.Log("numero: " + i);
+                }
             }
         }
-    }
-
-    //This is needed for actionObject to show up in the inspector
-    void OnValidate()
-    {
-        actionObject = inspectorObject.GetComponent<IActionObject>();
-        if (actionObject == null) inspectorObject = null;
     }
 
     public void Trigger(IActionObject actionObject)

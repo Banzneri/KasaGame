@@ -9,6 +9,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 	[SerializeField] private float speed;
 	[SerializeField] private float waitTime;
     [SerializeField] private bool automatic;
+    private bool goingToEndLoc = true; //Used only if the platform is not automatic.
 
     private Vector3 currentDestination;
 	private float waitCounter = 0;
@@ -71,14 +72,16 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 
     public void Action()
     {
-        if (transform.position == startLocation.position && !automatic)
+        if (goingToEndLoc && !automatic)
         { 
                 currentDestination = endLocation.position;
+                goingToEndLoc = false;
                 GetComponent<AudioSource>().Play(); 
         }
-        else if (transform.position == endLocation.position && !automatic)
+        else if (!goingToEndLoc && !automatic)
         {
                 currentDestination = startLocation.position;
+                goingToEndLoc = true;
                 GetComponent<AudioSource>().Play();
         }
     }

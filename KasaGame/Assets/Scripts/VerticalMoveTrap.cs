@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Invector.CharacterController;
+using System;
 
-public class VerticalMoveTrap : MonoBehaviour {
+public class VerticalMoveTrap : MonoBehaviour, IActionObject {
+    public bool automatic;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float delay = 2f;
     [SerializeField] private float initialDelay = 1f;
 
     private Vector3 minY;
     private Vector3 maxY;
-    private bool goingUp = false;
-    private bool goingDown = true;
+    [SerializeField] private bool goingUp = false;
+    [SerializeField] private bool goingDown = true;
     private float delayCounter = 0f;
     private float initialDelayCounter = 0f;
 
@@ -27,14 +29,15 @@ public class VerticalMoveTrap : MonoBehaviour {
             initialDelayCounter += Time.deltaTime;
         }
 
-        if (initialDelayCounter > initialDelay)
+        if (initialDelayCounter > initialDelay || !automatic)
         {
             delayCounter += Time.deltaTime;
+
             if (goingUp)
             {
                 Vector3 movement = Vector3.MoveTowards(transform.position, maxY, Time.deltaTime * speed);
                 transform.position = movement;
-                if (transform.position == maxY)
+                if (transform.position == maxY && automatic)
                 {
                     goingDown = true;
                     goingUp = false;
@@ -44,13 +47,14 @@ public class VerticalMoveTrap : MonoBehaviour {
             {
                 Vector3 movement = Vector3.MoveTowards(transform.position, minY, Time.deltaTime * speed);
                 transform.position = movement;
-                if (transform.position == minY)
+                if (transform.position == minY && automatic)
                 {
                     goingDown = false;
+                    goingUp = true;
                 }
             }
 
-            if (delayCounter > delay)
+            if (delayCounter > delay && automatic)
             {
                 GetComponent<AudioSource>().Play();
                 goingUp = true;
@@ -84,5 +88,22 @@ public class VerticalMoveTrap : MonoBehaviour {
                 player.TakeDamage();   
             }
         }
+    }
+
+    public void Action()
+    {
+
+        GetComponent<AudioSource>().Play();
+
+            if (goingUp)
+            {
+                    goingDown = true;
+                    goingUp = false;
+            }
+            else if (goingDown)
+            {
+                    goingDown = false;
+                    goingUp = true;     
+            }
     }
 }
