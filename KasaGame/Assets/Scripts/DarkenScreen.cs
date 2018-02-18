@@ -35,7 +35,6 @@ public class DarkenScreen : MonoBehaviour {
 	{
 		if (fadingOut)
 		{
-			Debug.Log("pixel");
 			pixelate.pixelSizeX = Mathf.RoundToInt(Mathf.Lerp(1f, 20f, t));
 			pixelate.pixelSizeY = Mathf.RoundToInt(Mathf.Lerp(1f, 20f, t));
 			
@@ -50,7 +49,6 @@ public class DarkenScreen : MonoBehaviour {
 		}
 		else if (fadingIn)
 		{
-			Debug.Log("pixel");
 			pixelate.pixelSizeX = (int) Mathf.Lerp(20f, 1f, t);
 			pixelate.pixelSizeY = (int) Mathf.Lerp(20f, 1f, t);
 			t += darkenTime * Time.deltaTime;

@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 81958680148262864}
   - component: {fileID: 114447368397588126}
   - component: {fileID: 114832470342675578}
+  - component: {fileID: 114961317075161942}
+  - component: {fileID: 114033879802538532}
   m_Layer: 0
   m_Name: NewCamera
   m_TagString: MainCamera
@@ -86,6 +88,21 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594692666928194}
   m_Enabled: 0
+--- !u!114 &114033879802538532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594692666928194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1da63591dc67445b632e87664be9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 703b245f98d111d418d988ba74eefbce, type: 3}
+  pixelSizeX: 1
+  pixelSizeY: 1
+  lockXY: 1
 --- !u!114 &114447368397588126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,6 +147,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Resolution: 0
   DefaultSpotCookie: {fileID: 0}
+--- !u!114 &114961317075161942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594692666928194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de1696662e5daf64e890f4ae4794e3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  darkenTime: 0.5
+  tex: {fileID: 2800000, guid: 67046d94411be94499bea5846dffc624, type: 3}
 --- !u!124 &124791824987207486
 Behaviour:
   m_ObjectHideFlags: 1

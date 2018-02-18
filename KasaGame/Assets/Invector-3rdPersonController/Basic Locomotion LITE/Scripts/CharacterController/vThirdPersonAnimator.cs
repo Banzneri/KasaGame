@@ -27,11 +27,28 @@ namespace Invector.CharacterController
                 animator.SetTrigger("Wave");
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (!GetComponent<MyCharManager>().throwing)
             {
-                animator.SetTrigger("Pickup");
-            }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    if (speed < 1 && isGrounded) 
+                    {
+                        animator.Play("ThrowStand");
+                    }
+                    else
+                        animator.Play("Throw");
+                }
 
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (speed < 1 && isGrounded) 
+                    {
+                        animator.Play("AttackStand");
+                    }
+                    else
+                        animator.Play("Attack");
+                }   
+            }
 
             // fre movement get the input 0 to 1
             if (!isFlying)

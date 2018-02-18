@@ -29,6 +29,12 @@ public class UIManager : MonoBehaviour {
 			GameObject image = GameObject.Find("2heart");
 			image.SetActive(false);
 		}
+		else if (player.Health == 0f && heartCount > 0)
+		{
+			heartCount = 0f;
+			GameObject image = GameObject.Find("1heart");
+			image.SetActive(false); 
+		}
 		
 		if (player.Health == 3f && heartCount < 3)
 		{

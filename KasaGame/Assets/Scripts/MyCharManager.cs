@@ -13,21 +13,37 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private float _maxStamina = 100f;
 	[SerializeField] private float _currentStamina = 100f;
 	[SerializeField] private bool _blinks = true;
+	[SerializeField] private float _jumpHeight = 5f;
+	[SerializeField] public GameObject _back;
+	[SerializeField] public GameObject _hand;
+	[SerializeField] private GameObject _weapon;
+	[SerializeField] private float attackTime = 1f;
+	
+	public bool throwing = false;
+	private float attackCounter = 0f;
+
+	public bool attacking = false;
 	private GameObject[] checkpoints;
 	private float _damageCooldownCounter = 0f;
 	private float _immunityBlinkCounter = 0f;
 	private bool _immuneToDamage = false;
 	private bool _pressingJump = false;
+	private bool _jumping = false;
 	private float _jumpCounter = 0f;
 	private Rigidbody _rigidbody;
 	private Color[] _originalColors;
 	private float _yBeforeJump = 0f;
+
+	private bool _reachedApex = false;
 
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
 	private vThirdPersonController cc;
 	private float _deathWait = 2f;
 	private float _deathCounter = 0f;
+
+	private float _jumpForce = 0f;
+	private float _maxJumpForce = 40f;
 
 	public float Health { get { return _currentHealth; } 
 							set {_currentHealth = value; } }
@@ -44,11 +60,12 @@ public class MyCharManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		HandleDamageCooldown();
+		AltHandleJumpFrames();
 		HandleFallSpeed();
-		HandleJumpFrames();
 		HandleDying();
+		HandleWeapon();
 	}
 
 	private void InitBlinking()
@@ -110,11 +127,30 @@ public class MyCharManager : MonoBehaviour {
 
 	private void HandleFallSpeed()
 	{
-		if (_rigidbody.velocity.y < 3f)
+		if (_jumping)
 		{
 			Vector3 vel = _rigidbody.velocity;
-            vel.y -= _extraFallSpeed;
-            _rigidbody.velocity = vel;
+			
+			if (_rigidbody.velocity.y < 0 && !cc.isGrounded)
+			{
+				vel.y -= _extraFallSpeed;
+			}
+			if (_rigidbody.velocity.y < 4f && !cc.isGrounded)
+			{
+				if (!_reachedApex)
+				{	
+					//vel.y -= 1f;
+					_reachedApex = true;	
+				}
+				vel.y -= _extraFallSpeed / 2f;
+			}
+			_rigidbody.velocity = vel;
+		} 
+		else if (!cc.isGrounded)
+		{
+			Vector3 vel = _rigidbody.velocity;
+			vel.y -= 0.4f;
+			_rigidbody.velocity = vel;
 		}
 	}
 
@@ -149,9 +185,13 @@ public class MyCharManager : MonoBehaviour {
 	public void TakeDamage() {
 		if (!_immuneToDamage)
 		{
+			if (_currentHealth > 1)
+			{
+				GetComponent<Animator>().SetTrigger("Stun");
+			}
 			if (_currentHealth > 0f)
 			{
-				_currentHealth--;	
+				_currentHealth--;
 			}
 			_immuneToDamage = true;
 		}
@@ -175,6 +215,69 @@ public class MyCharManager : MonoBehaviour {
 		}
 	}
 
+	public void HandleWeapon()
+	{
+		if (attacking)
+		{
+			attackCounter += Time.deltaTime;
+			if (attackCounter > attackTime)
+			{
+				attacking = false;
+				attackCounter = 0f;
+			}
+
+			if (_back.activeSelf)
+			{
+				WeaponInHand();
+			}
+		}
+		else if ( !attacking && _hand.activeSelf )
+		{
+			WeaponInBack();
+		}
+		else if (throwing && _hand.activeSelf)
+		{
+			
+		}
+	}
+
+	public void WeaponInBack()
+	{
+		_hand.SetActive(false);
+		_back.SetActive(true);
+	}
+
+	public void WeaponInHand()
+	{
+		_hand.SetActive(true);
+		_back.SetActive(false);
+	}
+
+	public void WeaponFlying()
+	{
+		_hand.SetActive(false);
+		_back.SetActive(false);
+	}
+
+	public void Attack()
+	{
+		if (!throwing)
+		{
+			attacking = true;
+			attackCounter = 0f;	
+		}
+	}
+
+	public void ThrowWeapon()
+	{
+		if (!throwing)
+		{
+			Instantiate(_weapon, _hand.transform.position, Quaternion.Euler(Vector3.zero));
+			WeaponFlying();
+			throwing = true;
+		}
+	}
+
 	public void Die()
 	{
 		_currentHealth = 0f;
@@ -192,15 +295,21 @@ public class MyCharManager : MonoBehaviour {
 		_deathCounter = 0f;
 		_currentHealth = _maxHealth;
 		ReturnToClosestCheckpoint();
-		//GetComponent<Animator>().SetTrigger("Resurrect");
 	}
 
-	public void HandleJumpFrames()
+	public void AltHandleJumpFrames()
 	{
+		Vector3 vel = _rigidbody.velocity;
+		if (cc.isGrounded && _jumping && vel.y == 0)
+		{
+			_reachedApex = false;
+			_jumping = false;
+		}
 		if (Input.GetButtonDown("Jump") && cc.isGrounded)
 		{
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
+			_jumping = true;
 		}
 
 		if (Input.GetButtonUp("Jump"))
@@ -212,23 +321,19 @@ public class MyCharManager : MonoBehaviour {
 		if (_pressingJump)
 		{
 			_jumpCounter += Time.deltaTime;
-			if (_jumpCounter < _jumpFrames)
+			if (_jumpCounter < cc.jumpTimer)
 			{
-				Vector3 vel = _rigidbody.velocity;
-				vel.y += 1f;
-				_rigidbody.velocity = vel;
+				_jumpForce = _jumpCounter;
 			}
 			else
 			{
+				_jumpForce = cc.jumpTimer;
+				_jumpForce = 0f;
 				_pressingJump = false;
 				_jumpCounter = 0f;
-				Vector3 vel = _rigidbody.velocity;
-				vel.y = 8.5f;
-				_rigidbody.velocity = vel;
-				Vector3 pos = _rigidbody.position;
-				pos.y = _yBeforeJump + 1f;
-				_rigidbody.position = pos;
 			}
+			vel.y +=  _jumpForce * 50f;
+			_rigidbody.velocity = vel;
 		}
 	}
 }

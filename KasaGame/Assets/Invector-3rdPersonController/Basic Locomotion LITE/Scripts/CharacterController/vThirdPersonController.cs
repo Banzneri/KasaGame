@@ -5,6 +5,7 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        private bool jumpedWhileJumping = false;
         protected virtual void Start()
         {
 #if !UNITY_EDITOR
@@ -27,10 +28,20 @@ namespace Invector.CharacterController
             isStrafing = !isStrafing;
         }
 
+        public virtual void Attack()
+        {
+            animator.SetTrigger("Attack");
+        }
+
         public virtual void Jump()
         {
+            if (isGrounded)
+            {
+                jumpedWhileJumping = false;
+            }
+            bool canJump = isGrounded || !jumpedWhileJumping;
             // conditions to do this action
-            bool jumpConditions = isGrounded && !isJumping;
+            bool jumpConditions = canJump && !isJumping;
             // return if jumpCondigions is false
             if (!jumpConditions) return;
             // trigger jump behaviour
@@ -38,9 +49,10 @@ namespace Invector.CharacterController
             isJumping = true;
             // trigger jump animations            
             if (_rigidbody.velocity.magnitude < 1)
-                animator.CrossFadeInFixedTime("Jump", 0.1f);
+                animator.CrossFadeInFixedTime("Jump", 0.05f);
             else
-                animator.CrossFadeInFixedTime("JumpMove", 0.2f);
+                animator.CrossFadeInFixedTime("JumpMove", 0.1f);
+            jumpedWhileJumping = true;
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)
