@@ -1,15 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour {
+public class Door : MonoBehaviour, IActionObject {
 
     public bool doorKey;
     public bool open;
-    public bool close;
-    public bool inTrigger;
-
-
+    private bool inTrigger;
 
     void OnTriggerEnter(Collider other)
     {
@@ -25,54 +23,56 @@ public class Door : MonoBehaviour {
     {
         if(inTrigger)  //if player is close enough, check for action
         {
-            if(close) //if door is closed, check if it should be opened
-            {
-                    if(Input.GetButtonDown("action") && doorKey)
+            if(Input.GetButtonDown("action") && doorKey)
                     {
-                        open = true;
-                        close = false;
+                        Action();
                     }
-            }
-            else //if door is open, check if it should be closed
-            {
-                if (Input.GetButtonDown("action"))
-                {
-                    open = false;
-                    close = true;
-                }
-            }
         }
-            if(open) //opens the door, if it should be open
-            {
-                Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, -90.0f, 0.0f), Time.deltaTime * 200);
-                transform.parent.transform.rotation = doorTurn;
-            }
-            else //closes the door, if it should be closed
-            {
-                Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), Time.deltaTime * 200);
-                transform.parent.transform.rotation = doorTurn;
-            }
+
+        if (open) //opens the door, if it should be open
+        {
+            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, -90.0f, 0.0f), Time.deltaTime * 200);
+            transform.rotation = doorTurn;
+        }
+        else //closes the door, if it should be closed
+        {
+            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), Time.deltaTime * 200);
+            transform.rotation = doorTurn;
+        }
     }
 
     private void OnGUI()
     {
         if(inTrigger)
         {
-            if(open)
+            if(open && doorKey)
             {
                 GUI.Box(new Rect(450, 400, 200, 25), "Press E to close");
             }
-            else
+            else if(!open & doorKey)
             {
-                if(doorKey)
-                {
-                    GUI.Box(new Rect(450, 400, 200, 25), "Press E to open");
-                }
-                else
-                {
-                    GUI.Box(new Rect(450, 400, 200, 25), "Need a key");
-                }
+                GUI.Box(new Rect(450, 400, 200, 25), "Press E to open");
             }
+            else if (!open & !doorKey)
+            {
+                GUI.Box(new Rect(450, 400, 200, 25), "Can't open");
+            }
+            else if (open & !doorKey)
+            {
+                GUI.Box(new Rect(450, 400, 200, 25), "Can't close");
+            }
+        }
+    }
+
+    public void Action()
+    {
+        if (open)
+        {
+            open = false;
+        }
+        else
+        {
+            open = true;
         }
     }
 }

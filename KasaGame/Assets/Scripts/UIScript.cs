@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour {
 
-    public Door door;
-    [SerializeField] private Image key;
+    public Door goldDoor;
+    [SerializeField] private Image goldKey;
 
     public void Update()
     {
-        if(door.doorKey == false)
+        if(goldDoor.doorKey == false)
         {
-            key.enabled = false;
+            goldKey.enabled = false;
         }
         else
         {
-            key.enabled = true;
+            goldKey.enabled = true;
         }
     }
 }
