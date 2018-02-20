@@ -16,12 +16,13 @@ public class ThrowWeapon : MonoBehaviour {
 	void Awake () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>();
 		hand = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>()._hand.transform;
+		destination = player.transform.forward;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Rotate(new Vector3(0, 12, 0));
-		destination = transform.forward * throwDistance;
+		transform.Rotate(new Vector3(0, 25, 0));
+		//destination = transform.forward * throwDistance;
 		Debug.Log("Throwing");
 		if (Vector3.Distance(transform.position, player.transform.position) > throwDistance && !comingBack)
 		{
@@ -30,7 +31,7 @@ public class ThrowWeapon : MonoBehaviour {
 
 		if (!comingBack)
 		{	
-			transform.position += player.transform.forward * Time.deltaTime * throwSpeed;
+			transform.position += destination * Time.deltaTime * throwSpeed;
 		}
 		else
 		{
@@ -50,7 +51,7 @@ public class ThrowWeapon : MonoBehaviour {
 	{
 		if (other.gameObject.tag != "Player")
 		{
-			comingBack = true;	
+			comingBack = true;
 		}
 	}
 }

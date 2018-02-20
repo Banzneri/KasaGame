@@ -31,13 +31,15 @@ public class MyCharManager : MonoBehaviour {
 	private bool _jumping = false;
 	private float _jumpCounter = 0f;
 	private Rigidbody _rigidbody;
-	private Color[] _originalColors;
+	private Color _originalColor;
 	private float _yBeforeJump = 0f;
 
 	private bool _reachedApex = false;
 
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
+
+	private MeshRenderer _hatRenderer;
 	private vThirdPersonController cc;
 	private float _deathWait = 2f;
 	private float _deathCounter = 0f;
@@ -71,9 +73,8 @@ public class MyCharManager : MonoBehaviour {
 	private void InitBlinking()
 	{
 		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
-		Color color1 = _renderer.materials[0].color;
-		Color color2 = _renderer.materials[1].color;
-		_originalColors = new Color[] { new Color(color1.r, color1.g, color1.b), new Color(color2.r, color2.g, color2.b) };
+		_hatRenderer = GameObject.FindGameObjectWithTag("Hat").GetComponent<MeshRenderer>();
+		_originalColor = _renderer.materials[0].color;
 	}
 
 	private void HandleDamageCooldown() 
@@ -98,7 +99,7 @@ public class MyCharManager : MonoBehaviour {
 		Color materialColor = _renderer.materials[0].color;
 		if (_immunityBlinkCounter > _immunityBlinkRate)
 		{
-			if (materialColor == Color.red) ReturnOriginalColor();
+			if (!_renderer.gameObject.activeSelf) ReturnOriginalColor();
 			else ChangeToBlinkColor();
 			_immunityBlinkCounter = 0f;
 		}
@@ -115,14 +116,16 @@ public class MyCharManager : MonoBehaviour {
 	}
 
 	private void ReturnOriginalColor() {
-		_renderer.materials[0].color = _originalColors[0];
-		_renderer.materials[1].color = _originalColors[1];
+		_renderer.gameObject.SetActive(true);
+		_hatRenderer.gameObject.SetActive(true);
+		_back.GetComponent<Renderer>().gameObject.SetActive(true);
 	}
 
 	private void ChangeToBlinkColor() 
 	{
-		_renderer.materials[0].color = Color.red;
-		_renderer.materials[1].color = Color.red;
+		_renderer.gameObject.SetActive(false);
+		_hatRenderer.gameObject.SetActive(false);
+		_back.GetComponent<MeshRenderer>().gameObject.SetActive(false);
 	}
 
 	private void HandleFallSpeed()

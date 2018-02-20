@@ -9,6 +9,7 @@ TagManager:
   - Box
   - Checkpoint
   - Heart
+  - Hat
   layers:
   - Default
   - TransparentFX
