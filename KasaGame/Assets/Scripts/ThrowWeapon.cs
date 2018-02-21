@@ -12,18 +12,18 @@ public class ThrowWeapon : MonoBehaviour {
 	private vThirdPersonController player;
 	private Transform hand;
 	private bool comingBack = false;
+	private bool hasActivated = false;
 	// Use this for initialization
 	void Awake () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>();
 		hand = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>()._hand.transform;
 		destination = player.transform.forward;
+		hasActivated = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		transform.Rotate(new Vector3(0, 25, 0));
-		//destination = transform.forward * throwDistance;
-		Debug.Log("Throwing");
 		if (Vector3.Distance(transform.position, player.transform.position) > throwDistance && !comingBack)
 		{
 			comingBack = true;
@@ -47,11 +47,16 @@ public class ThrowWeapon : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision other)
+	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag != "Player")
 		{
 			comingBack = true;
+		}
+		if (other.gameObject.tag == "Interactable" && !hasActivated)
+		{
+			other.gameObject.GetComponent<ITriggerObject<IActionObject>>().TriggerAll();
+			hasActivated = true;
 		}
 	}
 }

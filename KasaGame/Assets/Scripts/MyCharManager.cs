@@ -18,6 +18,7 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] public GameObject _hand;
 	[SerializeField] private GameObject _weapon;
 	[SerializeField] private float attackTime = 1f;
+	private float hitTime = 0.5f;
 	
 	public bool throwing = false;
 	private float attackCounter = 0f;
@@ -53,6 +54,8 @@ public class MyCharManager : MonoBehaviour {
 							set {_currentStamina = value; } }
 	public float MaxStamina { get { return _maxStamina; } }
 	public bool Immune { get { return _immuneToDamage; } }
+
+	public bool IsHitting { get { return attackCounter < hitTime; } }
 
 	void Start () {
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");

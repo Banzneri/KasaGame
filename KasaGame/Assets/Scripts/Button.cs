@@ -35,27 +35,32 @@ public class Button : MonoBehaviour, ITriggerObject<IActionObject> {
     {
         if (inTrigger)
         {
-            if(Input.GetButtonDown("action"))
+            if(Input.GetKeyDown(KeyCode.E))
             {
-                for(int i = 0; i < actionObjects.Length; i++)
-                {
-                    Trigger(actionObjects[i].GetComponent<IActionObject>());
-                    Debug.Log("numero: " + i);
-                }
+                TriggerAll();
             }
+        }
+    }
+
+    public void TriggerAll()
+    {
+        for(int i = 0; i < actionObjects.Length; i++)
+        {
+            Trigger(actionObjects[i].GetComponent<IActionObject>());
         }
     }
 
     public void Trigger(IActionObject actionObject)
     {
+        Debug.Log("trigger");
         actionObject.Action();
     }
 
-    private void OnGUI()
+    /*private void OnGUI()
     {
         if (inTrigger)
         {
-                GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
+            GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
         }
-    }
+    }*/
 }
