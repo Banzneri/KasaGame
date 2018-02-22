@@ -52,6 +52,12 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 				GetComponent<AudioSource>().Play();
 			}
 		}
+
+        //Stop sound for non-automatic
+        if (transform.position == currentDestination)
+        {
+            GetComponent<AudioSource>().Stop();
+        }
 	}
 
 	void OnCollisionEnter(Collision other)

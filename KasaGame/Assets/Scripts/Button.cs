@@ -6,20 +6,15 @@ using UnityEngine;
 public class Button : MonoBehaviour, ITriggerObject<IActionObject> {
     [SerializeField]
     public GameObject[] actionObjects;
-    //public IActionObject[] actionObjects;
-    //public List<IActionObject> listaaa = new List<IActionObject>();
     private bool inTrigger;
+    private Animator anim;
+    private new AudioSource audio;
 
-   /* void Wake()
+    private void Start()
     {
-        for(int i = 0; i < inspectorGameObjects.Length; i++)
-        {
-            actionObjects[i] = inspectorGameObjects[i].GetComponent<IActionObject>();
-        }
-
-        //actionObject = inspectorObject.GetComponent<IActionObject>();//
-        if (actionObjects == null) inspectorGameObjects = null;
-    }*/
+        anim = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -37,10 +32,11 @@ public class Button : MonoBehaviour, ITriggerObject<IActionObject> {
         {
             if(Input.GetButtonDown("action"))
             {
+                audio.Play();
+                anim.Play("ButtonPress");
                 for(int i = 0; i < actionObjects.Length; i++)
                 {
                     Trigger(actionObjects[i].GetComponent<IActionObject>());
-                    Debug.Log("numero: " + i);
                 }
             }
         }

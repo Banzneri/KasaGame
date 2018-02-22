@@ -50,7 +50,7 @@ public class RotateGear : MonoBehaviour {
     {
         if (Vector3.Distance(transform.position, player.transform.position) < 5)
         {
-            Debug.Log("Press e");
+            //Debug.Log("Press e");
             if (Input.GetKeyDown(KeyCode.E) && !isActivated)
             {
                 _light.enabled = true;
