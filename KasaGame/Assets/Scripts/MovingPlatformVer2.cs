@@ -12,6 +12,9 @@ public class MovingPlatformVer2 : MonoBehaviour, IActionObject
     private bool backwardLoop = false;
     private Vector3 currentDestination;
 
+    [SerializeField]
+    bool parentToPlayer;
+
     // Use this for initialization
     void Start()
     {
@@ -34,7 +37,9 @@ public class MovingPlatformVer2 : MonoBehaviour, IActionObject
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.transform.parent = transform;
+            if (parentToPlayer) {
+                other.gameObject.transform.parent = transform;
+            }
         }
     }
 
