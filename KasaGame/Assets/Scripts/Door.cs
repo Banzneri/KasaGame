@@ -10,6 +10,8 @@ public class Door : MonoBehaviour, IActionObject {
 
     public int dir = 1;
     private bool inTrigger;
+    public float direction;
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -34,12 +36,12 @@ public class Door : MonoBehaviour, IActionObject {
 
         if (open) //opens the door, if it should be open
         {
-            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 90.0f * dir, 0.0f), Time.deltaTime * 200);
+            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, -90f - direction, 0.0f), Time.deltaTime * 200);
             transform.rotation = doorTurn;
         }
         else //closes the door, if it should be closed
         {
-            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), Time.deltaTime * 200);
+            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 0.0f + direction, 0.0f), Time.deltaTime * 200);
             transform.rotation = doorTurn;
         }
     }
