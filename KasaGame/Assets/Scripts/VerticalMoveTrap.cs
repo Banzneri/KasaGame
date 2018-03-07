@@ -50,11 +50,9 @@ public class VerticalMoveTrap : MonoBehaviour, IActionObject {
                 if (transform.position == minY && automatic)
                 {
                     goingDown = false;
-                    goingUp = true;
                 }
             }
-
-            if (delayCounter > delay && automatic)
+            else if (delayCounter > delay && automatic)
             {
                 GetComponent<AudioSource>().Play();
                 goingUp = true;
