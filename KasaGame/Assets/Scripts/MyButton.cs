@@ -6,20 +6,15 @@ using UnityEngine;
 public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
     [SerializeField]
     public GameObject[] actionObjects;
-    //public IActionObject[] actionObjects;
-    //public List<IActionObject> listaaa = new List<IActionObject>();
     private bool inTrigger;
+    private Animator anim;
+    private new AudioSource audio;
 
-   /* void Wake()
+    private void Start()
     {
-        for(int i = 0; i < inspectorGameObjects.Length; i++)
-        {
-            actionObjects[i] = inspectorGameObjects[i].GetComponent<IActionObject>();
-        }
-
-        //actionObject = inspectorObject.GetComponent<IActionObject>();//
-        if (actionObjects == null) inspectorGameObjects = null;
-    }*/
+        anim = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -35,32 +30,33 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
     {
         if (inTrigger)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetButtonDown("action"))
             {
-                TriggerAll();
+                audio.Play();
+                anim.Play("ButtonPress");
+                for(int i = 0; i < actionObjects.Length; i++)
+                {
+                    Trigger(actionObjects[i].GetComponent<IActionObject>());
+                }
             }
-        }
-    }
-
-    public void TriggerAll()
-    {
-        for(int i = 0; i < actionObjects.Length; i++)
-        {
-            Trigger(actionObjects[i].GetComponent<IActionObject>());
         }
     }
 
     public void Trigger(IActionObject actionObject)
     {
-        Debug.Log("trigger");
         actionObject.Action();
     }
 
-    /*private void OnGUI()
+    private void OnGUI()
     {
         if (inTrigger)
         {
-            GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
+                GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
         }
-    }*/
+    }
+
+    public void TriggerAll()
+    {
+        
+    }
 }

@@ -272,7 +272,6 @@ public class MyCharManager : MonoBehaviour {
 	{
 		if (!throwing)
 		{
-			_hand.GetComponentInChildren<ParticleSystem>().Play();
 			attacking = true;
 			attackCounter = 0f;	
 		}
