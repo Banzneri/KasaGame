@@ -43,7 +43,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
             if (screwsDown >= automaticScrews.Length) {
                 b = true;
             }
-            Debug.Log("Screws down: " + screwsDown);
+            //Debug.Log("Screws down: " + screwsDown);
         }
 
         return b;
@@ -56,7 +56,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
         MoveToVector3(trajectory);
 
         if(automaticScrews.Length > 0) {
-            Debug.Log("Screw length is higher than 0");
+            //Debug.Log("Screw length is higher than 0");
             if (CheckAutomationArray()) {
                 SetToAutomatic();
             }
