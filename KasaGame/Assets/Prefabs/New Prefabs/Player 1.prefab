@@ -1315,6 +1315,7 @@ MonoBehaviour:
   _back: {fileID: 1133107840278436}
   _hand: {fileID: 1880895145448088}
   _weapon: {fileID: 1342755913617250, guid: 965fba5c28469ee4d840d40edc5a76d9, type: 2}
+  _hat: {fileID: 1152079411497894}
   attackTime: 2
   throwing: 0
   attacking: 0

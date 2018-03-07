@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4871290277798570}
-  - component: {fileID: 114830733411526600}
+  - component: {fileID: 114913856546183852}
   m_Layer: 0
   m_Name: ClimbingPlugin
   m_TagString: Untagged
@@ -220,7 +220,7 @@ Transform:
   m_Father: {fileID: 4871290277798570}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114830733411526600
+--- !u!114 &114913856546183852
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1294458010574194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0705843af7abf4880e59edd056b637, type: 3}
+  m_Script: {fileID: 11500000, guid: 479c4d2b47a10cc4ab06f8f0fdc95eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Player: {fileID: 0}
@@ -240,18 +240,18 @@ MonoBehaviour:
     m_Bits: 2048
   _FrameLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 4096
   _EdgeLayer:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 8192
   _MaxGradientEdge: 0.3
   _MaxGradientFacing: 0.1
-  _GrabCollider: {fileID: 135103648268806790}
-  _PhysicsCollider: {fileID: 135895824338027612}
-  _FeetCollider: {fileID: 135267649455204736}
-  _EmptyCollider: {fileID: 135260399472163904}
-  _RoomUpCollider: {fileID: 135412622727315380}
-  _RoomDownCollider: {fileID: 135298496165488022}
+  _GrabCollider: {fileID: 0}
+  _PhysicsCollider: {fileID: 0}
+  _FeetCollider: {fileID: 0}
+  _EmptyCollider: {fileID: 0}
+  _RoomUpCollider: {fileID: 0}
+  _RoomDownCollider: {fileID: 0}
 --- !u!135 &135103648268806790
 SphereCollider:
   m_ObjectHideFlags: 1
