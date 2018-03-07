@@ -17,6 +17,7 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] public GameObject _back;
 	[SerializeField] public GameObject _hand;
 	[SerializeField] private GameObject _weapon;
+	[SerializeField] private GameObject _hat;
 	[SerializeField] private float attackTime = 1f;
 	private float hitTime = 0.5f;
 	
@@ -79,7 +80,7 @@ public class MyCharManager : MonoBehaviour {
 	private void InitBlinking()
 	{
 		_renderer = GetComponentInChildren<SkinnedMeshRenderer>();
-		_hatRenderer = GameObject.FindGameObjectWithTag("Hat").GetComponent<MeshRenderer>();
+		_hatRenderer = _hat.GetComponent<MeshRenderer>();
 		_originalColor = _renderer.materials[0].color;
 	}
 
