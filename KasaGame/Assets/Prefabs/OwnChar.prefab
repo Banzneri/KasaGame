@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1243580674298418
 GameObject:
   m_ObjectHideFlags: 1
@@ -1299,8 +1299,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 3584
-  groundMinDistance: 1
-  groundMaxDistance: 2
+  groundMinDistance: 0.2
+  groundMaxDistance: 1
   locomotionType: 0
   lockMovement: 0
   freeRotationSpeed: 10
@@ -1378,7 +1378,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1237203923787946}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 479c4d2b47a10cc4ab06f8f0fdc95eef, type: 3}
   m_Name: 
@@ -1392,10 +1392,10 @@ MonoBehaviour:
     m_Bits: 2048
   _FrameLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 4096
   _EdgeLayer:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 4096
   _MaxGradientEdge: 0.3
   _MaxGradientFacing: 0.1
   _GrabCollider: {fileID: 135978634749462656}

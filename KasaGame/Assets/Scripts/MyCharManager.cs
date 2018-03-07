@@ -303,19 +303,16 @@ public class MyCharManager : MonoBehaviour {
 		{
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
-			Debug.Log("startedpressing");
 		}
 
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
 			_pressingJump = false;
 			_jumpCounter = 0f;
-			Debug.Log("buttonyp");
 		}
 
 		if (_pressingJump)
 		{
-			Debug.Log("pressing");
 			_jumpCounter += Time.deltaTime;
 			if (_jumpCounter < cc.jumpTimer)
 			{
@@ -327,7 +324,6 @@ public class MyCharManager : MonoBehaviour {
 				_jumpForce = 0f;
 				_pressingJump = false;
 				_jumpCounter = 0f;
-				Debug.Log("timeOut");
 			}
 			vel.y +=  _jumpForce * 50f;
 			_rigidbody.velocity = vel;

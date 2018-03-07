@@ -34,10 +34,7 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
             {
                 audio.Play();
                 anim.Play("ButtonPress");
-                for(int i = 0; i < actionObjects.Length; i++)
-                {
-                    Trigger(actionObjects[i].GetComponent<IActionObject>());
-                }
+                TriggerAll();
             }
         }
     }
@@ -57,6 +54,10 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
 
     public void TriggerAll()
     {
-        
+        for(int i = 0; i < actionObjects.Length; i++)
+        {
+            Trigger(actionObjects[i].GetComponent<IActionObject>());
+        }
+        Debug.Log("Trigger");
     }
 }
