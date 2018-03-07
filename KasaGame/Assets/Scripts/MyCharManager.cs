@@ -328,6 +328,6 @@ public class MyCharManager : MonoBehaviour {
 			vel.y +=  _jumpForce * 50f;
 			_rigidbody.velocity = vel;
 		}
-		Debug.Log(_jumping);
+		//Debug.Log(_jumping);
 	}
 }
