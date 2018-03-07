@@ -41,12 +41,12 @@ public class StaminaManager : MonoBehaviour {
 		float curStam = player.CurrentStamina;
 		float dt = Time.deltaTime;
 
-		if (Input.GetKeyDown(KeyCode.LeftShift) && !reachedZero && cc.isGrounded)
+		if (Input.GetButtonDown("Sprint") && !reachedZero && cc.isGrounded)
 		{
 			sprinting = true;
 			regenerating = false;
 		}
-		if (Input.GetKeyUp(KeyCode.LeftShift))
+		if (Input.GetButtonUp("Sprint"))
 		{
 			sprinting = false;
 			regenerating = true;

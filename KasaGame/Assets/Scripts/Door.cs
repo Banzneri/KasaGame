@@ -7,6 +7,8 @@ public class Door : MonoBehaviour, IActionObject {
 
     public bool doorKey;
     public bool open;
+
+    public int dir = 1;
     private bool inTrigger;
 
     void OnTriggerEnter(Collider other)
@@ -24,14 +26,15 @@ public class Door : MonoBehaviour, IActionObject {
         if(inTrigger)  //if player is close enough, check for action
         {
             if(Input.GetButtonDown("action") && doorKey)
-                    {
-                        Action();
-                    }
+            {
+                Action();
+                doorKey = false;
+            }
         }
 
         if (open) //opens the door, if it should be open
         {
-            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, -90.0f, 0.0f), Time.deltaTime * 200);
+            Quaternion doorTurn = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, 90.0f * dir, 0.0f), Time.deltaTime * 200);
             transform.rotation = doorTurn;
         }
         else //closes the door, if it should be closed

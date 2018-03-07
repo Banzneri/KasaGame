@@ -12,11 +12,13 @@ public class UIScript : MonoBehaviour {
     {
         if(goldDoor.doorKey == false)
         {
+            Debug.Log("false");
             goldKey.enabled = false;
         }
         else
         {
             goldKey.enabled = true;
+            Debug.Log("true");
         }
     }
 }

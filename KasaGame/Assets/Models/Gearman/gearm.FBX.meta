@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: 86412c7a5099e7e43ba4c0e37d0e850c
+timeCreated: 1519309552
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: body
+    100002: //RootNode
+    100004: Hat
+    100006: head
+    100008: head_end
+    100010: lbody
+    100012: left_foot
+    100014: left_foot_end
+    100016: left_hand
+    100018: left_hand_end
+    100020: left_larm
+    100022: left_lleg
+    100024: left_thumb
+    100026: left_thumb_end
+    100028: left_uarm
+    100030: left_uleg
+    100032: neck
+    100034: right_foot
+    100036: right_foot_end
+    100038: right_hand
+    100040: right_hand_end
+    100042: right_larm
+    100044: right_lleg
+    100046: right_thumb
+    100048: right_thumb_end
+    100050: right_uarm
+    100052: right_uleg
+    100054: ubody
+    400000: body
+    400002: //RootNode
+    400004: Hat
+    400006: head
+    400008: head_end
+    400010: lbody
+    400012: left_foot
+    400014: left_foot_end
+    400016: left_hand
+    400018: left_hand_end
+    400020: left_larm
+    400022: left_lleg
+    400024: left_thumb
+    400026: left_thumb_end
+    400028: left_uarm
+    400030: left_uleg
+    400032: neck
+    400034: right_foot
+    400036: right_foot_end
+    400038: right_hand
+    400040: right_hand_end
+    400042: right_larm
+    400044: right_lleg
+    400046: right_thumb
+    400048: right_thumb_end
+    400050: right_uarm
+    400052: right_uleg
+    400054: ubody
+    2300000: Hat
+    3300000: Hat
+    4300000: body
+    4300002: Hat
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: body
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #2'
+    second: {fileID: 2100000, guid: 60a3db1d4b160ce479c98fef6960d0a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #3'
+    second: {fileID: 2100000, guid: 5218049e0107853469897ba96d4ce13e, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

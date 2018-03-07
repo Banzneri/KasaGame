@@ -7,6 +7,13 @@ public class Seesaw : MonoBehaviour {
 	[SerializeField] private float maxAngle;
 	[SerializeField] private float direction = 1.0f;
 	private float current = 0.0f;
+
+	private Rigidbody _rigidBody;
+
+	void Awake()
+	{
+		_rigidBody = GetComponent<Rigidbody>();
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -22,6 +29,6 @@ public class Seesaw : MonoBehaviour {
 			direction = -direction;
 		}
 		Vector3 rotation = new Vector3(current, 0, 0);
-		transform.rotation = Quaternion.Euler(rotation);
+		_rigidBody.MoveRotation(Quaternion.Euler(rotation));
 	}
 }

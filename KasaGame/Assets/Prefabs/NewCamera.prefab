@@ -118,7 +118,7 @@ MonoBehaviour:
   smoothCameraRotation: 16
   cullingLayer:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 3584
   lockCamera: 0
   rightOffset: 0
   defaultDistance: 10

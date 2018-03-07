@@ -29,7 +29,7 @@ namespace Invector.CharacterController
 
             if (!GetComponent<MyCharManager>().throwing)
             {
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetButtonDown("Throw"))
                 {
                     if (speed < 1 && isGrounded) 
                     {
@@ -39,7 +39,7 @@ namespace Invector.CharacterController
                         animator.Play("Throw");
                 }
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetButtonDown("Attack"))
                 {
                     if (speed < 1 && isGrounded) 
                     {

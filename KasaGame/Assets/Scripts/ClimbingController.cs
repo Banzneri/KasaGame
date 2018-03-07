@@ -96,13 +96,30 @@ public class ClimbingController : MonoBehaviour
         get { return _RightGrab; }
     }
 
-    // Checks if player is rotated too much to left. 0 = back; 1 = front
+    // Tracks player's rotation on left
     [SerializeField]
-    private SphereCollider[] _LeftAngleChecks;
+    private SphereCollider _LeftOutCheck;
 
-    // Checks if player is rotated too much to right. 0 = back; 1 = front
+    // Tracks player's rotation on left
     [SerializeField]
-    private SphereCollider[] _RightAngleChecks;
+    private SphereCollider _LeftInCheck;
+
+    // Tracks player's rotation on right
+    [SerializeField]
+    private SphereCollider _RightOutCheck;
+
+    // Tracks player's rotation on right
+    [SerializeField]
+    private SphereCollider _RightInCheck;
+
+    // Tracks player's position ++
+    [SerializeField]
+    private SphereCollider _DistanceInCheck;
+
+    // Tracks player's position --
+    [SerializeField]
+    private SphereCollider _DistanceOutCheck;
+
 
     // Grab Point
     [SerializeField]
@@ -222,7 +239,7 @@ public class ClimbingController : MonoBehaviour
         // enable normal inputs, animations and gravity
         UseDefaultController(true);
         _GrabPointSet = false;
-        _InputDelay = 0.5f;
+        _InputDelay = 0.25f;
     }
 
     // Actions in ON_GROUND state
@@ -244,7 +261,7 @@ public class ClimbingController : MonoBehaviour
     {
         UseDefaultController(true);
         _GrabPointSet = false;
-        _InputDelay = 0.5f;
+        _InputDelay = 0.1f;
     }
 
     // Actions in ON_AIR state
@@ -259,13 +276,19 @@ public class ClimbingController : MonoBehaviour
         }
 
         // Check whether player holds grab button or not
-        if (!Input.GetMouseButton(0) || _InputDelay > 0)
+        if (!Input.GetMouseButton(0))
+        {
+            return;
+        }
+
+        //
+        if (_InputDelay > 0)
         {
             return;
         }
 
         // Check if there's actual grab point. Set _Ledge and _InitialGrabPosition
-        if (!GrabPointFound(20))
+        if (!GrabPointFound(30))
         {
             return;
         }
@@ -292,7 +315,6 @@ public class ClimbingController : MonoBehaviour
         // disable normal inputs, animations and gravity
         UseDefaultController(false);
         _InputDelay = 0.4f;
-
     }
 
     // Actions in ON_LEDGE state
@@ -306,22 +328,20 @@ public class ClimbingController : MonoBehaviour
         }
 
         // Set player to the position and rotation of _GrabPoint
-        PlayerCharacter.transform.position = _GrabPoint.transform.position + _GrabPoint.transform.TransformDirection(Vector3.forward).normalized * -0.3f + _GrabPoint.transform.TransformDirection(Vector3.up).normalized * -2;
+        PlayerCharacter.transform.position = _GrabPoint.transform.position + _GrabPoint.transform.TransformDirection(Vector3.forward).normalized * -0.4f + _GrabPoint.transform.TransformDirection(Vector3.up).normalized * -2;
         PlayerCharacter.transform.rotation = _GrabPoint.transform.rotation;
 
-        // Set Camera position and rotation
-        Camera.transform.position = PlayerCharacter.transform.position + PlayerCharacter.transform.TransformDirection(Vector3.forward).normalized * -10 + PlayerCharacter.transform.TransformDirection(Vector3.up).normalized * 5;
-        Camera.transform.LookAt(_PlayerCharacter.transform);
-
-        AdjustLedgePosition();
-
+        // Set Camera position
+       
 
         // Check if there's a ledge to grab from anymore
-        if (!LedgeFound(_InitialGrab, 20))
+        if (!GrabPointFound(20))
         {
+            Debug.Log("CLIMB");
             SetState(ClimbingState.ON_AIR);
             return;
         }
+        Debug.Log("CLIMB2");
 
         // Check inputs
         if (_InputDelay > 0)
@@ -330,11 +350,11 @@ public class ClimbingController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            HangSideways(-0.75f);
+            HangSideways(-1f);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            HangSideways(0.75f);
+            HangSideways(1f);
         }
         else if (Input.GetKey(KeyCode.W))
         {
@@ -434,7 +454,7 @@ public class ClimbingController : MonoBehaviour
     {
         if (!Physics.CheckBox(_GrabPoint.transform.position + Vector3.up, new Vector3(0.25f, 0.8f, 0.1f)))
         {
-            PlayerCharacter.transform.position = _GrabPoint.transform.position + Vector3.up * 0.5f;
+            PlayerCharacter.transform.position = _GrabPoint.transform.position + Vector3.up * 0.5f + Vector3.forward * 0.1f;
             SetState(ClimbingState.ON_GROUND);
             return true;
         }
@@ -444,48 +464,74 @@ public class ClimbingController : MonoBehaviour
     // moves player sideways
     private void HangSideways(float moveSpeed)
     {
+        AdjustLedgePosition();
+
+        bool PreventMovement = false;
         _GrabPoint.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+
+
+        if (!GrabPointFound(20))
+        {
+            PreventMovement = true;
+        }
+
+        if(PreventMovement)
+        {
+            _GrabPoint.transform.Translate(Vector3.right * -moveSpeed * Time.deltaTime);
+        }
     }
 
     // Moves and rotates player so that he is better placed in the ledge
     private void AdjustLedgePosition()
     {
 
-        bool Adjusting = true;
-        int Iterations = 0;
+        bool LeftOut = !CheckSphere(_LeftOutCheck, Vector3.zero, ClimbingLayer);
+        bool LeftIn = CheckSphere(_LeftInCheck, Vector3.zero, ClimbingLayer);
+        bool RightOut = !CheckSphere(_RightOutCheck, Vector3.zero, ClimbingLayer);
+        bool RightIn = CheckSphere(_RightInCheck, Vector3.zero, ClimbingLayer);
+        bool DistanceIn = CheckSphere(_DistanceInCheck, Vector3.zero, ClimbingLayer);
+        bool DistanceOut = !CheckSphere(_DistanceOutCheck, Vector3.zero, ClimbingLayer);
 
-        while (Adjusting && Iterations < 50)
+        float Angle = 180f * Time.deltaTime;
+        Vector3 Forward = Vector3.forward * Time.deltaTime * 0.5f;
+
+        if(!RightOut && LeftOut)
         {
+            _GrabPoint.transform.Rotate(new Vector3(0, Angle, 0));
+        }
 
-            // Adjust player's rotation better alongside to ledge
-            bool LeftBackIn = CheckSphere(_LeftAngleChecks[0], Vector3.zero, ClimbingLayer);
-            bool RightBackIn = CheckSphere(_RightAngleChecks[0], Vector3.zero, ClimbingLayer);
-            bool LeftFrontOut = !CheckSphere(_LeftAngleChecks[1], Vector3.zero, ClimbingLayer);
-            bool RightFrontOut = !CheckSphere(_RightAngleChecks[1], Vector3.zero, ClimbingLayer);
+        if (!LeftOut && RightOut)
+        {
+            _GrabPoint.transform.Rotate(new Vector3(0, -Angle, 0));
+        }
 
-            if (LeftBackIn && RightBackIn)
-            {
-                _GrabPoint.transform.Translate(Vector3.forward * -0.1f);
-                Adjusting = true;
-            }
-            else if (LeftFrontOut && RightFrontOut)
-            {
-                Adjusting = true;
-                _GrabPoint.transform.Translate(Vector3.forward * 0.1f);
-            }
+        if (!LeftIn && RightIn)
+        {
+            _GrabPoint.transform.Rotate(new Vector3(0, Angle, 0));
+            _GrabPoint.transform.Translate(Forward);
 
-            if (LeftFrontOut || RightBackIn)
-            {
-                Adjusting = true;
-                _GrabPoint.transform.Rotate(new Vector3(0, 3, 0));
-            }
-            else if (LeftBackIn || RightFrontOut)
-            {
-                Adjusting = true;
-                _GrabPoint.transform.Rotate(new Vector3(0, -3, 0));
-            }
+            RightIn = CheckSphere(_RightInCheck, Vector3.zero, ClimbingLayer);
+        }
 
-            Iterations++;
+        if (!LeftIn && !RightIn)
+        {
+            _GrabPoint.transform.Translate(Forward);
+        }
+
+
+        if (!RightIn && LeftIn)
+        {
+            _GrabPoint.transform.Rotate(new Vector3(0, -Angle, 0));
+        }
+
+        if(!DistanceIn)
+        {
+            _GrabPoint.transform.Translate(Forward);
+        }
+
+        if(!DistanceOut)
+        {
+            _GrabPoint.transform.Translate(-Forward);
         }
 
     }
@@ -499,6 +545,7 @@ public class ClimbingController : MonoBehaviour
     {
         PlayerCharacter.GetComponent<vThirdPersonInput>().enabled = enable;
         PlayerCharacter.GetComponent<Rigidbody>().isKinematic = !enable;
+        PlayerCharacter.GetComponent<CapsuleCollider>().enabled = enable;
         if (!enable)
         {
             V3PC.isJumping = false;

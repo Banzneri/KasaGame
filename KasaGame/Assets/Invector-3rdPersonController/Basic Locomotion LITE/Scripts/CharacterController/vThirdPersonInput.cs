@@ -106,14 +106,14 @@ namespace Invector.CharacterController
 
         protected virtual void AttackInput()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetButtonDown("Throw"))
             {
                 Debug.Log("AAA");
                 mc.Attack();
                 mc.ThrowWeapon();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Attack"))
             {
                 Debug.Log("AAA");
                 mc.Attack();

@@ -68,7 +68,10 @@ public class MyCharManager : MonoBehaviour {
 	void LateUpdate () {
 		HandleDamageCooldown();
 		AltHandleJumpFrames();
-		HandleFallSpeed();
+		if (!cc.lockMovement)
+		{
+			HandleFallSpeed();
+		}
 		HandleDying();
 		HandleWeapon();
 	}
@@ -155,7 +158,7 @@ public class MyCharManager : MonoBehaviour {
 		else if (!cc.isGrounded)
 		{
 			Vector3 vel = _rigidbody.velocity;
-			vel.y -= 0.4f;
+			vel.y -= 0.7f;
 			_rigidbody.velocity = vel;
 		}
 	}
@@ -269,6 +272,7 @@ public class MyCharManager : MonoBehaviour {
 	{
 		if (!throwing)
 		{
+			_hand.GetComponentInChildren<ParticleSystem>().Play();
 			attacking = true;
 			attackCounter = 0f;	
 		}
