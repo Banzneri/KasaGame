@@ -136,31 +136,20 @@ public class MyCharManager : MonoBehaviour {
 
 	private void HandleFallSpeed()
 	{
-		if (_jumping)
+		if (!cc.isGrounded)
 		{
 			Vector3 vel = _rigidbody.velocity;
 			
-			if (_rigidbody.velocity.y < 0 && !cc.isGrounded)
+			if (_rigidbody.velocity.y < 0)
 			{
 				vel.y -= _extraFallSpeed;
 			}
-			if (_rigidbody.velocity.y < 4f && !cc.isGrounded)
+			if (_rigidbody.velocity.y < 4f)
 			{
-				if (!_reachedApex)
-				{	
-					//vel.y -= 1f;
-					_reachedApex = true;	
-				}
-				vel.y -= _extraFallSpeed / 2f;
+				vel.y -= _extraFallSpeed / 2;
 			}
 			_rigidbody.velocity = vel;
 		} 
-		else if (!cc.isGrounded)
-		{
-			Vector3 vel = _rigidbody.velocity;
-			vel.y -= 0.7f;
-			_rigidbody.velocity = vel;
-		}
 	}
 
 	public void ReturnToClosestCheckpoint() {
@@ -310,26 +299,23 @@ public class MyCharManager : MonoBehaviour {
 	public void AltHandleJumpFrames()
 	{
 		Vector3 vel = _rigidbody.velocity;
-		if (cc.isGrounded && _jumping && vel.y == 0)
-		{
-			_reachedApex = false;
-			_jumping = false;
-		}
-		if (Input.GetButtonDown("Jump") && cc.isGrounded && !_jumping)
+		if (Input.GetKeyDown(KeyCode.Space) && cc.isGrounded && !_jumping)
 		{
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
-			_jumping = true;
+			Debug.Log("startedpressing");
 		}
 
-		if (Input.GetButtonUp("Jump"))
+		if (Input.GetKeyUp(KeyCode.Space))
 		{
 			_pressingJump = false;
 			_jumpCounter = 0f;
+			Debug.Log("buttonyp");
 		}
 
 		if (_pressingJump)
 		{
+			Debug.Log("pressing");
 			_jumpCounter += Time.deltaTime;
 			if (_jumpCounter < cc.jumpTimer)
 			{
@@ -341,9 +327,11 @@ public class MyCharManager : MonoBehaviour {
 				_jumpForce = 0f;
 				_pressingJump = false;
 				_jumpCounter = 0f;
+				Debug.Log("timeOut");
 			}
 			vel.y +=  _jumpForce * 50f;
 			_rigidbody.velocity = vel;
 		}
+		Debug.Log(_jumping);
 	}
 }

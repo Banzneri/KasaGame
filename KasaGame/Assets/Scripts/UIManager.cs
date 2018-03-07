@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour {
 		}
 
         //Displaying gold key
-        if (goldDoor.doorKey == false)
+        /*if (goldDoor.doorKey == false)
         {
             goldKey.enabled = false;
         }
@@ -54,6 +54,7 @@ public class UIManager : MonoBehaviour {
         {
             goldKey.enabled = true;
         }
+		*/
     }
 
 	void RefreshHearts() 

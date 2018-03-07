@@ -47,6 +47,7 @@ namespace Invector.CharacterController
                 animator.CrossFadeInFixedTime("Jump", 0.05f);
             else
                 animator.CrossFadeInFixedTime("JumpMove", 0.1f);
+            Debug.Log("realJump");
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)

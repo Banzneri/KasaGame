@@ -63,7 +63,7 @@ public class StateOnGround : StateOfClimbing
     // Locks or unlocks movement of player
     private void LockPlayer(bool LockPlayer)
     {
-        Debug.Log("Lock: " + LockPlayer);
+        //Debug.Log("Lock: " + LockPlayer);
         // Make the player stand still
         Host.EnableDefaultControllingSystem(!LockPlayer);
     }
