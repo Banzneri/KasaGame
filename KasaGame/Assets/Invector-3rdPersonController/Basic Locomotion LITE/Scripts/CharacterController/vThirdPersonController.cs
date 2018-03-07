@@ -35,13 +35,8 @@ namespace Invector.CharacterController
 
         public virtual void Jump()
         {
-            if (isGrounded)
-            {
-                jumpedWhileJumping = false;
-            }
-            bool canJump = isGrounded || !jumpedWhileJumping;
             // conditions to do this action
-            bool jumpConditions = canJump && !isJumping;
+            bool jumpConditions = !isJumping && isGrounded;
             // return if jumpCondigions is false
             if (!jumpConditions) return;
             // trigger jump behaviour
@@ -52,7 +47,6 @@ namespace Invector.CharacterController
                 animator.CrossFadeInFixedTime("Jump", 0.05f);
             else
                 animator.CrossFadeInFixedTime("JumpMove", 0.1f);
-            jumpedWhileJumping = true;
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)

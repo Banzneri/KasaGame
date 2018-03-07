@@ -289,6 +289,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public void Die()
 	{
+		GetComponent<Animator>().SetBool("Alive", false);
 		_currentHealth = 0f;
 		cc.isMovable = false;
 		cc.speed = 0f;
@@ -314,7 +315,7 @@ public class MyCharManager : MonoBehaviour {
 			_reachedApex = false;
 			_jumping = false;
 		}
-		if (Input.GetButtonDown("Jump") && cc.isGrounded)
+		if (Input.GetButtonDown("Jump") && cc.isGrounded && !_jumping)
 		{
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
