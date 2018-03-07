@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour {
 
 	private void StartGame()
 	{
-		sceneManager.LoadLevel(1);
+		sceneManager.LoadLevel(2);
 	}
 
 	private void ActivateSettings()

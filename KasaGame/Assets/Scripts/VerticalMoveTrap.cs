@@ -63,12 +63,22 @@ public class VerticalMoveTrap : MonoBehaviour, IActionObject {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            MyCharManager player = other.gameObject.GetComponent<MyCharManager>();
-            vThirdPersonController controller = other.gameObject.GetComponent<vThirdPersonController>();
-            Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
+        HitPlayer(other);
+    }
 
+    void OnTriggerStay(Collider other)
+    {
+        HitPlayer(other);
+    }
+
+    void HitPlayer(Collider playerCollider) 
+    {
+        if (playerCollider.gameObject.tag.Equals("Player"))
+        {
+            MyCharManager player = playerCollider.gameObject.GetComponent<MyCharManager>();
+            vThirdPersonController controller = playerCollider.gameObject.GetComponent<vThirdPersonController>();
+            Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
+            
             if (!player.Immune && player.Health > 0)
             {
                 if (goingDown || goingUp)
