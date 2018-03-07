@@ -20,12 +20,17 @@ public class Screw : MonoBehaviour, ITriggerObject<IActionObject> {
 		
 	}
 
+    public bool GetDown()
+    {
+        return down;
+    }
+
 	public void TriggerAll()
 	{
 		if (!down)
 		{
 			anim.SetTrigger("down");
-			//down = true;
+			down = true;
 		}
 	}
 }
