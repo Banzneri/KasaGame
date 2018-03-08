@@ -88,6 +88,8 @@ namespace Invector.CharacterController
         protected float groundDistance;
         public RaycastHit groundHit;
 
+        public float GroundDistance { get { return groundDistance; } }
+
         #endregion
 
         #region Actions

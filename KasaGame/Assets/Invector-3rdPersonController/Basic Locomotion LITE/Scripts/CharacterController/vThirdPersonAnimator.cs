@@ -5,6 +5,12 @@ namespace Invector.CharacterController
 {
     public abstract class vThirdPersonAnimator : vThirdPersonMotor
     {
+        private MyCharManager mc;
+
+        void Awake()
+        {
+            mc = GetComponent<MyCharManager>();    
+        }
         public virtual void UpdateAnimator()
         {
             if (animator == null || !animator.enabled) return;

@@ -49,6 +49,9 @@ public class MyCharManager : MonoBehaviour {
 	private float _jumpForce = 0f;
 	private float _maxJumpForce = 40f;
 
+	private float _lastJumpTime = 0f;
+	private float _lastJumpTimeCooldown = 0.2f;
+
 	public float Health { get { return _currentHealth; } 
 							set {_currentHealth = value; } }
 	public float CurrentStamina { get { return _currentStamina; } 
@@ -156,6 +159,7 @@ public class MyCharManager : MonoBehaviour {
 	public void ReturnToClosestCheckpoint() {
 		List<GameObject> activeCheckpoints = new List<GameObject>();
 
+		// Populate the activeCheckpoints list
 		for (int i = 0; i < checkpoints.Length; i++)
 		{
 			if (checkpoints[i].GetComponent<RotateGear>().isActivated)
@@ -166,6 +170,7 @@ public class MyCharManager : MonoBehaviour {
 
 		GameObject closestActiveCheckPoint = activeCheckpoints[0];
 
+		// Determine the closest active checkpoint
 		foreach (GameObject point in activeCheckpoints)
 		{
 			if (closestActiveCheckPoint == point) continue;
@@ -277,6 +282,11 @@ public class MyCharManager : MonoBehaviour {
 		}
 	}
 
+	public bool CanJump() {
+		// float velY = _rigidbody.velocity.y;
+		return cc.isGrounded;
+	}
+
 	public void Die()
 	{
 		GetComponent<Animator>().SetBool("Alive", false);
@@ -300,8 +310,9 @@ public class MyCharManager : MonoBehaviour {
 	public void AltHandleJumpFrames()
 	{
 		Vector3 vel = _rigidbody.velocity;
-		if (Input.GetKeyDown(KeyCode.Space) && cc.isGrounded && !_jumping)
+		if (Input.GetKeyDown(KeyCode.Space) && CanJump())
 		{
+			_lastJumpTime = Time.time;
 			_yBeforeJump = _rigidbody.position.y;
 			_pressingJump = true;
 		}
