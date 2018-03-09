@@ -45,7 +45,7 @@ namespace Invector.CharacterController
                         animator.Play("Throw");
                 }
 
-                if (Input.GetButtonDown("Attack"))
+                if (Input.GetButtonDown("Attack") && !GetComponent<MyCharManager>().hitting)
                 {
                     if (speed < 1 && isGrounded) 
                     {

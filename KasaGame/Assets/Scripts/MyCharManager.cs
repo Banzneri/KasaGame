@@ -19,12 +19,16 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private GameObject _weapon;
 	[SerializeField] private GameObject _hat;
 	[SerializeField] private float attackTime = 1f;
-	private float hitTime = 0.5f;
+	[SerializeField] private float hitTime = 0.5f;
 	
 	public bool throwing = false;
 	private float attackCounter = 0f;
+	private float hitCounter = 0f;
+
+	public bool attackHitting = false;
 
 	public bool attacking = false;
+	public bool hitting = false;
 	private GameObject[] checkpoints;
 	private float _damageCooldownCounter = 0f;
 	private float _immunityBlinkCounter = 0f;
@@ -59,7 +63,7 @@ public class MyCharManager : MonoBehaviour {
 	public float MaxStamina { get { return _maxStamina; } }
 	public bool Immune { get { return _immuneToDamage; } }
 
-	public bool IsHitting { get { return attackCounter < hitTime; } }
+	public bool IsHitting { get { return hitCounter < hitTime; } }
 
 	void Start () {
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -224,7 +228,13 @@ public class MyCharManager : MonoBehaviour {
 	{
 		if (attacking)
 		{
+			if (hitting) hitCounter += Time.deltaTime;
 			attackCounter += Time.deltaTime;
+			if (hitCounter > hitTime)
+			{
+				hitting = false;
+				hitCounter = 0.0f;
+			}
 			if (attackCounter > attackTime)
 			{
 				attacking = false;
@@ -266,9 +276,10 @@ public class MyCharManager : MonoBehaviour {
 
 	public void Attack()
 	{
-		if (!throwing)
+		if (!throwing  && !hitting)
 		{
 			attacking = true;
+			hitting = true;
 			attackCounter = 0f;	
 		}
 	}
