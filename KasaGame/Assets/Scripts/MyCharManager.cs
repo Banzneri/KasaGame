@@ -25,6 +25,8 @@ public class MyCharManager : MonoBehaviour {
 	private float attackCounter = 0f;
 	private float hitCounter = 0f;
 
+	private bool wantsToHit = false;
+
 	public bool attackHitting = false;
 
 	public bool attacking = false;
@@ -246,7 +248,7 @@ public class MyCharManager : MonoBehaviour {
 				WeaponInHand();
 			}
 		}
-		else if ( !attacking && _hand.activeSelf )
+		else if ( _hand.activeSelf )
 		{
 			WeaponInBack();
 		}
@@ -276,11 +278,18 @@ public class MyCharManager : MonoBehaviour {
 
 	public void Attack()
 	{
+		if (hitting)
+		{
+			wantsToHit = true;
+		}
 		if (!throwing  && !hitting)
 		{
 			attacking = true;
 			hitting = true;
-			attackCounter = 0f;	
+			attackCounter = 0f;
+			hitCounter = 0f;
+			wantsToHit = false;
+			GetComponent<vThirdPersonAnimator>().Attack();
 		}
 	}
 

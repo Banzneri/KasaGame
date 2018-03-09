@@ -49,7 +49,8 @@ public class ThrowWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+		if (other.gameObject.layer == LayerMask.NameToLayer("Ground") ||
+			other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
 		{
 			comingBack = true;
 		}

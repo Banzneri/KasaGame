@@ -43,16 +43,6 @@ namespace Invector.CharacterController
                     }
                     else
                         animator.Play("Throw");
-                }
-
-                if (Input.GetButtonDown("Attack") && !GetComponent<MyCharManager>().hitting)
-                {
-                    if (speed < 1 && isGrounded) 
-                    {
-                        animator.Play("AttackStand");
-                    }
-                    else
-                        animator.Play("Attack");
                 }   
             }
 
@@ -61,6 +51,16 @@ namespace Invector.CharacterController
             {
                 animator.SetFloat("InputVertical", speed, 0.1f, Time.deltaTime);
             }
+        }
+
+        public void Attack()
+        {
+            if (speed < 1 && isGrounded) 
+            {
+                animator.Play("AttackStand");
+            }
+            else
+                animator.Play("Attack");
         }
 
         public void OnAnimatorMove()
