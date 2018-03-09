@@ -146,12 +146,13 @@ public class MyCharManager : MonoBehaviour {
 			
 			if (_rigidbody.velocity.y < 0)
 			{
-				vel.y -= _extraFallSpeed;
+				vel.y -= _extraFallSpeed / 2;
 			}
 			if (_rigidbody.velocity.y < 4f)
 			{
-				vel.y -= _extraFallSpeed / 2;
+				vel.y -= _extraFallSpeed;
 			}
+			vel.y = Mathf.Clamp(vel.y, -50, 100);
 			_rigidbody.velocity = vel;
 		} 
 	}
@@ -341,5 +342,6 @@ public class MyCharManager : MonoBehaviour {
 			_rigidbody.velocity = vel;
 		}
 		//Debug.Log(_jumping);
+		Debug.Log(vel.y);
 	}
 }

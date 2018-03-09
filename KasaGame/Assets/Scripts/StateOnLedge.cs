@@ -144,7 +144,7 @@ public class StateOnLedge : StateOfClimbing
     public override void RunState()
     {
         // If Grab button is pressed, player falls down
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) || Input.GetKeyDown(KeyCode.S))
         {
             Host.ChangeState(new StateOnAir(Host));
             return;
@@ -169,7 +169,8 @@ public class StateOnLedge : StateOfClimbing
         {
             MovePlayerOnLedge(_DifferenceX + Time.deltaTime * 3);
         }
-        else if (Input.GetKeyDown(KeyCode.W))
+        
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             StandUp();
         }
