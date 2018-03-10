@@ -107,8 +107,53 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null || targetLookAt == null) return;
 
         CameraMovement();
+
+
+        Vector3 targetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
+
+        Vector3 cameraToPlayer = targetPos - transform.position;
+        float distanceToPlayer = cameraToPlayer.magnitude;
+
+        //Debug.Log("Camera distance to player: " + distanceToPlayer);
+
+        SkinnedMeshRenderer targetRenderer = target.GetComponentInChildren<SkinnedMeshRenderer>();
+
+        if (distanceToPlayer <= 2) {
+            SetMaterialTransparent();
+            targetRenderer.material.color = new Color(1, 1, 1, Mathf.Lerp(0,1,(distanceToPlayer-1)/2));
+        }else {
+            SetMaterialOpaque();
+        }
+
+        Debug.Log("targetRenderer.material.color.a =" + targetRenderer.material.color.a + ", distanceToPlayer = " + distanceToPlayer);
     }
 
+    void SetMaterialTransparent()
+    {
+        foreach(Material m in target.GetComponentInChildren<Renderer>().materials) {
+            m.SetFloat("_Mode", 2);
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetInt("_ZWrite", 0);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.EnableKeyword("_ALPHABLEND_ON");
+            m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            m.renderQueue = 3000;
+        }
+    }
+
+    private void SetMaterialOpaque()
+    {
+        foreach (Material m in target.GetComponentInChildren<Renderer>().materials) {
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            m.SetInt("_ZWrite", 1);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.DisableKeyword("_ALPHABLEND_ON");
+            m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            m.renderQueue = -1;
+        }
+    }
 
     /// <summary>
     /// Set the target for the camera
