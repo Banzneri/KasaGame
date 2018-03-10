@@ -102,6 +102,8 @@ public class vThirdPersonCamera : MonoBehaviour
         currentHeight = height;
     }
 
+    Renderer[] targetRenderers;
+
     void LateUpdate()
     {
         if (target == null || targetLookAt == null) return;
@@ -109,28 +111,49 @@ public class vThirdPersonCamera : MonoBehaviour
         CameraMovement();
 
 
-        Vector3 targetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
+        Vector3 targetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + 1, currentTarget.position.z);
 
         Vector3 cameraToPlayer = targetPos - transform.position;
         float distanceToPlayer = cameraToPlayer.magnitude;
 
         //Debug.Log("Camera distance to player: " + distanceToPlayer);
+        //Renderer targetRenderer = target.GetComponentInChildren<SkinnedMeshRenderer>();
+        
+        targetRenderers = target.GetComponentsInChildren<Renderer>();
 
-        SkinnedMeshRenderer targetRenderer = target.GetComponentInChildren<SkinnedMeshRenderer>();
+        foreach(Renderer r in targetRenderers) {
+            Material[] rMaterials = r.materials;
 
+            if (distanceToPlayer <= 2) {
+                SetMaterialTransparent(rMaterials);
+
+                r.material.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, (distanceToPlayer - 1) / 2));
+                if (r.material.color.a <= 0.1f) {
+                    r.material.color = new Color(1, 1, 1, 0.1f);
+                }
+            } else {
+                SetMaterialOpaque(rMaterials);
+            }
+        }
+
+        /*
         if (distanceToPlayer <= 2) {
             SetMaterialTransparent();
             targetRenderer.material.color = new Color(1, 1, 1, Mathf.Lerp(0,1,(distanceToPlayer-1)/2));
-        }else {
+            if(targetRenderer.material.color.a <= 0.1f) {
+                targetRenderer.material.color = new Color(1, 1, 1, 0.1f);
+            }
+        } else {
             SetMaterialOpaque();
         }
+        */
 
-        Debug.Log("targetRenderer.material.color.a =" + targetRenderer.material.color.a + ", distanceToPlayer = " + distanceToPlayer);
+        //Debug.Log("targetRenderer.material.color.a =" + targetRenderer.material.color.a + ", distanceToPlayer = " + distanceToPlayer);
     }
 
-    void SetMaterialTransparent()
+    void SetMaterialTransparent(Material[] materials)
     {
-        foreach(Material m in target.GetComponentInChildren<Renderer>().materials) {
+        foreach(Material m in materials) {
             m.SetFloat("_Mode", 2);
             m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -142,9 +165,9 @@ public class vThirdPersonCamera : MonoBehaviour
         }
     }
 
-    private void SetMaterialOpaque()
+    private void SetMaterialOpaque(Material[] materials)
     {
-        foreach (Material m in target.GetComponentInChildren<Renderer>().materials) {
+        foreach (Material m in materials) {
             m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
             m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
             m.SetInt("_ZWrite", 1);
