@@ -1094,7 +1094,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908532817791000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.8, y: 12.8, z: 40.7}
+  m_LocalPosition: {x: 21.259958, y: -1.9455248e-17, z: 71.65622}
   m_LocalScale: {x: 1, y: 1, z: 1.0044593}
   m_Children:
   - {fileID: 4829479460755978}
@@ -1559,8 +1559,11 @@ MonoBehaviour:
   _weapon: {fileID: 1342755913617250, guid: 965fba5c28469ee4d840d40edc5a76d9, type: 2}
   _hat: {fileID: 1152079411497894}
   attackTime: 2
+  hitTime: 0.6
   throwing: 0
+  attackHitting: 0
   attacking: 0
+  hitting: 0
 --- !u!114 &114994516726751616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1584,18 +1587,18 @@ MonoBehaviour:
   jumpAirControl: 1
   jumpTimer: 0.3
   jumpCounter: 0
-  jumpForward: 15
-  jumpHeight: 8
+  jumpForward: 17
+  jumpHeight: 9
   useRootMotion: 0
   freeWalkSpeed: 2.5
-  freeRunningSpeed: 17
+  freeRunningSpeed: 20
   freeSprintSpeed: 0
   strafeWalkSpeed: 2.5
   strafeRunningSpeed: 3
   strafeSprintSpeed: 4
   stepOffsetEnd: 0.45
   stepOffsetStart: 0.05
-  stepSmooth: 4
+  stepSmooth: 0
   slopeLimit: 45
   extraGravity: -10
   isGrounded: 0

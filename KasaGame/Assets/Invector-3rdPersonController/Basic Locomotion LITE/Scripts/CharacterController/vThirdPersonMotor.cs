@@ -264,7 +264,7 @@ namespace Invector.CharacterController
                 xInput = 1;
             }
             */
-            speed = Mathf.Abs(input.x * 5) + Mathf.Abs(input.y * 5);
+            speed = Mathf.Abs(input.x * 2) + Mathf.Abs(input.y * 2);
             if (!IsMoving()) speed = Mathf.Abs(input.x / 2) + Mathf.Abs(input.y / 2);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
