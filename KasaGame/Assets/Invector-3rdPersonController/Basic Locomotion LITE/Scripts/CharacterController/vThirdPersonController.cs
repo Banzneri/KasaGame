@@ -6,14 +6,12 @@ namespace Invector.CharacterController
     public class vThirdPersonController : vThirdPersonAnimator
     {
         private bool jumpedWhileJumping = false;
-        private MyCharManager mc;
         protected virtual void Start()
         {
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 
 #endif
-            mc = GetComponent<MyCharManager>();
         }
 
         public virtual void Sprint(bool value)

@@ -23,13 +23,27 @@ public class WeaponHit : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "Interactable" && !hasActivated && player.IsHitting)
+		if (other.gameObject.tag == "Interactable" && !hasActivated && player.hitting)
 		{
 			other.gameObject.GetComponent<ITriggerObject<IActionObject>>().TriggerAll();
 			hasActivated = true;
 		}
 
-		if (!player.IsHitting)
+		if (!player.hitting)
+		{
+			hasActivated = false;
+		}
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.tag == "Interactable" && !hasActivated && player.hitting)
+		{
+			other.gameObject.GetComponent<ITriggerObject<IActionObject>>().TriggerAll();
+			hasActivated = true;
+		}
+
+		if (!player.hitting)
 		{
 			hasActivated = false;
 		}

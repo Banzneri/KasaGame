@@ -38,7 +38,7 @@ namespace Invector.CharacterController
         public bool lockMovement;
         [Tooltip("Speed of the rotation on free directional movement")]
         [SerializeField]
-        public float freeRotationSpeed = 10f;
+        public float freeRotationSpeed = 20f;
         [Tooltip("Speed of the rotation while strafe movement")]
         public float strafeRotationSpeed = 10f;
 
@@ -264,7 +264,7 @@ namespace Invector.CharacterController
                 xInput = 1;
             }
             */
-            speed = Mathf.Abs(input.x * 2) + Mathf.Abs(input.y * 2);
+            speed = Mathf.Abs(input.x * 4) + Mathf.Abs(input.y * 4);
             if (!IsMoving()) speed = Mathf.Abs(input.x / 2) + Mathf.Abs(input.y / 2);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator

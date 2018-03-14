@@ -35,11 +35,15 @@ public class StateOnLedge : StateOfClimbing
         Host.EnableDefaultControllingSystem(false);
         _DifferenceX = Ledge.TransformToEdge(Host.Player.transform.position);
         SetPlayerPositionAndRotation();
+        Host.Player.gameObject.GetComponent<Animator>().SetBool("IsClimbing", true);
+        Host.isClimbing = true;
     }
 
     public override void ExitState()
     {
         Host.GrabDelay = 0.2f;
+        Host.isClimbing = false;
+        Host.Player.gameObject.GetComponent<Animator>().SetBool("IsClimbing", false);
     }
 
     #endregion
@@ -135,6 +139,7 @@ public class StateOnLedge : StateOfClimbing
         if (!Host.CheckSphere(Host.RoomUpCollider, Vector3.zero, Host.ObstacleLayer))
         {
             Host.Player.transform.position = Ledge.PointOnEdge(_DifferenceX) + DirectionGlobal(Ledge.FacingDirection, true) * 0.25f + DirectionGlobal(Ledge.UpDirection, false) * 0.2f;
+            Host.Player.transform.forward = DirectionGlobal(Ledge.FacingDirection, true);
             Host.ChangeState(new StateOnGround(Host));
         }
     }
@@ -163,11 +168,18 @@ public class StateOnLedge : StateOfClimbing
         // INPUTS
         if (Input.GetKey(KeyCode.A))
         {
+            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", true);
             MovePlayerOnLedge(DifferenceX - Time.deltaTime * 3);
+            
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", true);
             MovePlayerOnLedge(_DifferenceX + Time.deltaTime * 3);
+        }
+        else
+        {
+            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", false);
         }
         
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))

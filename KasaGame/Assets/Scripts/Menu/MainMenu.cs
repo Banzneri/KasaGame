@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
-	[SerializeField] UnityEngine.UI.Button startButton;
-	[SerializeField] UnityEngine.UI.Button settingsButton;
-	[SerializeField] UnityEngine.UI.Button quitButton;
-	[SerializeField] UnityEngine.UI.Button backButton;
+	[SerializeField] Button startButton;
+	[SerializeField] Button settingsButton;
+	[SerializeField] Button quitButton;
+	[SerializeField] Button backButton;
 	[SerializeField] Canvas mainMenuCanvas;
 	[SerializeField] Canvas settingsCanvas;
 	MySceneManager sceneManager;
@@ -16,10 +16,10 @@ public class MainMenu : MonoBehaviour {
 	{
 		ActivateMainMenu();
 		sceneManager = Object.FindObjectOfType<MySceneManager>();
-		UnityEngine.UI.Button start = startButton.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button settings = settingsButton.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button quit = quitButton.GetComponent<UnityEngine.UI.Button>();
-		UnityEngine.UI.Button back = backButton.GetComponent<UnityEngine.UI.Button>();
+		Button start = startButton.GetComponent<Button>();
+		Button settings = settingsButton.GetComponent<Button>();
+		Button quit = quitButton.GetComponent<Button>();
+		Button back = backButton.GetComponent<Button>();
 
 		start.onClick.AddListener(StartGame);
 		settings.onClick.AddListener(ActivateSettings);
@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour {
 
 	private void StartGame()
 	{
-		sceneManager.LoadLevel(2);
+		sceneManager.LoadLevel(420);
 	}
 
 	private void ActivateSettings()

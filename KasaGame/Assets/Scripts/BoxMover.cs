@@ -26,7 +26,7 @@ public class BoxMover : MonoBehaviour {
 
         float distanceToPlayer = Vector3.Distance(this.transform.position, _player.transform.position);
 
-        Debug.Log(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"));
+        //Debug.Log(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"));
 
 
         if (Input.GetButton("action") && distanceToPlayer < 2.5)
@@ -44,6 +44,8 @@ public class BoxMover : MonoBehaviour {
             {
                 _NoiseEffect.Stop();
             }
+
+            _player.GetComponent<Animator>().SetBool("pushing", true);
         }
         else
         {
@@ -52,6 +54,7 @@ public class BoxMover : MonoBehaviour {
             _player.GetComponent<vThirdPersonController>().strafeRotationSpeed = 10;
             Physics.IgnoreCollision(_BoxCol, _PlayerCol, false);
             _NoiseEffect.Stop();
+            _player.GetComponent<Animator>().SetBool("pushing", false);
         }
     }
 }

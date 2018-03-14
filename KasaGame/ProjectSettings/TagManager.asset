@@ -11,6 +11,11 @@ TagManager:
   - Heart
   - Hat
   - Interactable
+  - SceneHandler
+  - MovingPlatform
+  - Key
+  - Door
+  - PushableBox
   layers:
   - Default
   - TransparentFX

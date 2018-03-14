@@ -5,7 +5,7 @@ namespace Invector.CharacterController
 {
     public abstract class vThirdPersonAnimator : vThirdPersonMotor
     {
-        private MyCharManager mc;
+        public MyCharManager mc;
 
         void Awake()
         {
@@ -55,11 +55,11 @@ namespace Invector.CharacterController
 
         public void Attack()
         {
-            if (speed < 1 && isGrounded) 
-            {
+            if (speed < 1 && isGrounded && !animator.GetBool("pushing")) 
+            {   
                 animator.Play("AttackStand");
             }
-            else
+            else if (!animator.GetBool("pushing"))
                 animator.Play("Attack");
         }
 

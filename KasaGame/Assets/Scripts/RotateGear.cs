@@ -7,6 +7,8 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
     public float riseAmount = 2;
     public Transform spawnPoint;
 
+    public float rotateSpeed = 30f;
+
     public bool isActivated = false;
 
     private Vector3 riseLocation;
@@ -30,11 +32,11 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
             {
                 Activate();
             }
-            transform.Rotate(0, 0, 3f);
+            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         }
         if (rising)
         {
-            transform.position = Vector3.Lerp(transform.position, riseLocation, 0.01f);
+            transform.position = Vector3.Lerp(transform.position, riseLocation, Time.deltaTime);
             _light.GetComponent<VolumetricLight>().ScatteringCoef = Mathf.Lerp(0, 1f, t);
             t += 0.5f * Time.deltaTime;
 
@@ -51,7 +53,7 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
         if (Vector3.Distance(transform.position, player.transform.position) < 5)
         {
             //Debug.Log("Press e");
-            if (Input.GetKeyDown(KeyCode.E) && !isActivated)
+            if (!isActivated)
             {
                 Activate();
             }
@@ -76,6 +78,8 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
         _light.enabled = true;
         rising = true;
         isActivated = true;
+
+        GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<Scene>().SaveScene();
 
         ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
 

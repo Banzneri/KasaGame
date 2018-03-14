@@ -6,6 +6,7 @@ using Invector.CharacterController;
 public class ThrowWeapon : MonoBehaviour {
 	[SerializeField] private float throwDistance = 5f;
 	[SerializeField] private float throwSpeed = 50f;
+	[SerializeField] private float rotateSpeed = 50f;
 
 	private Vector3 destination;
 	
@@ -23,7 +24,7 @@ public class ThrowWeapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Rotate(new Vector3(0, 25, 0));
+		transform.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
 		if (Vector3.Distance(transform.position, player.transform.position) > throwDistance && !comingBack)
 		{
 			comingBack = true;

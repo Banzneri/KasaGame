@@ -12,6 +12,8 @@ namespace Invector.CharacterController
         [Header("Default Inputs")]
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
+
+        public bool onlyCameraInput = false;
         public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
@@ -77,6 +79,17 @@ namespace Invector.CharacterController
 
         protected virtual void InputHandle()
         {
+            if (MenuManager.isPaused)
+            {
+                return;
+            }
+
+            if (onlyCameraInput)
+            {
+                CameraInput();
+                return;
+            }
+
             ExitGameInput();
             CameraInput();
 
@@ -109,7 +122,6 @@ namespace Invector.CharacterController
             if (Input.GetButtonDown("Throw"))
             {
                 Debug.Log("AAA");
-                mc.Attack();
                 mc.ThrowWeapon();
             }
 
@@ -161,7 +173,7 @@ namespace Invector.CharacterController
             tpCamera.RotateCamera(X, Y);
 
             // tranform Character direction from camera if not KeepDirection
-            if (!keepDirection)
+            if (!keepDirection && !onlyCameraInput)
                 cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
             // rotate the character with the camera while strafing        
             RotateWithCamera(tpCamera != null ? tpCamera.transform : null);            

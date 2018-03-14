@@ -21,42 +21,35 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private float attackTime = 1f;
 	[SerializeField] private float hitTime = 0.5f;
 	
-	public bool throwing = false;
 	private float attackCounter = 0f;
 	private float hitCounter = 0f;
-
-	private bool wantsToHit = false;
-
-	public bool attackHitting = false;
-
-	public bool attacking = false;
-	public bool hitting = false;
-	private GameObject[] checkpoints;
+	private float _jumpCounter = 0f;
+	private float _deathCounter = 0f;
 	private float _damageCooldownCounter = 0f;
 	private float _immunityBlinkCounter = 0f;
+
+	private bool wantsToHit = false;
+	private GameObject[] checkpoints;
 	private bool _immuneToDamage = false;
 	private bool _pressingJump = false;
 	private bool _jumping = false;
-	private float _jumpCounter = 0f;
 	private Rigidbody _rigidbody;
 	private Color _originalColor;
 	private float _yBeforeJump = 0f;
-
-	private bool _reachedApex = false;
-
 	private bool CanMove = true;
 	private SkinnedMeshRenderer _renderer;
-
 	private MeshRenderer _hatRenderer;
 	private vThirdPersonController cc;
 	private float _deathWait = 2f;
-	private float _deathCounter = 0f;
-
 	private float _jumpForce = 0f;
 	private float _maxJumpForce = 40f;
-
 	private float _lastJumpTime = 0f;
 	private float _lastJumpTimeCooldown = 0.2f;
+
+	public bool throwing = false;
+	public bool attackHitting = false;
+	public bool attacking = false;
+	public bool hitting = false;
 
 	public float Health { get { return _currentHealth; } 
 							set {_currentHealth = value; } }
@@ -67,7 +60,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public bool IsHitting { get { return hitCounter < hitTime; } }
 
-	void Start () {
+	void Awake () {
 		checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
 		if (_blinks) InitBlinking();
 		_rigidbody = GetComponent<Rigidbody>();
@@ -154,7 +147,7 @@ public class MyCharManager : MonoBehaviour {
 			{
 				vel.y -= _extraFallSpeed / 2;
 			}
-			if (_rigidbody.velocity.y < 4f)
+			if (_rigidbody.velocity.y < 5f)
 			{
 				vel.y -= _extraFallSpeed;
 			}
@@ -164,6 +157,10 @@ public class MyCharManager : MonoBehaviour {
 	}
 
 	public void ReturnToClosestCheckpoint() {
+		transform.position = GetClosestCheckpoint().GetComponent<RotateGear>().spawnPoint.position;
+	}
+
+	public GameObject GetClosestCheckpoint() {
 		List<GameObject> activeCheckpoints = new List<GameObject>();
 
 		// Populate the activeCheckpoints list
@@ -190,7 +187,7 @@ public class MyCharManager : MonoBehaviour {
 			if (newDistance < curDistance) closestActiveCheckPoint = point;
 		}
 
-		transform.position = closestActiveCheckPoint.GetComponent<RotateGear>().spawnPoint.position;
+		return closestActiveCheckPoint;
 	}
 
 	public void TakeDamage() {
@@ -248,13 +245,16 @@ public class MyCharManager : MonoBehaviour {
 				WeaponInHand();
 			}
 		}
-		else if ( _hand.activeSelf )
+		else if ( _hand.activeSelf)
 		{
 			WeaponInBack();
 		}
-		else if (throwing && _hand.activeSelf)
+
+		if (GetComponent<Animator>().GetBool("pushing"))
 		{
-			
+			attacking = false;
+			hitting = false;
+			WeaponInBack();	
 		}
 	}
 
@@ -282,13 +282,14 @@ public class MyCharManager : MonoBehaviour {
 		{
 			wantsToHit = true;
 		}
-		if (!throwing  && !hitting)
+		if (!throwing  && !hitting && !GetComponent<Animator>().GetBool("pushing"))
 		{
 			attacking = true;
 			hitting = true;
 			attackCounter = 0f;
 			hitCounter = 0f;
 			wantsToHit = false;
+			_hand.GetComponent<AudioSource>().Play();
 			GetComponent<vThirdPersonAnimator>().Attack();
 		}
 	}
@@ -299,6 +300,8 @@ public class MyCharManager : MonoBehaviour {
 		{
 			Instantiate(_weapon, _hand.transform.position, Quaternion.Euler(Vector3.zero));
 			WeaponFlying();
+			attacking = false;
+			hitting = false;
 			throwing = true;
 		}
 	}

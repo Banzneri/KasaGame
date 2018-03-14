@@ -13,6 +13,8 @@ public class ClimbingPlugin : MonoBehaviour {
     // Player Character gameobject
     [SerializeField]
     private GameObject _Player;
+
+    public bool isClimbing = false;
     public GameObject Player
     {
         get { return _Player; }

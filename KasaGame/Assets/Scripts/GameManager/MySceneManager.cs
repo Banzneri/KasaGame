@@ -31,5 +31,10 @@ public class MySceneManager : MonoBehaviour {
 		SceneManager.LoadScene("SettingsMenu");
 	}
 
+	public void LaunchPauseMenu()
+	{
+		
+	}
+
 
 }

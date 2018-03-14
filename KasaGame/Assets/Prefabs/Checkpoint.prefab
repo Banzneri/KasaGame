@@ -264,6 +264,7 @@ MonoBehaviour:
   player: {fileID: 0}
   riseAmount: 2.5
   spawnPoint: {fileID: 4410172033976046}
+  rotateSpeed: 30
   isActivated: 1
 --- !u!198 &198656563896259894
 ParticleSystem:
@@ -277,7 +278,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -477,7 +478,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -885,7 +886,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 39.81
+      scalar: 37
       minScalar: 10
       maxCurve:
         serializedVersion: 2

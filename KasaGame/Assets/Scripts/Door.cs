@@ -35,6 +35,7 @@ public class Door : MonoBehaviour, IActionObject
             if (Input.GetButtonDown("action") && doorKey)
             {
                 Action();
+                doorKey = false;
             }
         }
 
@@ -56,7 +57,7 @@ public class Door : MonoBehaviour, IActionObject
         {
             if (open && doorKey)
             {
-                GUI.Box(new Rect(450, 400, 200, 25), "Press E to close");
+                //GUI.Box(new Rect(450, 400, 200, 25), "Press E to close");
             }
             else if (!open & doorKey)
             {
@@ -64,11 +65,11 @@ public class Door : MonoBehaviour, IActionObject
             }
             else if (!open & !doorKey)
             {
-                GUI.Box(new Rect(450, 400, 200, 25), "Can't open");
+                GUI.Box(new Rect(450, 400, 200, 25), "You need a key!");
             }
             else if (open & !doorKey)
             {
-                GUI.Box(new Rect(450, 400, 200, 25), "Can't close");
+                //GUI.Box(new Rect(450, 400, 200, 25), "Can't close");
             }
         }
     }

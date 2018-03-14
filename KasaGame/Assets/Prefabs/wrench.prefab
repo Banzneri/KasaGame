@@ -125,3 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwDistance: 10
   throwSpeed: 45
+  rotateSpeed: 2000

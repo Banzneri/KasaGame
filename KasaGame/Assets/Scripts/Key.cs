@@ -7,6 +7,15 @@ public class Key : MonoBehaviour {
     private bool inTrigger;
     public Door doorReference;
 
+    private AudioSource audio;
+
+    public bool isPickedUp = false;
+
+    void Start()
+    {
+        audio = GetComponent<AudioSource>();    
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         inTrigger = true;
@@ -21,19 +30,17 @@ public class Key : MonoBehaviour {
     {
         if (inTrigger)
         {
-            if(Input.GetButtonDown("action"))
+            if (!audio.isPlaying && !isPickedUp)
             {
-                doorReference.doorKey = true;
-                Destroy(this.gameObject);
+                audio.Play();   
             }
+            doorReference.doorKey = true;
+            isPickedUp = true;
+            gameObject.GetComponent<Renderer>().enabled = false;
         }
-    }
-
-    private void OnGUI()
-    {
-        if (inTrigger)
+        if (isPickedUp && !audio.isPlaying)
         {
-            GUI.Box(new Rect(450, 400, 200, 25), "Press E to pick up");
-        }   
+            gameObject.SetActive(false);
+        }
     }
 }

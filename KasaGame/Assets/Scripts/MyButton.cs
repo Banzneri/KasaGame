@@ -26,19 +26,6 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
         inTrigger = false;
     }
 
-    private void Update()
-    {
-        if (inTrigger)
-        {
-            if(Input.GetButtonDown("action"))
-            {
-                audio.Play();
-                anim.Play("ButtonPress");
-                TriggerAll();
-            }
-        }
-    }
-
     public void Trigger(IActionObject actionObject)
     {
         actionObject.Action();
@@ -54,6 +41,8 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
 
     public void TriggerAll()
     {
+        audio.Play();
+        anim.Play("ButtonPress");
         for(int i = 0; i < actionObjects.Length; i++)
         {
             Trigger(actionObjects[i].GetComponent<IActionObject>());
