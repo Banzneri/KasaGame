@@ -16,6 +16,9 @@ TagManager:
   - Key
   - Door
   - PushableBox
+  - Fire
+  - Screw
+  - Button
   layers:
   - Default
   - TransparentFX

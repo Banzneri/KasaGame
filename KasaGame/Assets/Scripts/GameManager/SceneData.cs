@@ -11,7 +11,7 @@ public class SceneData {
 	public List<SwitchData> switches = new List<SwitchData>();
 	public List<DoorData> doors = new List<DoorData>();
 	public List<ItemData> pickableItems = new List<ItemData>();
-	public int health;
+	public List<CheckPointData> screws = new List<CheckPointData>();
 }
 
 [System.Serializable]
