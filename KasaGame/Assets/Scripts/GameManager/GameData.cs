@@ -4,6 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class GameData {
-	public int health;
-	public string currentSceneName;
+	public int health = 3;
+	public string currentSceneName = "Level2";
+	public MyVector3 currentPosition = new MyVector3(0, 0, 0);
 }

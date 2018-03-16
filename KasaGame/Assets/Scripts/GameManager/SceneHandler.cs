@@ -13,10 +13,16 @@ public class SceneHandler : MonoBehaviour {
 	private List<GameObject> doors = new List<GameObject>();
 	private List<GameObject> screws = new List<GameObject>();
 
+	private Vector3 defaultStartPosition;
+
+	private MyCharManager player;
+
 	// Use this for initialization
 	void Awake () {
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>();
 		Init();
 		LoadScene();
+		Debug.Log(player.Health);
 	}
 
 	private void Init() {
@@ -26,6 +32,7 @@ public class SceneHandler : MonoBehaviour {
 		keys.AddRange(GameObject.FindGameObjectsWithTag("Key"));
 		doors.AddRange(GameObject.FindGameObjectsWithTag("Door"));
 		screws.AddRange(GameObject.FindGameObjectsWithTag("Screw"));
+		defaultStartPosition = GameObject.FindGameObjectWithTag("DefaultStartPosition").transform.position;
 	}
 
 	private SceneData CreateSceneDataObject()
@@ -85,19 +92,41 @@ public class SceneHandler : MonoBehaviour {
 		fs.Close();
 	}
 
-	public void LoadScene()
+	public void SavePlayer()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open);
-		if (file == null)
-		{
-			Init();
-			Debug.Log("Fill null");
-			return;
-		}
-		//ClearAll();
-		SceneData data = (SceneData)bf.Deserialize(file);
-		file.Close();
+		FileStream fs = File.Create(Application.persistentDataPath + "/PlayerData");
+		GameData gameData = new GameData();
+
+		gameData.health = (int)player.Health;
+		gameData.currentSceneName = SceneManager.GetActiveScene().name;
+		Vector3 pos = player.GetClosestCheckpoint().transform.position;
+		gameData.currentPosition = new MyVector3(pos.x, pos.y, pos.z);
+		bf.Serialize(fs, gameData);
+		fs.Close();
+	}
+
+	public void LoadScene()
+	{
+		SceneData data = null;
+
+		try
+        {
+            using (FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open))
+            {
+				BinaryFormatter bf = new BinaryFormatter();
+				data = (SceneData)bf.Deserialize(file);
+				file.Close();
+				LoadPlayer();
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+			Debug.Log("Save not found, creating new!");
+			data = CreateSceneDataObject();
+			LoadPlayer();
+			player.gameObject.transform.position = defaultStartPosition;
+        }
 
 		for (int i = 0; i < data.checkPoints.Count; i++)
 		{
@@ -134,8 +163,19 @@ public class SceneHandler : MonoBehaviour {
 			screws[i].GetComponent<Screw>().down = data.screws[i].isActivated;
 			screws[i].GetComponent<Screw>().loaded = true;
 		}
+		//ClearAll();
 
 		Debug.Log(checkpoints.Count);
+	}
+
+	public void LoadPlayer()
+	{
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Open(Application.persistentDataPath + "/PlayerData", FileMode.Open);
+		GameData data = (GameData)bf.Deserialize(file);
+		player.Health = data.health;
+		player.transform.position = TranslateMyVector3ToVector3(data.currentPosition);
+		file.Close();
 	}
 
 	public Vector3 TranslateMyVector3ToVector3(MyVector3 myVector3) {

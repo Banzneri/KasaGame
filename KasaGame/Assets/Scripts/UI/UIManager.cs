@@ -20,22 +20,28 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (player.Health == 2f && heartCount > 2f)
+		if (player.Health == 0f && heartCount > 0f)
 		{
-			heartCount = 2f;
-			GameObject image = GameObject.Find("3heart");
-			image.SetActive(false);
+			heartCount = 0f;
+			GameObject image1 = GameObject.Find("1heart");
+			GameObject image2 = GameObject.Find("2heart");
+			GameObject image3 = GameObject.Find("3heart");
+			image1.SetActive(false);
+			image2.SetActive(false);
+			image3.SetActive(false);
 		}
 		else if (player.Health == 1f && heartCount > 1f)
 		{
-			heartCount = 1f;
-			GameObject image = GameObject.Find("2heart");
-			image.SetActive(false);
+			heartCount = 2f;
+			GameObject image1 = GameObject.Find("2heart");
+			GameObject image2 = GameObject.Find("3heart");
+			image1.SetActive(false);
+			image2.SetActive(false);
 		}
-		else if (player.Health == 0f && heartCount > 0)
+		else if (player.Health == 2f && heartCount > 2)
 		{
-			heartCount = 0f;
-			GameObject image = GameObject.Find("1heart");
+			heartCount = 2f;
+			GameObject image = GameObject.Find("3heart");
 			image.SetActive(false); 
 		}
 		

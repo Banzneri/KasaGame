@@ -80,6 +80,7 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
         isActivated = true;
 
         GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
+        GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
 
         ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
 

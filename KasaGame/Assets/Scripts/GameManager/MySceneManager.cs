@@ -21,9 +21,9 @@ public class MySceneManager : MonoBehaviour {
 		SceneManager.LoadScene("MainMenu");
 	}
 
-	public void LoadLevel(int level)
+	public void LoadLevel(string level)
 	{
-		SceneManager.LoadScene("Level" + level);
+		SceneManager.LoadScene(level);
 	}
 
 	public void LoadSettingsMenu()

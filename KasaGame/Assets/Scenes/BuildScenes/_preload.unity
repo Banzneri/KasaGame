@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 1556174748}
   - component: {fileID: 1556174749}
   - component: {fileID: 1556174750}
+  - component: {fileID: 1556174751}
   m_Layer: 0
   m_Name: game
   m_TagString: Untagged
@@ -177,3 +178,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3544439c498575b4ba15c0b8285e88c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1556174751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1556174746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4042eee0a6ed71c40839f50f409be0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameData:
+    health: 3
+    currentSceneName: Level2
+    currentPosition:
+      x: 0
+      y: 0
+      z: 0

@@ -19,6 +19,7 @@ TagManager:
   - Fire
   - Screw
   - Button
+  - DefaultStartPosition
   layers:
   - Default
   - TransparentFX

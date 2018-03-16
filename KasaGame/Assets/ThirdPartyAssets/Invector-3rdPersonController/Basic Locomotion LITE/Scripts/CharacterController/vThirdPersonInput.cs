@@ -138,6 +138,7 @@ namespace Invector.CharacterController
             if (Input.GetKeyDown(KeyCode.F5))
 		    {
 			    GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
+			    GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
 			    Debug.Log("Saved game!");
 		    }
         }

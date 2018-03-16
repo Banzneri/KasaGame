@@ -20,40 +20,16 @@ public class TimedSwitch : MonoBehaviour, ITriggerObject<IActionObject>
         audio = GetComponent<AudioSource>();
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        inTrigger = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        inTrigger = false;
-    }
-
     private void Update()
     {
-        if (inTrigger && !activated)
-        {
-            if (Input.GetButtonDown("action"))
-            {
-                for (int i = 0; i < actionObjects.Length; i++)
-                {
-                    Trigger(actionObjects[i].GetComponent<IActionObject>());
-                }
-                activated = true;
-                anim.Play("GoDown");
-                audio.Play();
-            }
-        }
-
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("EndAction") && activated)
         {
             audio.Stop();
-                for (int i = 0; i < actionObjects.Length; i++)
-                {
-                    Trigger(actionObjects[i].GetComponent<IActionObject>());
-                }
-                activated = false;
+            activated = false;
+            for (int i = 0; i < actionObjects.Length; i++)
+            {
+                Trigger(actionObjects[i].GetComponent<IActionObject>());
+            }
         }
     }
 
@@ -64,14 +40,15 @@ public class TimedSwitch : MonoBehaviour, ITriggerObject<IActionObject>
 
     public void TriggerAll()
     {
-        
-    }
-
-    private void OnGUI()
-    {
-        if (inTrigger && !activated)
+        if (!activated)
         {
-            GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
+            activated = true;
+            anim.Play("GoDown");
+            audio.Play();
+            for (int i = 0; i < actionObjects.Length; i++)
+            {
+                Trigger(actionObjects[i].GetComponent<IActionObject>());
+            }
         }
     }
 }
