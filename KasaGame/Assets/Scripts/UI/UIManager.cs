@@ -12,10 +12,17 @@ public class UIManager : MonoBehaviour {
 
 	private float heartCount = 3f;
 
+	private GameObject heart1;
+	private GameObject heart2;
+	private GameObject heart3;
+
 	// Use this for initialization
 	void Start () {
 		hearts = GameObject.FindGameObjectsWithTag("Heart");
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>();
+		heart1 = GameObject.Find("1heart");
+		heart2 = GameObject.Find("2heart");
+		heart3 = GameObject.Find("3heart");
 	}
 	
 	// Update is called once per frame
@@ -23,26 +30,20 @@ public class UIManager : MonoBehaviour {
 		if (player.Health == 0f && heartCount > 0f)
 		{
 			heartCount = 0f;
-			GameObject image1 = GameObject.Find("1heart");
-			GameObject image2 = GameObject.Find("2heart");
-			GameObject image3 = GameObject.Find("3heart");
-			image1.SetActive(false);
-			image2.SetActive(false);
-			image3.SetActive(false);
+			heart1.SetActive(false);
+			heart2.SetActive(false);
+			heart3.SetActive(false);
 		}
 		else if (player.Health == 1f && heartCount > 1f)
 		{
-			heartCount = 2f;
-			GameObject image1 = GameObject.Find("2heart");
-			GameObject image2 = GameObject.Find("3heart");
-			image1.SetActive(false);
-			image2.SetActive(false);
+			heartCount = 1f;
+			heart2.SetActive(false);
+			heart3.SetActive(false);
 		}
 		else if (player.Health == 2f && heartCount > 2)
 		{
 			heartCount = 2f;
-			GameObject image = GameObject.Find("3heart");
-			image.SetActive(false); 
+			heart3.SetActive(false); 
 		}
 		
 		if (player.Health == 3f && heartCount < 3)

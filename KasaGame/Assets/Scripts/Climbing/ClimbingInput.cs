@@ -12,13 +12,7 @@ public class ClimbingInput {
     // Returns true if Release button is pressed down in this frame
     public bool Release()
     {
-        return Input.GetKeyDown(KeyCode.Q);
-    }
-
-    // Returns true if Release button is pressed
-    public bool ReleaseHold()
-    {
-        return Input.GetKey(KeyCode.Q);
+        return Input.GetKeyDown(KeyCode.LeftControl);
     }
 
     // Returns true if Move Left is pressed
@@ -37,18 +31,6 @@ public class ClimbingInput {
     public bool Jump()
     {
         return Input.GetKeyDown(KeyCode.Space);
-    }
-
-    // Returns true if Move Up is pressed down in this frame
-    public bool MoveUp()
-    {
-        return Input.GetKeyDown(KeyCode.W);
-    }
-
-    // Returns true if Move Down is pressed down in this frame
-    public bool MoveDown()
-    {
-        return Input.GetKeyDown(KeyCode.S);
     }
 
 }

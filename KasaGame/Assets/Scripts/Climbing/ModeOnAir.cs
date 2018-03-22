@@ -41,12 +41,6 @@ public class ModeOnAir : ClimbingMode
             return;
         }
 
-        // If Release is hold, don't check anything
-        if (Host.Inputs.ReleaseHold())
-        {
-            return;
-        }
-
         // Try to grab from an edge
         Host.GrabOnAir();
     }

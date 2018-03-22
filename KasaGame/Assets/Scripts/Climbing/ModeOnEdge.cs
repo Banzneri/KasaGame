@@ -13,8 +13,14 @@ public class ModeOnEdge : ClimbingMode
     // Difference from the center of the Edge in SideDirection
     private float _SidePosition;
 
-    // If player found new edge
-    private bool ChangeEdge;
+    // Whether there's still transition going on
+    private bool _Transition;
+
+    // target rotation for transition
+    private Quaternion _TargetRotation;
+
+    // target position for transition
+    private Vector3 _TargetPosition;
 
     #endregion
 
@@ -29,8 +35,12 @@ public class ModeOnEdge : ClimbingMode
     {
         Host.EnableDefaultControllingSystem(false);
         _SidePosition = Host.SidePositionOnEdge(Host.Player.transform, _Edge, true);
-        Host.SetPlayerToEdge(_SidePosition, _Edge);
-        Host.Player.gameObject.GetComponent<Animator>().SetBool("IsClimbing", true);
+
+        // initialize transition
+        _Transition = true;
+        bool Gradual = Host.IsGradual(_Edge);
+        _TargetRotation = Host.RotationOnEdge(Gradual, _Edge);
+        _TargetPosition = Host.PositionOnEdge(Gradual, _SidePosition, _Edge);
     }
 
     public override void Exit()
@@ -38,12 +48,20 @@ public class ModeOnEdge : ClimbingMode
         Host.GrabDelay = Time.deltaTime * 10;
         Host.PreviousEdge = _Edge;
         Host.Player.transform.rotation = Quaternion.LookRotation(_Edge.TransformToVectorInWorld(_Edge.ForwardDirection, true));
-        Host.Player.gameObject.GetComponent<Animator>().SetBool("IsClimbing", false);
+		Host.AnimatorComp.SetBool("IsClimbing", false);
     }
 
     public override void Run()
     {
-        ChangeEdge = false;
+
+        // If transitioning, do that and exit
+        if (_Transition)
+        {
+            Transition();
+            return;
+        }
+		
+		Host.AnimatorComp.SetBool("IsMovingWhileClimbing", false);
 
         // If _Edge is not climbable anymore, player falls down
         if (!_Edge.Climbable(Host.MaxGradientSide, Host.MaxGradientForward))
@@ -58,14 +76,8 @@ public class ModeOnEdge : ClimbingMode
         // Inputs
         HandleInputs();
 
-        // if new edge found, don't continue
-        if (ChangeEdge)
-        {
-            return;
-        }
-
         // if player hits Obstacles, let go of Edge
-        if (!Host.SpaceOnPlayer(new Vector3(1, 1, 1)))
+        if (!Host.SpaceOnPlayer(new Vector3(0.8f, 0.8f, 0.8f)))
         {
             Host.ChangeMode(new ModeOnAir(Host, false));
             return;
@@ -75,6 +87,31 @@ public class ModeOnEdge : ClimbingMode
     #endregion
 
     #region Moving
+
+    // Moves player to the edge
+    private void Transition()
+    {
+
+        bool RotationReady = Quaternion.Angle(Host.Player.transform.rotation, _TargetRotation) < 25;
+        bool MovingReady = Host.Player.transform.position == _TargetPosition;
+
+        // check if transition is no more needed
+        if (RotationReady && MovingReady)
+        {
+            _Transition = false;
+            Host.AnimatorComp.SetBool("IsClimbing", true);
+            return;
+        }
+
+        // rotation and moving step
+        float step = 5 * Time.deltaTime;
+
+        // rotate
+        Host.Player.transform.rotation = Quaternion.Lerp(Host.Player.transform.rotation, _TargetRotation, step);
+
+        // move
+        Host.Player.transform.position = Vector3.MoveTowards(Host.Player.transform.position, _TargetPosition, step);
+    }
 
     // Checks for inputs
     private void HandleInputs()
@@ -97,28 +134,11 @@ public class ModeOnEdge : ClimbingMode
         // Move alongside SideDirection
         if (Host.Inputs.MoveLeftHold())
         {
-            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", true);
             MoveHorizontal(-1);
         }
         else if (Host.Inputs.MoveRightHold())
         {
-            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", true);
             MoveHorizontal(1);
-        }
-        else
-        {
-            Host.Player.gameObject.GetComponent<Animator>().SetBool("IsMovingWhileClimbing", false);
-        }
-
-        // Move down, move up / stand
-        if (Host.Inputs.MoveUp())
-        {
-            MoveVertical(1);
-        } else if (Host.Inputs.MoveDown())
-        {
-            MoveVertical(-1);
-        } else
-        {
         }
 
     }
@@ -140,7 +160,9 @@ public class ModeOnEdge : ClimbingMode
         if (Host.SpaceOnEdge(_Edge, NewSidePos))
         {
             _SidePosition = NewSidePos;
-        } else
+			Host.AnimatorComp.SetBool("IsMovingWhileClimbing", true);
+        }
+        else
         {
             // if not, check for new edge
             GrabEdge = true;
@@ -156,13 +178,14 @@ public class ModeOnEdge : ClimbingMode
         // find new edge
         if (GrabEdge)
         {
-            ChangeEdge = Host.GrabOnEdge(_Edge, new Vector3(0.5f * Dir, 2, PosZ), new Vector3(1.5f, 1.5f, 1.5f));
+            Host.GrabOnEdge(_Edge, new Vector3(0.5f * Dir, 2, PosZ), new Vector3(1.5f, 1.5f, 1.5f));
             _SidePosition = Mathf.Clamp(_SidePosition, -0.5f, 0.5f);
         }
 
     }
 
-    // Move player on edge, vertical
+    // DEPRECATED
+    /* Move player on edge, vertical
     private void MoveVertical(int Dir)
     {
         bool EdgeFound;
@@ -173,12 +196,11 @@ public class ModeOnEdge : ClimbingMode
         {
             if (!EdgeFound && Host.SpaceOnTopOfEdge(_Edge))
             {
-                ChangeEdge = true;
                 Host.Player.transform.position = Host.WorldPointOnEdge(_SidePosition, _Edge) + _Edge.TransformToVectorInWorld(_Edge.ForwardDirection, true) * 0.3f;
                 Host.ChangeMode(new ModeOnGround(Host));
             }
         }
-    }
+    }*/
 
     #endregion
 }

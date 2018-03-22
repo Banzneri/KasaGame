@@ -31,10 +31,6 @@ public class ModeOnGround : ClimbingMode
             return;
         }
 
-        if (Host.Inputs.ReleaseHold())
-        {
-            Host.GrabOnGround();
-        }
     }
    
 }

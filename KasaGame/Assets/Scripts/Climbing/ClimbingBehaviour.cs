@@ -41,6 +41,13 @@ public class ClimbingBehaviour : MonoBehaviour {
     // Rigidbody attached to player
     [SerializeField]
     private Rigidbody _Rigidbody;
+	
+	// Animator Component
+	[SerializeField]
+	private Animator _AnimatorComp;
+	public Animator AnimatorComp {
+		get { return _AnimatorComp; }
+	}
 
     #endregion
 
@@ -210,10 +217,20 @@ public class ClimbingBehaviour : MonoBehaviour {
                 Debug.LogError("Rigidbody not found");
             }
         }
+		
+		 // Find Animator if missing
+        if (_AnimatorComp == null)
+        {
+            _AnimatorComp = _Player.GetComponent<Animator>();
+            if (_AnimatorComp == null)
+            {
+                Debug.LogError("Animator not found");
+            }
+        }
     }
 
     // Update is called once per frame
-    void Update () {
+    void LateUpdate () {
 
         // Find Frames nearby and update their Edges
         _Frames = Physics.OverlapSphere(transform.position, 2.5f, _FrameLayer);
@@ -236,7 +253,8 @@ public class ClimbingBehaviour : MonoBehaviour {
     public void EnableDefaultControllingSystem(bool enable)
     {
         _VController.enabled = enable;
-        _VInput.enabled = enable;
+        _VController.lockMovement = !enable;
+        //_VInput.enabled = enable;
         _Rigidbody.isKinematic = !enable;
 
         if (!enable)
@@ -321,20 +339,20 @@ public class ClimbingBehaviour : MonoBehaviour {
         if (GrabDelay > 0)
         {
             GrabDelay -= Time.deltaTime;
-            GrabEdge(PreviousEdge);
         } else
         {
             GrabEdge(null);
         }
     }
 
-    // Sets GrabCollider ready for normal check on ground
+    // DEPRECATED
+    /* Sets GrabCollider ready for normal check on ground
     public void GrabOnGround()
     {
         _GrabCollider.transform.localPosition = new Vector3(0, 0.25f, 0.25f);
         _GrabCollider.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
         GrabEdge(null);
-    }
+    }*/
 
     // Sets GrabCollider ready for normal check on air
     public bool GrabOnEdge(Edge Current, Vector3 GrabDirection, Vector3 GrabScale)
@@ -377,7 +395,7 @@ public class ClimbingBehaviour : MonoBehaviour {
         _PhysicsCollider.transform.parent = _PlayerGhost.transform;
 
         // Check space
-        bool IsSpace = SpaceOnPlayer(new Vector3(1f, 1f, 1f));
+        bool IsSpace = SpaceOnPlayer(new Vector3(0.8f, 0.8f, 0.8f));
 
         // Switch _PhysicsCollider parent back to ClimbingBehaviour
         _PhysicsCollider.transform.parent = this.transform;
@@ -398,7 +416,7 @@ public class ClimbingBehaviour : MonoBehaviour {
         _PhysicsCollider.transform.parent = _PlayerGhost.transform;
 
         // Check space
-        bool IsSpace = SpaceOnPlayer(new Vector3(0.5f, 0.5f, 0.5f));
+        bool IsSpace = SpaceOnPlayer(new Vector3(0.75f, 0.75f, 0.75f));
 
         // Switch _PhysicsCollider parent back to ClimbingBehaviour
         _PhysicsCollider.transform.parent = this.transform;
@@ -420,8 +438,7 @@ public class ClimbingBehaviour : MonoBehaviour {
         float SidePos = 0;
 
         // transform obj to local space of edge
-        obj.position = new Vector3(obj.position.x, edge.transform.position.y, obj.position.z);
-        Vector3 ObjInEdgeSpace = edge.transform.InverseTransformPoint(obj.position);
+        Vector3 ObjInEdgeSpace = edge.transform.InverseTransformPoint(new Vector3(obj.position.x, edge.transform.position.y, obj.position.z));
 
         if (edge.VectorDirectionX(edge.SideDirection))
         {
@@ -471,15 +488,45 @@ public class ClimbingBehaviour : MonoBehaviour {
     // Finds best edge in the list. Returns false if edge not found
     private bool FindBestEdge(List<Edge> Edges)
     {
-        if(Edges.Count == 0)
+
+        for(int i = 0; i < Edges.Count; i++)
         {
-            return false;
+
+            // Check player's position on SideDirection of Edge
+            float SidePos = SidePositionOnEdge(Player.transform, Edges[i], false);
+
+            if(Mathf.Abs(SidePos) < 0.5f)
+            {
+
+                // Check player's position on ForwardDirection of Edge
+                Vector3 PlayerPositionOnEdgeSpace = Edges[i].transform.InverseTransformPoint(Player.transform.position);
+                float Difference = 0;
+
+                if (Edges[i].VectorDirectionX(Edges[i].ForwardDirection))
+                {
+                    Difference = PlayerPositionOnEdgeSpace.x * Edges[i].TransformToVector(Edges[i].ForwardDirection).x;
+                }
+                else if (Edges[i].VectorDirectionY(Edges[i].ForwardDirection))
+                {
+                    Difference = PlayerPositionOnEdgeSpace.y * Edges[i].TransformToVector(Edges[i].ForwardDirection).y;
+                }
+                else
+                {
+                    Difference = PlayerPositionOnEdgeSpace.z * Edges[i].TransformToVector(Edges[i].ForwardDirection).z;
+                }
+
+                // If player is between the start and end points of edge and inside the edge object, don't pick that edge
+                if (Difference > 0)
+                {
+                    continue;
+                }
+            }
+
+            ChangeMode(new ModeOnEdge(this, Edges[i]));
+            return true;
         }
 
-
-
-        ChangeMode(new ModeOnEdge(this, Edges[0]));
-        return true;
+        return false;
     }
     
 
@@ -488,19 +535,19 @@ public class ClimbingBehaviour : MonoBehaviour {
     #region Helpers
 
     // Is edge gradual (angle 0-89)
-    private bool IsGradual(Edge edge)
+    public bool IsGradual(Edge edge)
     {
         return edge.TransformToVectorInWorld(edge.ForwardDirection, false).y < 0;
     }
 
     // Calculates rotation for object that hangs from edge
-    private Quaternion RotationOnEdge(bool Gradual, Edge edge)
+    public Quaternion RotationOnEdge(bool Gradual, Edge edge)
     {
         return Quaternion.LookRotation(edge.TransformToVectorInWorld(edge.ForwardDirection, !Gradual));
     }
 
     // Calculates position on the edge
-    private Vector3 PositionOnEdge(bool Gradual, float SidePos, Edge edge)
+    public Vector3 PositionOnEdge(bool Gradual, float SidePos, Edge edge)
     {
         // Y factor
         Vector3 FactorY;

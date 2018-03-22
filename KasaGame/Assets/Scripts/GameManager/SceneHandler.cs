@@ -77,8 +77,6 @@ public class SceneHandler : MonoBehaviour {
 
 		// GameObject curCheckpoint = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>().GetClosestCheckpoint();
 		// sceneData.currentCheckpoint = new CheckPointData(curCheckpoint, curCheckpoint.GetComponent<RotateGear>().isActivated);
-
-		Debug.Log(sceneData.checkPoints.Count);
 		return sceneData;
 	}
 
