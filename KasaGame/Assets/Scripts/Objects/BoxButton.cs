@@ -7,6 +7,7 @@ public class BoxButton : MonoBehaviour, ITriggerObject<IActionObject> {
 
     public GameObject[] actionObjects;
     private AudioSource _soundEffect;
+    private bool _pressed = false;
 
     private void Start()
     {
@@ -15,8 +16,9 @@ public class BoxButton : MonoBehaviour, ITriggerObject<IActionObject> {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Box")
+        if (other.tag == "Box" && !_pressed)
         {
+            _pressed = true;
             _soundEffect.Play();
             for (int i = 0; i < actionObjects.Length; i++)
             {
@@ -28,8 +30,9 @@ public class BoxButton : MonoBehaviour, ITriggerObject<IActionObject> {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Box")
+        if (other.tag == "Box" && Input.GetButton("action"))
         {
+            _pressed = false;
             _soundEffect.Play();
             for (int i = 0; i < actionObjects.Length; i++)
             {
