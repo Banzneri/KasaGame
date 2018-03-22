@@ -40,7 +40,7 @@ public class BoxMover : MonoBehaviour {
             _playerFacesToBox = false;
         }
 
-        if (Input.GetButton("action") && _playerFacesToBox)
+        if (Input.GetButton("Attack") && _playerFacesToBox)
         {
             transform.SetParent(_player.transform);
             _player.GetComponent<vThirdPersonController>().isStrafing = true;
@@ -55,15 +55,18 @@ public class BoxMover : MonoBehaviour {
             {
                 _NoiseEffect.Stop();
             }
+
+            _player.GetComponent<Animator>().SetBool("pushing", true);
         }
 
-        if (!Input.GetButton("action"))
+        if (!Input.GetButton("Attack"))
         {
             transform.parent = null;
             Physics.IgnoreCollision(_BoxCol, _PlayerCol, false);
             _NoiseEffect.Stop();
             _player.GetComponent<vThirdPersonController>().isStrafing = false;
             _player.GetComponent<vThirdPersonController>().strafeRotationSpeed = 10;
+            _player.GetComponent<Animator>().SetBool("pushing", false);
         }
     }
 }

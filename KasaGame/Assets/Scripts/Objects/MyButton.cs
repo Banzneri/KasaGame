@@ -6,7 +6,6 @@ using UnityEngine;
 public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
     [SerializeField]
     public GameObject[] actionObjects;
-    private bool inTrigger;
     private Animator anim;
     private new AudioSource audio;
 
@@ -16,27 +15,9 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
         audio = GetComponent<AudioSource>();
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        inTrigger = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        inTrigger = false;
-    }
-
     public void Trigger(IActionObject actionObject)
     {
         actionObject.Action();
-    }
-
-    private void OnGUI()
-    {
-        if (inTrigger)
-        {
-                GUI.Box(new Rect(450, 400, 200, 25), "Press E to interact");
-        }
     }
 
     public void TriggerAll()
