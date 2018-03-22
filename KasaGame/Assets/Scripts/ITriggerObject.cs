@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface ITriggerObject<T> {
     void Trigger(T actionObject);
+    void TriggerAll();
 }

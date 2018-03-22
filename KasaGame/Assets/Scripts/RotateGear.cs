@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateGear : MonoBehaviour {
+public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionObject> {
     public GameObject player;
     public float riseAmount = 2;
     public Transform spawnPoint;
@@ -53,17 +53,36 @@ public class RotateGear : MonoBehaviour {
             //Debug.Log("Press e");
             if (Input.GetKeyDown(KeyCode.E) && !isActivated)
             {
-                _light.enabled = true;
-                rising = true;
-                isActivated = true;
+                Activate();
             }
         }
+    }
+
+    public void Action()
+    {
+        Activate();
+    }
+
+    public void Trigger(IActionObject obj)
+    {
+    }
+
+    public void TriggerAll()
+    {
+        Action();
     }
 
     void Activate() {
         _light.enabled = true;
         rising = true;
         isActivated = true;
+
+        ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
+
+        if (particle != null)
+        {
+            particle.Play();
+        }
     }
 
 }

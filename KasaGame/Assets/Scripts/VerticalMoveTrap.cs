@@ -50,11 +50,9 @@ public class VerticalMoveTrap : MonoBehaviour, IActionObject {
                 if (transform.position == minY && automatic)
                 {
                     goingDown = false;
-                    goingUp = true;
                 }
             }
-
-            if (delayCounter > delay && automatic)
+            else if (delayCounter > delay && automatic)
             {
                 GetComponent<AudioSource>().Play();
                 goingUp = true;
@@ -63,29 +61,33 @@ public class VerticalMoveTrap : MonoBehaviour, IActionObject {
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        vThirdPersonController controller = collision.gameObject.GetComponent<vThirdPersonController>();
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
-            controller.isFlying = true;
-            controller.isMovable = false;
-            rigidbody.AddForce(Vector3.up * 1.5f, ForceMode.VelocityChange);
-            controller.speed = -0.5f;
-            Debug.Log("Collision");
-        }
+        HitPlayer(other);
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerStay(Collider other)
     {
-        MyCharManager player = other.gameObject.GetComponent<MyCharManager>();
+        HitPlayer(other);
+    }
 
-        if (other.gameObject.tag.Equals("Player") && !player.GetComponent<vThirdPersonController>().isFlying)
+    void HitPlayer(Collider playerCollider) 
+    {
+        if (playerCollider.gameObject.tag.Equals("Player"))
         {
-            if (goingDown || goingUp)
+            MyCharManager player = playerCollider.gameObject.GetComponent<MyCharManager>();
+            vThirdPersonController controller = playerCollider.gameObject.GetComponent<vThirdPersonController>();
+            Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
+            
+            if (!player.Immune && player.Health > 0)
             {
-                player.TakeDamage();   
+                if (goingDown || goingUp)
+                {
+                    controller.isFlying = true;
+                    rigidbody.velocity = Vector3.zero;
+                    rigidbody.AddForce(Vector3.up * 10 , ForceMode.VelocityChange);
+                    player.TakeDamage();   
+                }
             }
         }
     }

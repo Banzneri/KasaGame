@@ -9,12 +9,18 @@ public class Key : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        inTrigger = true;
+        if(other.tag == "Player")
+        {
+            inTrigger = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        inTrigger = false;
+        if (other.tag == "Player")
+        {
+            inTrigger = false;
+        }  
     }
 
     private void Update()

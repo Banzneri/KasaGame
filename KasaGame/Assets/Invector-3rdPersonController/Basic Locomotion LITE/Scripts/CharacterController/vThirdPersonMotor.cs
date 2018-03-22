@@ -88,6 +88,8 @@ namespace Invector.CharacterController
         protected float groundDistance;
         public RaycastHit groundHit;
 
+        public float GroundDistance { get { return groundDistance; } }
+
         #endregion
 
         #region Actions
@@ -223,7 +225,7 @@ namespace Invector.CharacterController
 
         void ControlLocomotion()
         {
-            if (!isFlying)
+            if (!isFlying && isMovable)
             {
                 if (freeLocomotionConditions)
                     FreeMovement();     // free directional movement
@@ -232,7 +234,6 @@ namespace Invector.CharacterController
             } 
             else if (isGrounded)
             {
-                isMovable = true;
                 isFlying = false;
             }
         }
@@ -250,10 +251,23 @@ namespace Invector.CharacterController
         public virtual void FreeMovement()
         {
             // set speed to both vertical and horizontal inputs
-            speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);            
+            float xInput = 0;
+            float yInput = 0;
+
+            /*
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+            {
+                yInput = 1;
+            }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                xInput = 1;
+            }
+            */
+            speed = Mathf.Abs(input.x * 5) + Mathf.Abs(input.y * 5);
+            if (!IsMoving()) speed = Mathf.Abs(input.x / 2) + Mathf.Abs(input.y / 2);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
-            if (isSprinting) speed += 0.5f;
                         
             if (input != Vector2.zero && targetDirection.magnitude > 0.1f)
             {
@@ -267,9 +281,17 @@ namespace Invector.CharacterController
                 {
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime * 1000);
                 }               
             }
+        }
+
+        protected bool IsMoving() {
+            bool wPressed = Input.GetKey(KeyCode.W);
+            bool aPressed = Input.GetKey(KeyCode.A);
+            bool sPressed = Input.GetKey(KeyCode.S);
+            bool dPressed = Input.GetKey(KeyCode.D);
+            return wPressed || aPressed || sPressed || dPressed;
         }
         protected void ControlSpeed(float velocity)
         {

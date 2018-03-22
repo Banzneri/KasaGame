@@ -9,6 +9,10 @@ TagManager:
   - Box
   - Checkpoint
   - Heart
+  - Hat
+  - Interactable
+  - Fire
+  - JumpPad
   layers:
   - Default
   - TransparentFX
@@ -22,8 +26,8 @@ TagManager:
   - Ground
   - Climbing
   - Obstacle
-  - 
-  - 
+  - Frame
+  - Edge
   - 
   - 
   - 

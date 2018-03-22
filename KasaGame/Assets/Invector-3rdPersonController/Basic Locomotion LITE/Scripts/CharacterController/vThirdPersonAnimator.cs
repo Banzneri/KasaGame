@@ -5,6 +5,12 @@ namespace Invector.CharacterController
 {
     public abstract class vThirdPersonAnimator : vThirdPersonMotor
     {
+        private MyCharManager mc;
+
+        void Awake()
+        {
+            mc = GetComponent<MyCharManager>();    
+        }
         public virtual void UpdateAnimator()
         {
             if (animator == null || !animator.enabled) return;
@@ -27,17 +33,34 @@ namespace Invector.CharacterController
                 animator.SetTrigger("Wave");
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (!GetComponent<MyCharManager>().throwing)
             {
-                animator.SetTrigger("Pickup");
+                if (Input.GetButtonDown("Throw"))
+                {
+                    if (speed < 1 && isGrounded) 
+                    {
+                        animator.Play("ThrowStand");
+                    }
+                    else
+                        animator.Play("Throw");
+                }   
             }
-
 
             // fre movement get the input 0 to 1
             if (!isFlying)
             {
                 animator.SetFloat("InputVertical", speed, 0.1f, Time.deltaTime);
             }
+        }
+
+        public void Attack()
+        {
+            if (speed < 1 && isGrounded) 
+            {
+                animator.Play("AttackStand");
+            }
+            else
+                animator.Play("Attack");
         }
 
         public void OnAnimatorMove()

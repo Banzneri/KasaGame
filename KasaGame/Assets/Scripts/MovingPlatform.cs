@@ -11,6 +11,8 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
     [SerializeField] private bool automatic;
     private bool goingToEndLoc = true; //Used only if the platform is not automatic.
 
+    [SerializeField] Screw[] automaticScrews;
+
     private Vector3 currentDestination;
 	private float waitCounter = 0;
 
@@ -19,10 +21,46 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 		currentDestination = new Vector3(startLocation.position.x, startLocation.position.y, startLocation.position.z);
 	}
 	
+    void MoveToVector3(Vector3 target)
+    {
+        transform.position = target;
+    }
+
+    void SetToAutomatic()
+    {
+        automatic = true;
+    }
+
+    bool CheckAutomationArray()
+    {
+        bool b = false;
+        int screwsDown = 0;
+
+        foreach (Screw screw in automaticScrews) {
+            if (screw.GetDown()) {
+                screwsDown++;
+            }
+            if (screwsDown >= automaticScrews.Length) {
+                b = true;
+            }
+            //Debug.Log("Screws down: " + screwsDown);
+        }
+
+        return b;
+    }
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		Vector3 trajectory = Vector3.MoveTowards(transform.position, currentDestination, speed * Time.deltaTime);
-		transform.position = trajectory;
+
+        MoveToVector3(trajectory);
+
+        if(automaticScrews.Length > 0) {
+            //Debug.Log("Screw length is higher than 0");
+            if (CheckAutomationArray()) {
+                SetToAutomatic();
+            }
+        }
 
 		if (transform.position == startLocation.position && automatic)
 		{

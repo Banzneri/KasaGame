@@ -62,6 +62,11 @@ public class TimedSwitch : MonoBehaviour, ITriggerObject<IActionObject>
         actionObject.Action();
     }
 
+    public void TriggerAll()
+    {
+        
+    }
+
     private void OnGUI()
     {
         if (inTrigger && !activated)

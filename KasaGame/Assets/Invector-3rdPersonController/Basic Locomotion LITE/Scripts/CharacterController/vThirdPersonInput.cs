@@ -32,7 +32,8 @@ namespace Invector.CharacterController
         [HideInInspector]
         public bool keepDirection;                          // keep the current direction in case you change the cameraState
 
-        protected vThirdPersonController cc;                // access the ThirdPersonController component                
+        protected vThirdPersonController cc;                // access the ThirdPersonController component
+        protected MyCharManager mc;    
 
         #endregion
 
@@ -44,6 +45,7 @@ namespace Invector.CharacterController
         protected virtual void CharacterInit()
         {
             cc = GetComponent<vThirdPersonController>();
+            mc = GetComponent<MyCharManager>();
             if (cc != null)
                 cc.Init();
 
@@ -84,6 +86,7 @@ namespace Invector.CharacterController
                 SprintInput();
                 StrafeInput();
                 JumpInput();
+                AttackInput();
             }
         }
 
@@ -101,11 +104,28 @@ namespace Invector.CharacterController
                 cc.Strafe();
         }
 
+        protected virtual void AttackInput()
+        {
+            if (Input.GetButtonDown("Throw"))
+            {
+                Debug.Log("AAA");
+                mc.Attack();
+                mc.ThrowWeapon();
+            }
+
+            if (Input.GetButtonDown("Attack"))
+            {
+                Debug.Log("AAA");
+                mc.Attack();
+            }
+        }
+
         protected virtual void SprintInput()
         {
-            if (Input.GetKeyDown(sprintInput))
+            if (Input.GetKeyDown(sprintInput) && cc.isGrounded) {
                 cc.Sprint(true);
-            else if(Input.GetKeyUp(sprintInput))
+            }
+            else if(Input.GetKeyUp(sprintInput ))
                 cc.Sprint(false);
         }
 

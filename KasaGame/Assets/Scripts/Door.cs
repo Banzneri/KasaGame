@@ -8,6 +8,8 @@ public class Door : MonoBehaviour, IActionObject
 
     public bool doorKey;
     public bool open;
+
+    public int dir = 1;
     private bool inTrigger;
     private Quaternion _OriginalRotation;
 
@@ -18,12 +20,18 @@ public class Door : MonoBehaviour, IActionObject
 
     void OnTriggerEnter(Collider other)
     {
-        inTrigger = true;
+        if(other.tag == "Player")
+        {
+            inTrigger = true;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        inTrigger = false;
+        if (other.tag == "Player")
+        {
+            inTrigger = false;
+        }
     }
 
     void Update()
