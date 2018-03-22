@@ -4,43 +4,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoxMover : MonoBehaviour {
+public class BoxMover_old : MonoBehaviour {
     
     private GameObject _player;
+    private Rigidbody _RBody;
     private BoxCollider _BoxCol;
     private CapsuleCollider _PlayerCol;
     private AudioSource _NoiseEffect;
-    private bool _playerFacesToBox = false;
 
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
+        _RBody = GetComponent<Rigidbody>();
+        _BoxCol = GetComponent<BoxCollider>();
         _PlayerCol = _player.GetComponent<CapsuleCollider>();
         _NoiseEffect = GetComponent<AudioSource>();
-        _BoxCol = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
     void Update () {
 
-        RaycastHit hit;
-        Ray forward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, 1, 1)));
+        float distanceToPlayer = Vector3.Distance(this.transform.position, _player.transform.position);
 
-        Debug.DrawRay(_player.transform.position + new Vector3(0, 1, 0), _player.transform.TransformDirection(Vector3.forward)*1, Color.red);
+        //Debug.Log(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"));
 
-        if (Physics.Raycast(forward, out hit, 2))
-        {
-            if (hit.collider == _BoxCol)
-            {
-                _playerFacesToBox = true;
-            }
-        }
-        else
-        {
-            _playerFacesToBox = false;
-        }
 
-        if (Input.GetButton("action") && _playerFacesToBox)
+        if (Input.GetButton("action") && distanceToPlayer < 2.5)
         {
             transform.SetParent(_player.transform);
             _player.GetComponent<vThirdPersonController>().isStrafing = true;
@@ -55,15 +44,17 @@ public class BoxMover : MonoBehaviour {
             {
                 _NoiseEffect.Stop();
             }
-        }
 
-        if (!Input.GetButton("action"))
+            _player.GetComponent<Animator>().SetBool("pushing", true);
+        }
+        else
         {
             transform.parent = null;
-            Physics.IgnoreCollision(_BoxCol, _PlayerCol, false);
-            _NoiseEffect.Stop();
             _player.GetComponent<vThirdPersonController>().isStrafing = false;
             _player.GetComponent<vThirdPersonController>().strafeRotationSpeed = 10;
+            Physics.IgnoreCollision(_BoxCol, _PlayerCol, false);
+            _NoiseEffect.Stop();
+            _player.GetComponent<Animator>().SetBool("pushing", false);
         }
     }
 }

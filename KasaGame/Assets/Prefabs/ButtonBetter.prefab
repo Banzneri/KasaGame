@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 95992396364946634}
   - component: {fileID: 65146131589162256}
   - component: {fileID: 65217964099744594}
-  - component: {fileID: 114663866940530930}
   - component: {fileID: 82535589035412812}
+  - component: {fileID: 114389221773348728}
   m_Layer: 0
   m_Name: ButtonBetter
   m_TagString: Untagged
@@ -352,7 +352,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114663866940530930
+--- !u!114 &114389221773348728
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -360,8 +360,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1244215360846996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4272831a0e823a43bcf70f14335455b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e26d99b467a0db41bdc53ac51a41fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionObjects:
-  - {fileID: 0}
+  actionObjects: []
