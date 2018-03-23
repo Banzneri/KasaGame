@@ -28,6 +28,5 @@ public class MyButton : MonoBehaviour, ITriggerObject<IActionObject> {
         {
             Trigger(actionObjects[i].GetComponent<IActionObject>());
         }
-        Debug.Log("Trigger");
     }
 }

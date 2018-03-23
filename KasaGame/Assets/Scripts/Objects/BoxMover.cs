@@ -7,7 +7,7 @@ using UnityEngine;
 public class BoxMover : MonoBehaviour {
     
     private GameObject _player;
-    private BoxCollider _BoxCol;
+    private Collider _BoxCol;
     private CapsuleCollider _PlayerCol;
     private AudioSource _NoiseEffect;
     private bool _playerFacesToBox = false;
@@ -17,7 +17,7 @@ public class BoxMover : MonoBehaviour {
         _player = GameObject.FindGameObjectWithTag("Player");
         _PlayerCol = _player.GetComponent<CapsuleCollider>();
         _NoiseEffect = GetComponent<AudioSource>();
-        _BoxCol = GetComponent<BoxCollider>();
+        _BoxCol = GetComponent<Collider>();
     }
 
     // Update is called once per frame

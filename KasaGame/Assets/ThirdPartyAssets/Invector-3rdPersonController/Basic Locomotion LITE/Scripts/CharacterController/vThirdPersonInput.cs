@@ -122,13 +122,11 @@ namespace Invector.CharacterController
         {
             if (Input.GetButtonDown("Throw"))
             {
-                Debug.Log("AAA");
                 mc.ThrowWeapon();
             }
 
             if (Input.GetButtonDown("Attack"))
             {
-                Debug.Log("AAA");
                 mc.Attack();
             }
         }
