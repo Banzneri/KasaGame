@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1804244246914276
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +59,24 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!1 &1841393696219618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4635461395298762}
+  - component: {fileID: 108968189672024012}
+  - component: {fileID: 114737864748805460}
+  m_Layer: 11
+  m_Name: Spotlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1936747924477380
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,13 +102,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1804244246914276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.06, z: -1.79}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.0000047609706, y: -0.059997626, z: -1.7899039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4551975504837368}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4541022198386754
 Transform:
   m_ObjectHideFlags: 1
@@ -111,16 +128,30 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936747924477380}
-  m_LocalRotation: {x: -0.7066183, y: -0, z: -0, w: 0.70759493}
-  m_LocalPosition: {x: -5.1351166, y: 13.29, z: -220.03853}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.00069060916, y: -0, z: -0, w: 0.99999976}
+  m_LocalPosition: {x: 0, y: -0, z: 0.97}
+  m_LocalScale: {x: 0.4045341, y: 0.4045343, z: 0.47818404}
   m_Children:
   - {fileID: 4541022198386754}
   - {fileID: 4410172033976046}
   - {fileID: 4670795391322882}
+  - {fileID: 4635461395298762}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.921005, y: 0, z: 0}
+--- !u!4 &4635461395298762
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841393696219618}
+  m_LocalRotation: {x: -0, y: 0.99999976, z: -0.00069060916, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.89}
+  m_LocalScale: {x: 3.1083217, y: 2.6145842, z: 1.7402011}
+  m_Children: []
+  m_Father: {fileID: 4551975504837368}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4670795391322882
 Transform:
   m_ObjectHideFlags: 1
@@ -128,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1834192282266290}
   m_LocalRotation: {x: -0.000690639, y: -0, z: -0, w: 0.99999976}
-  m_LocalPosition: {x: 0, y: -0, z: 1.09}
+  m_LocalPosition: {x: 0, y: 0, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4551975504837368}
@@ -148,7 +179,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 64e40758b1e936c40a31d7bd8bc2b5e6, type: 2}
+  - {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -195,13 +226,49 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1101850778863804}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0.9396551, b: 0.125, a: 1}
   m_Intensity: 23.24
-  m_Range: 1.82
+  m_Range: 0.98
   m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!108 &108968189672024012
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841393696219618}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.9411765, b: 0.1254902, a: 1}
+  m_Intensity: 14.73
+  m_Range: 6.5979424
+  m_SpotAngle: 94.18928
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -265,8 +332,37 @@ MonoBehaviour:
   riseAmount: 2.5
   spawnPoint: {fileID: 4410172033976046}
   rotateSpeed: 30
-  isActivated: 1
+  isActivated: 0
   rising: 0
+  _light: {fileID: 108770861847250522}
+  _spotLight: {fileID: 108968189672024012}
+  _activeMaterial: {fileID: 2100000, guid: 61fc4d9b68d16cf4889d380b1cc3e33f, type: 2}
+  _inactiveMaterial: {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
+--- !u!114 &114737864748805460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841393696219618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafc90245bfe9e2408e358f71deace2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SampleCount: 12
+  ScatteringCoef: 0.1
+  ExtinctionCoef: 0.01
+  SkyboxExtinctionCoef: 0.9
+  MieG: 0.1
+  HeightFog: 0
+  HeightScale: 0.1
+  GroundLevel: 0
+  Noise: 0
+  NoiseScale: 0.015
+  NoiseIntensity: 1
+  NoiseIntensityOffset: 0.3
+  NoiseVelocity: {x: 3, y: 3}
+  MaxRayLength: 400
 --- !u!198 &198656563896259894
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -327,7 +423,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1925267353
+  randomSeed: 633496239
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -770,7 +866,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 5
     enabled: 1
-    type: 0
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -792,7 +888,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.5387666
       mode: 0
       spread: 0
       speed:

@@ -98,8 +98,10 @@ public class SceneHandler : MonoBehaviour {
 
 		gameData.health = (int)player.Health;
 		gameData.currentSceneName = SceneManager.GetActiveScene().name;
-		Vector3 pos = player.GetClosestCheckpoint().transform.position;
+		Vector3 pos = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
+		Quaternion rot = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().rotation;
 		gameData.currentPosition = new MyVector3(pos.x, pos.y, pos.z);
+		gameData.currentRotation = new MyQuaternion(rot.x, rot.y, rot.z, rot.w);
 		bf.Serialize(fs, gameData);
 		fs.Close();
 	}
@@ -173,6 +175,7 @@ public class SceneHandler : MonoBehaviour {
 		GameData data = (GameData)bf.Deserialize(file);
 		player.Health = data.health;
 		player.transform.position = TranslateMyVector3ToVector3(data.currentPosition);
+		player.transform.rotation = TranslateMyQuaternionToQuaternion(data.currentRotation);
 		file.Close();
 	}
 

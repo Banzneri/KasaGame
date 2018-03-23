@@ -14,12 +14,14 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
     private Vector3 riseLocation;
     private Vector3 originalLocation;
     public bool rising = false;
-    private Light _light;
+    [SerializeField] private Light _light;
+    [SerializeField] private Light _spotLight;
+    [SerializeField] private Material _activeMaterial;
+    [SerializeField] private Material _inactiveMaterial;
     private float t = 0f;
 
     private void Start()
     {
-        _light = GetComponentInChildren<Light>();
         player = GameObject.FindGameObjectWithTag("Player");
         riseLocation = new Vector3(transform.position.x, transform.position.y + riseAmount, transform.position.z);
     }
@@ -45,20 +47,7 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
                 rising = false;
             }
         }
-        Interact();
 	}
-
-    void Interact()
-    {
-        if (Vector3.Distance(transform.position, player.transform.position) < 5)
-        {
-            //Debug.Log("Press e");
-            if (!isActivated)
-            {
-                Activate();
-            }
-        }
-    }
 
     public void Action()
     {
@@ -74,10 +63,17 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
         Action();
     }
 
+    public Transform GetSpawnPoint()
+    {
+        return spawnPoint;
+    }
+
     public void Activate() {
-        _light.enabled = true;
+        _light.gameObject.SetActive(true);
+        _spotLight.gameObject.SetActive(true);
         rising = true;
         isActivated = true;
+        gameObject.GetComponent<MeshRenderer>().material = _activeMaterial;
 
         GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
         GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
