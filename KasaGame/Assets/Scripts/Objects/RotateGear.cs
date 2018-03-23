@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionObject> {
+public class RotateGear : MonoBehaviour {
     public GameObject player;
     public float riseAmount = 2;
     public Transform spawnPoint;
@@ -30,10 +30,6 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
     void Update () {
         if (isActivated)
         {
-            if (!rising)
-            {
-                Activate();
-            }
             transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         }
         if (rising)
@@ -48,20 +44,6 @@ public class RotateGear : MonoBehaviour, IActionObject, ITriggerObject<IActionOb
             }
         }
 	}
-
-    public void Action()
-    {
-        Activate();
-    }
-
-    public void Trigger(IActionObject obj)
-    {
-    }
-
-    public void TriggerAll()
-    {
-        Action();
-    }
 
     public Transform GetSpawnPoint()
     {

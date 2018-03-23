@@ -53,6 +53,7 @@ public class Checkpoint : MonoBehaviour {
 	void Activate ()
 	{
 		_gear.GetComponent<RotateGear>().Activate();
+		_gear.GetComponent<AudioSource>().Play();
 		_isActivated = true;
 	}
 }

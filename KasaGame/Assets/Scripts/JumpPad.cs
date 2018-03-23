@@ -23,7 +23,7 @@ public class JumpPad : MonoBehaviour {
         if(_player.GetComponent<vThirdPersonController>().isGrounded &&
            _player.GetComponent<vThirdPersonController>().groundHit.collider.gameObject == transform.gameObject)
         {
-            _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2;
+            _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2f;
             _player.GetComponent<vThirdPersonController>().Jump();
 
             if(!_soundEffect.isPlaying)
