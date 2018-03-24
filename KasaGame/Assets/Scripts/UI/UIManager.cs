@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
-    public Door goldDoor;
+	[HideInInspector]
+    public bool hasKey = false;
     [SerializeField] private Image goldKey;
 
-    private GameObject[] hearts; 
+    private GameObject[] hearts;
 	private MyCharManager player;
 
 	private float heartCount = 3f;
@@ -51,16 +52,6 @@ public class UIManager : MonoBehaviour {
 			heartCount = 3;
 			RefreshHearts();
 		}
-
-        // Displaying gold key
-        if (goldDoor.doorKey == false)
-        {
-            goldKey.enabled = false;
-        }
-        else
-        {
-            goldKey.enabled = true;
-        }
     }
 
 	void RefreshHearts() 
@@ -72,5 +63,17 @@ public class UIManager : MonoBehaviour {
 				hearts[i].SetActive(true);
 			}		
 		}
+	}
+
+	public void PickupKey()
+	{
+		Debug.Log("Picked up key!");
+		goldKey.enabled = true;
+	}
+
+	public void LoseKey()
+	{
+		Debug.Log("Used key!");
+		goldKey.enabled = false;
 	}
 }

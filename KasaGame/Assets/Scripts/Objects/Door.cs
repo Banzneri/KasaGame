@@ -36,6 +36,7 @@ public class Door : MonoBehaviour, IActionObject
             {
                 Action();
                 doorKey = false;
+                GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UIManager>().LoseKey();
             }
         }
 
