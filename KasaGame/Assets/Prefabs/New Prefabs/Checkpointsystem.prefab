@@ -765,7 +765,7 @@ Light:
   m_Color: {r: 1, g: 0.9411765, b: 0.1254902, a: 1}
   m_Intensity: 14.73
   m_Range: 6.5979424
-  m_SpotAngle: 94.18928
+  m_SpotAngle: 44.53073
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -839,7 +839,7 @@ MonoBehaviour:
   player: {fileID: 0}
   riseAmount: 2.5
   spawnPoint: {fileID: 4140926204177762}
-  rotateSpeed: 30
+  rotateSpeed: 100
   isActivated: 0
   rising: 0
   _light: {fileID: 108189214347261296}

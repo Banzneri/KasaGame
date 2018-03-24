@@ -28,10 +28,7 @@ public class RotateGear : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (isActivated)
-        {
-            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
-        }
+        transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         if (rising)
         {
             transform.position = Vector3.Lerp(transform.position, riseLocation, Time.deltaTime);
@@ -56,6 +53,7 @@ public class RotateGear : MonoBehaviour {
         rising = true;
         isActivated = true;
         gameObject.GetComponent<MeshRenderer>().material = _activeMaterial;
+        rotateSpeed = rotateSpeed * 2;
 
         GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
         GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
