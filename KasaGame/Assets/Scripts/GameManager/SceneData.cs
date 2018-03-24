@@ -26,9 +26,11 @@ public class CheckPointData : SaveableObject {
 [System.Serializable]
 public class DoorData : SaveableObject {
 	public bool isOpen;
+	public bool key;
 
-	public DoorData(GameObject obj, bool open): base(obj) {
+	public DoorData(GameObject obj, bool open, bool hasKey): base(obj) {
 		isOpen = open;
+		key = hasKey;
 	}
 }
 

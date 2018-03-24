@@ -8,4 +8,5 @@ public class GameData {
 	public string currentSceneName = "Level2";
 	public MyVector3 currentPosition = new MyVector3(0, 0, 0);
 	public MyQuaternion currentRotation = new MyQuaternion(0, 0, 0, 0);
+	public bool hasPlayed = false;
 }

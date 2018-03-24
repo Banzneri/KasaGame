@@ -25,6 +25,10 @@ public class MainMenu : MonoBehaviour {
 		settings.onClick.AddListener(ActivateSettings);
 		quit.onClick.AddListener(QuitGame);
 		back.onClick.AddListener(ActivateMainMenu);
+		if (Object.FindObjectOfType<Game>().GetGameData().hasPlayed)
+		{
+			start.GetComponent<Text>().text = "Continue";
+		}
 	}
 
 	private void StartGame()

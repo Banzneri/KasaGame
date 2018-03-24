@@ -12,6 +12,7 @@ public class SceneHandler : MonoBehaviour {
 	private List<GameObject> keys = new List<GameObject>();
 	private List<GameObject> doors = new List<GameObject>();
 	private List<GameObject> screws = new List<GameObject>();
+	private UIManager ui;
 
 	private Vector3 defaultStartPosition;
 
@@ -19,13 +20,15 @@ public class SceneHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>();
 		Init();
 		LoadScene();
 		Debug.Log(player.Health);
 	}
 
 	private void Init() {
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>();
+		ui = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UIManager>();
+
 		checkpoints.AddRange(GameObject.FindGameObjectsWithTag("Checkpoint"));
 		movableBoxes.AddRange(GameObject.FindGameObjectsWithTag("Box"));
 		movingPlatforms.AddRange(GameObject.FindGameObjectsWithTag("MovingPlatform"));
@@ -65,7 +68,7 @@ public class SceneHandler : MonoBehaviour {
 
 		foreach (var door in doors)
 		{
-			DoorData data = new DoorData(door, door.GetComponent<Door>().open);
+			DoorData data = new DoorData(door, door.GetComponent<Door>().open, door.GetComponent<Door>().doorKey);
 			sceneData.doors.Add(data);
 		}
 
@@ -96,6 +99,7 @@ public class SceneHandler : MonoBehaviour {
 		FileStream fs = File.Create(Application.persistentDataPath + "/PlayerData");
 		GameData gameData = new GameData();
 
+		gameData.hasPlayed = true;
 		gameData.health = (int)player.Health;
 		gameData.currentSceneName = SceneManager.GetActiveScene().name;
 		Vector3 pos = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
@@ -153,10 +157,18 @@ public class SceneHandler : MonoBehaviour {
 			keys[i].SetActive(!data.pickableItems[i].pickedUp);
 		}
 
+		bool hasKey = false;
 		for (int i = 0; i < data.doors.Count; i++)
 		{
 			doors[i].GetComponent<Door>().open = data.doors[i].isOpen;
+			doors[i].GetComponent<Door>().doorKey = data.doors[i].key;
+
+			if (doors[i].GetComponent<Door>().doorKey && !hasKey)
+			{
+				hasKey = true;
+			}
 		}
+		ui.hasKey = hasKey;
 
 		for (int i = 0; i < data.screws.Count; i++)
 		{

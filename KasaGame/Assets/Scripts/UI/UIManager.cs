@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (hasKey && !goldKey.enabled)
+		{
+			PickupKey();
+		}
 		if (player.Health == 0f && heartCount > 0f)
 		{
 			heartCount = 0f;
@@ -69,11 +73,13 @@ public class UIManager : MonoBehaviour {
 	{
 		Debug.Log("Picked up key!");
 		goldKey.enabled = true;
+		hasKey = true;
 	}
 
 	public void LoseKey()
 	{
 		Debug.Log("Used key!");
 		goldKey.enabled = false;
+		hasKey = false;
 	}
 }
