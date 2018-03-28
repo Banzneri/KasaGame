@@ -21,7 +21,7 @@ public class Game : MonoBehaviour {
 				return gameData;
             }
         }
-        catch (FileNotFoundException ex)
+        catch (System.Exception ex)
         {
 			FileStream file = File.Create(Application.persistentDataPath + "/PlayerData");
 			GameData gameData = new GameData();

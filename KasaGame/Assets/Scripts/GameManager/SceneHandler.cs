@@ -22,7 +22,6 @@ public class SceneHandler : MonoBehaviour {
 	void Awake () {
 		Init();
 		LoadScene();
-		Debug.Log(player.Health);
 	}
 
 	private void Init() {
@@ -124,7 +123,7 @@ public class SceneHandler : MonoBehaviour {
 				LoadPlayer();
             }
         }
-        catch (FileNotFoundException ex)
+        catch (System.Exception ex)
         {
 			Debug.Log("Save not found, creating new!");
 			data = CreateSceneDataObject();
