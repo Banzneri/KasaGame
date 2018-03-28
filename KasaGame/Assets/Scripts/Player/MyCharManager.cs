@@ -77,7 +77,6 @@ public class MyCharManager : MonoBehaviour {
 		}
 		HandleDying();
 		HandleWeapon();
-		Debug.Log(cc.isGrounded);
 	}
 
 	private void InitBlinking()
