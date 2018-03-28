@@ -109,8 +109,11 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null || targetLookAt == null) return;
 
         CameraMovement();
+        //HandlePlayerTransparency();        
+    }
 
-
+    void HandlePlayerTransparency()
+    {
         Vector3 targetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + 1, currentTarget.position.z);
 
         Vector3 cameraToPlayer = targetPos - transform.position;

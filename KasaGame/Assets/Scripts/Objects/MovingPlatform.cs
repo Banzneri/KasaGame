@@ -37,13 +37,13 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
         int screwsDown = 0;
 
         foreach (Screw screw in automaticScrews) {
-            if (screw.GetDown()) {
-                screwsDown++;
-            }
-            if (screwsDown >= automaticScrews.Length) {
-                b = true;
-            }
-            //Debug.Log("Screws down: " + screwsDown);
+			if (screw.GetDown()) {
+				screwsDown++;
+			}
+			if (screwsDown >= automaticScrews.Length) {
+				b = true;
+			}
+			//Debug.Log("Screws down: " + screwsDown);
         }
 
         return b;
@@ -108,7 +108,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 
 	void OnCollisionExit(Collision other)
 	{
-			if (other.gameObject.tag == "Player")
+		if (other.gameObject.tag == "Player")
 		{
 			other.gameObject.transform.parent = null;
 		}		

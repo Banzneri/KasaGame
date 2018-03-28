@@ -396,7 +396,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8009a20034d14e1468bfb9cd117078cc, type: 2}
+  - {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -430,7 +430,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8009a20034d14e1468bfb9cd117078cc, type: 2}
+  - {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -498,7 +498,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8009a20034d14e1468bfb9cd117078cc, type: 2}
+  - {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -532,7 +532,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8009a20034d14e1468bfb9cd117078cc, type: 2}
+  - {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -566,7 +566,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2d5909eecfbe71946a324c8405df75c7, type: 2}
+  - {fileID: 2100000, guid: c1824e3f1aba44646ab0afbb7ade681e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -844,7 +844,7 @@ MonoBehaviour:
   rising: 0
   _light: {fileID: 108189214347261296}
   _spotLight: {fileID: 108126342897113174}
-  _activeMaterial: {fileID: 2100000, guid: 86d46a9c60b76fa47a11ffa96ca05520, type: 2}
+  _activeMaterial: {fileID: 2100000, guid: 490474d0c1a4bcb45ba1c71b6c0bddfa, type: 2}
   _inactiveMaterial: {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
 --- !u!114 &114178634869524194
 MonoBehaviour:
@@ -907,8 +907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5e7e40504da2468e84b0a5c663a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeMaterial: {fileID: 2100000, guid: 61fc4d9b68d16cf4889d380b1cc3e33f, type: 2}
-  _inactiveMaterial: {fileID: 2100000, guid: 7543fef67ad9e2341916d10eec5764d1, type: 2}
+  _activeMaterial: {fileID: 2100000, guid: 490474d0c1a4bcb45ba1c71b6c0bddfa, type: 2}
+  _inactiveMaterial: {fileID: 2100000, guid: 31b68aadfd419f548b4a8c7d60cd5847, type: 2}
   _isActivated: 0
   _sides:
   - {fileID: 1354901055999166}

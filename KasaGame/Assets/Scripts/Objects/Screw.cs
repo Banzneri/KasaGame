@@ -5,7 +5,10 @@ using UnityEngine;
 public class Screw : MonoBehaviour, ITriggerObject<IActionObject> {
 	private Animator anim;
 	public bool down = false;
+	[HideInInspector]
 	public bool loaded = false;
+	public GameObject[] gameObjects;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();

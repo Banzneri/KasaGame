@@ -265,7 +265,8 @@ namespace Invector.CharacterController
             }
             */
             speed = Mathf.Abs(input.x * 4) + Mathf.Abs(input.y * 4);
-            if (!IsMoving()) speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
+            if (!IsMoving()) 
+                speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
                         
@@ -347,7 +348,7 @@ namespace Invector.CharacterController
         public void AirControl()
         {
             if (isGrounded) return;
-            if (!jumpFwdCondition) return;
+            //if (!jumpFwdCondition) return;
 
             var velY = transform.forward * jumpForward * speed;
             velY.y = _rigidbody.velocity.y;
