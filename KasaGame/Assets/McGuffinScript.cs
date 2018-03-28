@@ -12,14 +12,19 @@ public class McGuffinScript : MonoBehaviour {
     [SerializeField]
     McGuffinOrigin mcGuffinOrigin;
 
-	// Use this for initialization
-	void Start () {
+    Renderer renderer;
+
+    // Use this for initialization
+    void Start () {
+
+        renderer = GetComponent<Renderer>();
+
         if (mcGuffinOrigin == McGuffinOrigin.Level1) {
-            GetComponent<Renderer>().material.color = Color.red;
+            renderer.material.color = Color.red;
         } else if(mcGuffinOrigin == McGuffinOrigin.Level2) {
-            GetComponent<Renderer>().material.color = Color.green;
+            renderer.material.color = Color.green;
         } else {
-            GetComponent<Renderer>().material.color = Color.blue;
+            renderer.material.color = Color.blue;
         }
 	}
 	
@@ -28,7 +33,8 @@ public class McGuffinScript : MonoBehaviour {
         RotateMcGuffin(rotationSpeed);
 
         transform.Translate(Vector3.forward * Mathf.Sin(Time.time) / 200);
-	}
+
+    }
 
     void RotateMcGuffin(float speed)
     {
