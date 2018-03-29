@@ -8,15 +8,21 @@ public class Checkpoint : MonoBehaviour {
 	[SerializeField] private bool _isActivated = false;
 	[SerializeField] private GameObject[] _sides;
 	[SerializeField] private GameObject _gear;
+	[SerializeField] private float _actDistance = 5.0f;
 
 	private GameObject _player;
-	// Use this for initialization
+
+	bool WithinDistance {
+		get {
+			return Vector3.Distance(transform.position, _player.transform.position) < _actDistance;
+		}
+	}
+
 	void Start () {
 		SetMaterials();
 		_player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		Interact ();
 	}
@@ -33,19 +39,16 @@ public class Checkpoint : MonoBehaviour {
 			{
 				side.GetComponent<MeshRenderer>().material = _inactiveMaterial;
 			}
-			
 		}
 	}
 
 	void Interact()
     {
-        if (Vector3.Distance(transform.position, _player.transform.position) < 5)
+        if (WithinDistance)
         {
-            //Debug.Log("Press e");
             if (!_isActivated)
             {
                 Activate();
-				SetMaterials();
             }
         }
     }
@@ -55,5 +58,6 @@ public class Checkpoint : MonoBehaviour {
 		_gear.GetComponent<RotateGear>().Activate();
 		_gear.GetComponent<AudioSource>().Play();
 		_isActivated = true;
+		SetMaterials();
 	}
 }
