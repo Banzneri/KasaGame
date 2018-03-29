@@ -11,8 +11,17 @@ TagManager:
   - Heart
   - Hat
   - Interactable
+  - SceneHandler
+  - MovingPlatform
+  - Key
+  - Door
+  - PushableBox
   - Fire
+  - Screw
+  - Button
+  - DefaultStartPosition
   - JumpPad
+  - UI
   layers:
   - Default
   - TransparentFX

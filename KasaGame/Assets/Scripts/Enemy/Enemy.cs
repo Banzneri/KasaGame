@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour {
 			{
 				moving = false;	
 			}
-			//animator.SetTrigger("Hit");
+			animator.SetTrigger("Hit");
 			SetWheelVelocity(0);	
 		}
 		if (moving)
