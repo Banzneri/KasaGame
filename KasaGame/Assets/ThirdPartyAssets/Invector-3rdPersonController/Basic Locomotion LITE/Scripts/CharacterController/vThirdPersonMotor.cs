@@ -278,7 +278,7 @@ namespace Invector.CharacterController
                 var eulerY = transform.eulerAngles.y;
 
                 // apply free directional rotation while not turning180 animations
-                if (isGrounded || (!isGrounded && jumpAirControl))
+                if (( isGrounded || (!isGrounded && jumpAirControl) ) && !lockMovement)
                 {
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
