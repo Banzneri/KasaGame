@@ -201,6 +201,7 @@ namespace Invector.CharacterController
 
         public virtual void UpdateMotor()
         {
+            Debug.Log(groundDistance);
             CheckGround();
             ControlJumpBehaviour();
             ControlLocomotion();
@@ -411,7 +412,7 @@ namespace Invector.CharacterController
             // clear the checkground to free the character to attack on air                
             var onStep = StepOffset();
 
-            if (groundDistance <= 0.05f)
+            if (groundDistance <= 0.1f)
             {
                 isGrounded = true;
                 Sliding();
@@ -445,6 +446,7 @@ namespace Invector.CharacterController
                 Vector3 pos = transform.position + Vector3.up * (_capsuleCollider.radius);
                 // ray for RayCast
                 Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
+                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
                 // ray for SphereCast
                 Ray ray2 = new Ray(pos, -Vector3.up);
                 // raycast for check the ground distance
@@ -472,8 +474,9 @@ namespace Invector.CharacterController
             var onStep = StepOffset();
             var groundAngleTwo = 0f;
             RaycastHit hitinfo;
-            Ray ray = new Ray(transform.position, -transform.up);
-
+            Vector3 pos = transform.position;
+            pos.y = pos.y - transform.lossyScale.y / 2.0f;
+            Ray ray = new Ray(pos, -transform.up);
             if (Physics.Raycast(ray, out hitinfo, 1f, groundLayer))
             {
                 groundAngleTwo = Vector3.Angle(Vector3.up, hitinfo.normal);
@@ -481,7 +484,7 @@ namespace Invector.CharacterController
 
             if (GroundAngle() > slopeLimit + 1f && GroundAngle() <= 85 &&
                 groundAngleTwo > slopeLimit + 1f && groundAngleTwo <= 85 &&
-                groundDistance <= 0.05f && !onStep)
+                groundDistance <= 1f)
             {
                 isSliding = true;
                 isGrounded = false;
