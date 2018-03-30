@@ -488,7 +488,7 @@ namespace Invector.CharacterController
             {
                 isSliding = true;
                 isGrounded = false;
-                var slideVelocity = (GroundAngle() - slopeLimit) * 2f;
+                var slideVelocity = (GroundAngle() - slopeLimit) * 40f;
                 slideVelocity = Mathf.Clamp(slideVelocity, 0, 10);
                 _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, -slideVelocity, _rigidbody.velocity.z);
             }
