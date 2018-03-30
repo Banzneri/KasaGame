@@ -41,6 +41,7 @@ public class ModeOnEdge : ClimbingMode
         bool Gradual = Host.IsGradual(_Edge);
         _TargetRotation = Host.RotationOnEdge(Gradual, _Edge);
         _TargetPosition = Host.PositionOnEdge(Gradual, _SidePosition, _Edge);
+        Host.AnimatorComp.SetBool("IsClimbing", true);
     }
 
     public override void Exit()
@@ -99,7 +100,7 @@ public class ModeOnEdge : ClimbingMode
         if (RotationReady && MovingReady)
         {
             _Transition = false;
-            Host.AnimatorComp.SetBool("IsClimbing", true);
+            //Host.AnimatorComp.SetBool("IsClimbing", true);
             return;
         }
 
