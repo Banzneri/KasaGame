@@ -201,7 +201,6 @@ namespace Invector.CharacterController
 
         public virtual void UpdateMotor()
         {
-            Debug.Log(groundDistance);
             CheckGround();
             ControlJumpBehaviour();
             ControlLocomotion();
