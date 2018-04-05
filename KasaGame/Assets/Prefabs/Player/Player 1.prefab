@@ -947,7 +947,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908532817791000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.3, y: 1.9, z: -40.6}
+  m_LocalPosition: {x: 0.010184674, y: 1.4, z: -0.036031872}
   m_LocalScale: {x: 1, y: 1, z: 1.0044593}
   m_Children:
   - {fileID: 4829479460755978}
@@ -1064,7 +1064,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a2654877176a5404aba6e88cea66e55e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1435,7 +1435,7 @@ MonoBehaviour:
   _damageCooldown: 2
   _immunityBlinkRate: 0.1
   _jumpFrames: 0.5
-  _extraFallSpeed: 1.5
+  _extraFallSpeed: 1
   _maxStamina: 100
   _currentStamina: 100
   _blinks: 1
