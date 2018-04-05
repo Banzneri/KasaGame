@@ -5,107 +5,97 @@ using Invector.CharacterController;
 using System;
 
 public class VerticalMoveTrap : MonoBehaviour, IActionObject {
-    public bool automatic;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float delay = 2f;
-    [SerializeField] private float initialDelay = 1f;
+    public bool _automatic;
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _delay = 2f;
+    [SerializeField] private float _initialDelay = 1f;
+    [SerializeField] private bool _goingUp = false;
+    [SerializeField] private bool _goingDown = true;
+    private float _delayCounter = 0f;
+    private float _initialDelayCounter = 0f;
+    private Vector3 _minY;
+    private Vector3 _maxY;
+    private DamageOnTriggerEnter _damage;
 
-    private Vector3 minY;
-    private Vector3 maxY;
-    [SerializeField] private bool goingUp = false;
-    [SerializeField] private bool goingDown = true;
-    private float delayCounter = 0f;
-    private float initialDelayCounter = 0f;
-
-	void Start () {
-        minY = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
-        maxY = transform.position;
+	void Awake () {
+        _minY = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+        _maxY = transform.position;
+        _damage = GetComponent<DamageOnTriggerEnter>();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (initialDelayCounter < initialDelay)
+        HandleMoving();
+        HandleDamage();
+    }
+
+    private void HandleDamage()
+    {
+        if (_goingDown || _goingUp)
         {
-            initialDelayCounter += Time.deltaTime;
+            if (!_damage._doesDamage)
+            {
+                _damage._doesDamage = true;
+            }
+        }
+        else if (_damage.enabled)
+        {
+            Debug.Log("DamageDisabled");
+            _damage._doesDamage = false;
+        }
+    }
+
+    private void HandleMoving()
+    {
+        if (_initialDelayCounter < _initialDelay)
+        {
+            _initialDelayCounter += Time.deltaTime;
         }
 
-        if (initialDelayCounter > initialDelay || !automatic)
+        if (_initialDelayCounter > _initialDelay || !_automatic)
         {
-            delayCounter += Time.deltaTime;
-
-            if (goingUp)
+            if (_goingUp)
             {
-                Vector3 movement = Vector3.MoveTowards(transform.position, maxY, Time.deltaTime * speed);
-                transform.position = movement;
-                if (transform.position == maxY && automatic)
+                transform.position = Vector3.MoveTowards(transform.position, _maxY, Time.deltaTime * _speed);
+                if (transform.position == _maxY && _automatic)
                 {
-                    goingDown = true;
-                    goingUp = false;
+                    _goingDown = true;
+                    _goingUp = false;
                 }
             }
-            else if (goingDown)
+            else if (_goingDown)
             {
-                Vector3 movement = Vector3.MoveTowards(transform.position, minY, Time.deltaTime * speed);
-                transform.position = movement;
-                if (transform.position == minY && automatic)
+                transform.position = Vector3.MoveTowards(transform.position, _minY, Time.deltaTime * _speed);
+                if (transform.position == _minY && _automatic)
                 {
-                    goingDown = false;
+                    _goingDown = false;
                 }
             }
-            else if (delayCounter > delay && automatic)
+            else if (_delayCounter > _delay && _automatic)
             {
                 GetComponent<AudioSource>().Play();
-                goingUp = true;
-                delayCounter = 0f;
+                _goingUp = true;
+                _delayCounter = 0f;
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        HitPlayer(other);
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        HitPlayer(other);
-    }
-
-    void HitPlayer(Collider playerCollider) 
-    {
-        if (playerCollider.gameObject.tag.Equals("Player"))
-        {
-            MyCharManager player = playerCollider.gameObject.GetComponent<MyCharManager>();
-            vThirdPersonController controller = playerCollider.gameObject.GetComponent<vThirdPersonController>();
-            Rigidbody rigidbody = controller.GetComponent<Rigidbody>();
-            
-            if (!player.Immune && player.Health > 0)
+            else
             {
-                if (goingDown || goingUp)
-                {
-                    controller.isFlying = true;
-                    rigidbody.velocity = Vector3.zero;
-                    rigidbody.AddForce(Vector3.up * 10 , ForceMode.VelocityChange);
-                    player.TakeDamage();   
-                }
+                _delayCounter += Time.deltaTime;
             }
         }
     }
 
     public void Action()
     {
-
         GetComponent<AudioSource>().Play();
-
-            if (goingUp)
-            {
-                    goingDown = true;
-                    goingUp = false;
-            }
-            else if (goingDown)
-            {
-                    goingDown = false;
-                    goingUp = true;     
-            }
+        if (_goingUp)
+        {
+                _goingDown = true;
+                _goingUp = false;
+        }
+        else if (_goingDown)
+        {
+                _goingDown = false;
+                _goingUp = true;     
+        }
     }
 }

@@ -26,6 +26,8 @@ public class BoxMover : MonoBehaviour {
         RaycastHit hit;
         Ray forward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, 1, 1)));
 
+        Debug.DrawRay(_player.transform.position + new Vector3(0, 1, 0), _player.transform.TransformDirection(Vector3.forward)*1, Color.red);
+
         if (Physics.Raycast(forward, out hit, 2))
         {
             if (hit.collider == _BoxCol)

@@ -41,6 +41,8 @@ public class ModeOnEdge : ClimbingMode
         bool Gradual = Host.IsGradual(_Edge);
         _TargetRotation = Host.RotationOnEdge(Gradual, _Edge);
         _TargetPosition = Host.PositionOnEdge(Gradual, _SidePosition, _Edge);
+        Host.AnimatorComp.SetTrigger("StartClimbing");
+        Host.AnimatorComp.SetBool("IsClimbing", true);
     }
 
     public override void Exit()
@@ -48,7 +50,7 @@ public class ModeOnEdge : ClimbingMode
         Host.GrabDelay = Time.deltaTime * 10;
         Host.PreviousEdge = _Edge;
         Host.Player.transform.rotation = Quaternion.LookRotation(_Edge.TransformToVectorInWorld(_Edge.ForwardDirection, true));
-		Host.AnimatorComp.SetBool("IsClimbing", false);
+        Host.AnimatorComp.SetBool("IsClimbing", false);
     }
 
     public override void Run()
@@ -99,7 +101,7 @@ public class ModeOnEdge : ClimbingMode
         if (RotationReady && MovingReady)
         {
             _Transition = false;
-            Host.AnimatorComp.SetBool("IsClimbing", true);
+            //Host.AnimatorComp.SetBool("IsClimbing", true);
             return;
         }
 

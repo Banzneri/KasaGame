@@ -265,7 +265,8 @@ namespace Invector.CharacterController
             }
             */
             speed = Mathf.Abs(input.x * 4) + Mathf.Abs(input.y * 4);
-            if (!IsMoving()) speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
+            if (!IsMoving()) 
+                speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
                         
@@ -277,7 +278,7 @@ namespace Invector.CharacterController
                 var eulerY = transform.eulerAngles.y;
 
                 // apply free directional rotation while not turning180 animations
-                if (isGrounded || (!isGrounded && jumpAirControl))
+                if (( isGrounded || (!isGrounded && jumpAirControl) ) && !lockMovement)
                 {
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
@@ -347,7 +348,7 @@ namespace Invector.CharacterController
         public void AirControl()
         {
             if (isGrounded) return;
-            if (!jumpFwdCondition) return;
+            //if (!jumpFwdCondition) return;
 
             var velY = transform.forward * jumpForward * speed;
             velY.y = _rigidbody.velocity.y;
@@ -410,7 +411,7 @@ namespace Invector.CharacterController
             // clear the checkground to free the character to attack on air                
             var onStep = StepOffset();
 
-            if (groundDistance <= 0.05f)
+            if (groundDistance <= 0.1f)
             {
                 isGrounded = true;
                 Sliding();
@@ -444,6 +445,7 @@ namespace Invector.CharacterController
                 Vector3 pos = transform.position + Vector3.up * (_capsuleCollider.radius);
                 // ray for RayCast
                 Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
+                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
                 // ray for SphereCast
                 Ray ray2 = new Ray(pos, -Vector3.up);
                 // raycast for check the ground distance
@@ -471,8 +473,9 @@ namespace Invector.CharacterController
             var onStep = StepOffset();
             var groundAngleTwo = 0f;
             RaycastHit hitinfo;
-            Ray ray = new Ray(transform.position, -transform.up);
-
+            Vector3 pos = transform.position;
+            pos.y = pos.y - transform.lossyScale.y / 2.0f;
+            Ray ray = new Ray(pos, -transform.up);
             if (Physics.Raycast(ray, out hitinfo, 1f, groundLayer))
             {
                 groundAngleTwo = Vector3.Angle(Vector3.up, hitinfo.normal);
@@ -480,11 +483,11 @@ namespace Invector.CharacterController
 
             if (GroundAngle() > slopeLimit + 1f && GroundAngle() <= 85 &&
                 groundAngleTwo > slopeLimit + 1f && groundAngleTwo <= 85 &&
-                groundDistance <= 0.05f && !onStep)
+                groundDistance <= 1f)
             {
                 isSliding = true;
                 isGrounded = false;
-                var slideVelocity = (GroundAngle() - slopeLimit) * 2f;
+                var slideVelocity = (GroundAngle() - slopeLimit) * 40f;
                 slideVelocity = Mathf.Clamp(slideVelocity, 0, 10);
                 _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, -slideVelocity, _rigidbody.velocity.z);
             }

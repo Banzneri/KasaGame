@@ -15,7 +15,6 @@ public class JumpPad : MonoBehaviour {
     void Start () {
 		_player = GameObject.FindGameObjectWithTag("Player");
         _originalJumpHeight = _player.GetComponent<vThirdPersonController>().jumpHeight;
-        _jump = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
     }
 
@@ -24,6 +23,7 @@ public class JumpPad : MonoBehaviour {
         if(_player.GetComponent<vThirdPersonController>().isGrounded &&
            _player.GetComponent<vThirdPersonController>().groundHit.collider.gameObject == transform.gameObject)
         {
+            
             if (Input.GetButton("Jump"))
             {
                 _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2.5f;
@@ -36,6 +36,7 @@ public class JumpPad : MonoBehaviour {
             }
             else
             {
+                
                 _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
 
                 if (!_jump.isPlaying)
