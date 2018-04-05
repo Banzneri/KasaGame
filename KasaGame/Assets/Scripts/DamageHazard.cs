@@ -6,7 +6,6 @@ using System;
 
 public class DamageHazard : MonoBehaviour
 {
-
     private void OnTriggerEnter(Collider other)
     {
         HitPlayer(other);
