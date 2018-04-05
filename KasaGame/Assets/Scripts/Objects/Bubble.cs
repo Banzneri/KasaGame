@@ -12,7 +12,7 @@ public class Bubble : MonoBehaviour {
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _originalJumpHeight = _player.GetComponent<vThirdPersonController>().jumpHeight;
+        _originalJumpHeight = originSpawner.originalPlayerJumpHeight;
     }
 
     // Update is called once per frame
@@ -26,20 +26,16 @@ public class Bubble : MonoBehaviour {
             if (hit.collider == GetComponent<SphereCollider>())
             {
                 originSpawner.PlayEffect();
-                _player.GetComponent<vThirdPersonController>().jumpHeight = 13 * 2f;
+                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
                 GameObject.Destroy(gameObject);
             }
         }
 
-        if (_player.GetComponent<vThirdPersonController>().jumpCounter == 0 ||
-            _player.GetComponent<vThirdPersonController>().isGrounded)
-        {
-            _player.GetComponent<vThirdPersonController>().jumpHeight = 13;
-        }
-
+        //Bubbles like to float
         transform.position += new Vector3(0, 1f, 0) * 3f * Time.deltaTime;
 
+        //Destroy old bubbles
         if(transform.position.y > _floatHeight)
         {
             GameObject.Destroy(gameObject);

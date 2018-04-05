@@ -14,6 +14,7 @@ public class LightsOutCube : MonoBehaviour {
     public AudioSource _soundOn;
     public AudioSource _soundOff;
     private LightsOut _manager;
+    private float _originalJumpHeight;
 
     private void Start()
     {

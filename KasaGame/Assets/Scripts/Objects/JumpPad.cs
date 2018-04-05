@@ -20,32 +20,35 @@ public class JumpPad : MonoBehaviour {
 
     private void Update()
     {
-        if(_player.GetComponent<vThirdPersonController>().isGrounded &&
-           _player.GetComponent<vThirdPersonController>().groundHit.collider.gameObject == transform.gameObject)
+        RaycastHit hit;
+        Ray downward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, -0.5f, 0)));
+
+        if (Physics.Raycast(downward, out hit, 1f))
         {
-            
-            if (Input.GetButton("Jump"))
+            if (hit.collider.gameObject == this.gameObject)
             {
-                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2.5f;
-
-                if (!_superJump.isPlaying)
+                if (Input.GetButton("Jump"))
                 {
-                    _superJump.Play();
-                    _anim.Play("PadJump");
-                }
-            }
-            else
-            {
-                
-                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
+                    _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2.5f;
 
-                if (!_jump.isPlaying)
-                {
-                    _jump.Play();
-                    _anim.Play("PadJump");
+                    if (!_superJump.isPlaying)
+                    {
+                        _superJump.Play();
+                        _anim.Play("PadJump");
+                    }
                 }
+                else
+                {
+                    _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
+
+                    if (!_jump.isPlaying)
+                    {
+                        _jump.Play();
+                        _anim.Play("PadJump");
+                    }
+                }
+                _player.GetComponent<vThirdPersonController>().SpecialJump();
             }
-            _player.GetComponent<vThirdPersonController>().Jump();
         }
 
         if (_player.GetComponent<vThirdPersonController>().jumpCounter == 0)

@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originSpawner: {fileID: 0}
-  _floatHeight: 40
+  _floatHeight: 50
 --- !u!135 &135428372051252156
 SphereCollider:
   m_ObjectHideFlags: 1

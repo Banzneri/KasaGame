@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Invector.CharacterController;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,14 @@ public class BubbleSpawner : MonoBehaviour, IActionObject {
     public Bubble bubble;
     private AudioSource _popSound;
     public bool activated = true;
+    public float originalPlayerJumpHeight;
+    private GameObject _player;
 
 
 	// Use this for initialization
 	void Start () {
+        _player = GameObject.FindGameObjectWithTag("Player");
+        originalPlayerJumpHeight = _player.GetComponent<vThirdPersonController>().jumpHeight;
         _timeCounter = summonTime - delay;
         _popSound = GetComponent<AudioSource>();
     }
@@ -30,7 +35,14 @@ public class BubbleSpawner : MonoBehaviour, IActionObject {
             Instantiate(bubble, transform.position, transform.rotation);
             _timeCounter = 0;
         }
-	}
+
+        //Change the jump height back to normal when appropriate
+        if (_player.GetComponent<vThirdPersonController>().jumpCounter == 0 ||
+            _player.GetComponent<vThirdPersonController>().isGrounded)
+        {
+            _player.GetComponent<vThirdPersonController>().jumpHeight = originalPlayerJumpHeight;
+        }
+    }
 
     public void PlayEffect()
     {
