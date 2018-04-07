@@ -28,19 +28,33 @@ public class WaterPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_player.GetComponent<vThirdPersonController>().isGrounded &&
-           _player.GetComponent<vThirdPersonController>().groundHit.collider.gameObject == transform.gameObject)
-        {
-            _anim.enabled = false;
 
-            if(!_soundEffect.isPlaying)
+        if (_player.GetComponent<vThirdPersonController>().isGrounded)
+        {
+            if (_player.GetComponent<vThirdPersonController>().groundHit.collider == null)
             {
-                _soundEffect.Play();
+                return;
             }
-            
-            _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2f;
-            _player.GetComponent<vThirdPersonController>().Jump();
-            _goDown = true;
+            if (_player.GetComponent<vThirdPersonController>().groundHit.collider.gameObject == transform.gameObject)
+            {
+                _anim.enabled = false;
+
+                if(!_soundEffect.isPlaying)
+                {
+                    _soundEffect.Play();
+                }
+                
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 10f;
+                }
+                else
+                {
+                    _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 10f;   
+                }
+                _player.GetComponent<vThirdPersonController>().Jump();
+                _goDown = true;
+            }
         }
 
         if (_player.GetComponent<vThirdPersonController>().jumpCounter == 0)
