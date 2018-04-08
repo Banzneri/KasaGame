@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 82281689807264526}
   - component: {fileID: 95122657155603918}
   - component: {fileID: 114938205862553624}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Launcher
   m_TagString: JumpPad
   m_Icon: {fileID: 0}

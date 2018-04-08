@@ -774,6 +774,16 @@ Prefab:
       propertyPath: _extraFallSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114994516726751616, guid: d64eb4e02815a7b4196fbf76e0691105,
+        type: 2}
+      propertyPath: jumpForward
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114688137989860710, guid: d64eb4e02815a7b4196fbf76e0691105,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d64eb4e02815a7b4196fbf76e0691105, type: 2}
   m_IsPrefabParent: 0
@@ -10277,12 +10287,12 @@ Prefab:
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 369
+      value: 393.5
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 451.5
+      value: 450
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd1589a11e3f3e2478bea9d5dc26ff50, type: 2}

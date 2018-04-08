@@ -70,7 +70,7 @@ public class MyCharManager : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
 		HandleDamageCooldown();
-		AltHandleJumpFrames();
+		//AltHandleJumpFrames();
 		if (!cc.lockMovement)
 		{
 			HandleFallSpeed();

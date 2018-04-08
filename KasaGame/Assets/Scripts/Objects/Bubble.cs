@@ -26,7 +26,10 @@ public class Bubble : MonoBehaviour {
             if (hit.collider == GetComponent<SphereCollider>())
             {
                 originSpawner.PlayEffect();
-                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
+                _player.GetComponent<JumpManager>().StopJumping();
+                _player.GetComponent<JumpManager>().RevertToOriginalSettings();
+                _player.GetComponent<JumpManager>().JumpHeight = _originalJumpHeight * 1.3f;
+                _player.GetComponent<JumpManager>().JumpTime = _player.GetComponent<JumpManager>().JumpTime * 1.3f;
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
                 GameObject.Destroy(gameObject);
             }

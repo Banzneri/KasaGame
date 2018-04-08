@@ -33,6 +33,8 @@ public class ModeOnEdge : ClimbingMode
 
     public override void Enter()
     {
+        Host.Player.GetComponent<JumpManager>().RevertToOriginalSettings();
+        Host.Player.GetComponent<JumpManager>().StopJumping();
         Host.EnableDefaultControllingSystem(false);
         _SidePosition = Host.SidePositionOnEdge(Host.Player.transform, _Edge, true);
 

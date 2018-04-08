@@ -22,7 +22,7 @@ public class WaterPlatform : MonoBehaviour
         _anim = GetComponent<Animator>();
         _originalPosition = transform.position;
         _player = GameObject.FindGameObjectWithTag("Player");
-        _originalJumpHeight = _player.GetComponent<vThirdPersonController>().jumpHeight;
+        _originalJumpHeight = _player.GetComponent<JumpManager>().JumpHeight;
     }
 
     // Update is called once per frame
@@ -41,7 +41,8 @@ public class WaterPlatform : MonoBehaviour
                 {
                     _soundEffect.Play();
                 }
-                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 2f;
+                _player.GetComponent<JumpManager>().StopJumping();
+                _player.GetComponent<JumpManager>().ScaleJump(1.5f);
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
                 _goDown = true;
             }

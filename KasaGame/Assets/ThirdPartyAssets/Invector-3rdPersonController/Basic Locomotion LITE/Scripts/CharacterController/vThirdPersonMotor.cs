@@ -340,9 +340,9 @@ namespace Invector.CharacterController
                 isJumping = false;
             }
             // apply extra force to the jump height   
-            var vel = _rigidbody.velocity;
+            /*var vel = _rigidbody.velocity;
             vel.y = jumpHeight;
-            _rigidbody.velocity = vel;
+            _rigidbody.velocity = vel;*/
         }
 
         public void AirControl()
@@ -351,7 +351,7 @@ namespace Invector.CharacterController
             //if (!jumpFwdCondition) return;
 
             var velY = transform.forward * jumpForward * speed;
-            velY.y = _rigidbody.velocity.y;
+            //velY.y = _rigidbody.velocity.y;
             var velX = transform.right * jumpForward * direction;
             velX.x = _rigidbody.velocity.x;            
 
