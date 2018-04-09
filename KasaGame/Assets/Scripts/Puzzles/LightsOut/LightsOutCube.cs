@@ -71,7 +71,7 @@ public class LightsOutCube : MonoBehaviour {
 
         if (Physics.Raycast(downward, out hit, 1))
         {
-            if (hit.collider == transform.GetComponent<BoxCollider>())
+            if (hit.collider == transform.GetComponent<BoxCollider>() && _player.GetComponent<Rigidbody>().velocity.y < 0)
             {
                 _playerOnTop = true;
             }

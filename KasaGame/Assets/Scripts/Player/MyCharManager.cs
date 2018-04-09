@@ -73,7 +73,7 @@ public class MyCharManager : MonoBehaviour {
 		//AltHandleJumpFrames();
 		if (!cc.lockMovement)
 		{
-			HandleFallSpeed();
+			//HandleFallSpeed();
 		}
 		HandleDying();
 		HandleWeapon();

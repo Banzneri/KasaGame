@@ -6,6 +6,7 @@ using UnityEngine;
 public class JumpPad : MonoBehaviour {
 
     private GameObject _player;
+    private JumpManager _jumpManager;
     private float _originalJumpHeight;
     public AudioSource _jump;
     public AudioSource _superJump;
@@ -14,6 +15,7 @@ public class JumpPad : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		_player = GameObject.FindGameObjectWithTag("Player");
+        _jumpManager = _player.GetComponent<JumpManager>();
         _originalJumpHeight = _player.GetComponent<JumpManager>().JumpHeight;
         _anim = GetComponent<Animator>();
     }
@@ -27,9 +29,10 @@ public class JumpPad : MonoBehaviour {
         {
             if (hit.collider.gameObject == this.gameObject)
             {
+                _jumpManager.RevertToOriginalSettings();
                 if (Input.GetButton("Jump"))
                 {
-                    _player.GetComponent<JumpManager>().ScaleJump(1.8f);
+                    _jumpManager.SetSuperJumpPadJump();
 
                     if (!_superJump.isPlaying)
                     {
@@ -39,7 +42,7 @@ public class JumpPad : MonoBehaviour {
                 }
                 else
                 {
-                    _player.GetComponent<JumpManager>().ScaleJump(1.5f);
+                    _jumpManager.SetNormalJumpPadJump();
 
                     if (!_jump.isPlaying)
                     {
@@ -47,14 +50,9 @@ public class JumpPad : MonoBehaviour {
                         _anim.Play("PadJump");
                     }
                 }
-                _player.GetComponent<JumpManager>().StopJumping();
+                _jumpManager.StopJumping();
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
             }
-        }
-
-        if (_player.GetComponent<vThirdPersonController>().jumpCounter == 0)
-        {
-            _player.GetComponent<JumpManager>().JumpHeight = _originalJumpHeight;
         }
     }
 }

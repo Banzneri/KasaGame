@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 81735235188680942}
   - component: {fileID: 114688137989860710}
   - component: {fileID: 114059060297703458}
+  - component: {fileID: 82821816982853238}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -1341,6 +1342,86 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!82 &82821816982853238
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908532817791000}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4dd2b3e3440536f41b0cfa6647094f79, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 0.9
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95658295505720700
 Animator:
   serializedVersion: 3
@@ -1374,9 +1455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d00f6f0fb66ac45960d77129f489a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpTime: 0.4
-  _jumpLength: 12
-  _jumpHeight: 10
+  _jumpTime: 0.8
+  _jumpLength: 19
+  _jumpHeight: 7
+  _regularJumpSound: {fileID: 82821816982853238}
 --- !u!114 &114138816597207792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1450,7 +1532,7 @@ MonoBehaviour:
   _damageCooldown: 2
   _immunityBlinkRate: 0.1
   _jumpFrames: 0.5
-  _extraFallSpeed: 0.5
+  _extraFallSpeed: 0
   _maxStamina: 100
   _currentStamina: 100
   _blinks: 1
@@ -1508,7 +1590,7 @@ MonoBehaviour:
   groundMaxDistance: 0.5
   locomotionType: 0
   lockMovement: 0
-  freeRotationSpeed: 10
+  freeRotationSpeed: 100
   strafeRotationSpeed: 10
   jumpAirControl: 1
   jumpTimer: 0.3

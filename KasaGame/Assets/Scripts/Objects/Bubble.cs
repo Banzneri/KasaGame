@@ -28,8 +28,7 @@ public class Bubble : MonoBehaviour {
                 originSpawner.PlayEffect();
                 _player.GetComponent<JumpManager>().StopJumping();
                 _player.GetComponent<JumpManager>().RevertToOriginalSettings();
-                _player.GetComponent<JumpManager>().JumpHeight = _originalJumpHeight * 1.3f;
-                _player.GetComponent<JumpManager>().JumpTime = _player.GetComponent<JumpManager>().JumpTime * 1.3f;
+                _player.GetComponent<JumpManager>().SetBubbleJump();
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
                 GameObject.Destroy(gameObject);
             }
