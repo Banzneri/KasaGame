@@ -264,13 +264,13 @@ namespace Invector.CharacterController
                 xInput = 1;
             }
             */
-            speed = Mathf.Abs(input.x * 4) + Mathf.Abs(input.y * 4);
+            speed = Mathf.Abs(input.x * 50) + Mathf.Abs(input.y * 50);
             if (!IsMoving()) 
                 speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
                         
-            if (input != Vector2.zero && targetDirection.magnitude > 0.1f)
+            if (input != Vector2.zero && targetDirection.magnitude > 0.01f)
             {
                 Vector3 lookDirection = targetDirection.normalized;
                 freeRotation = Quaternion.LookRotation(lookDirection, transform.up);
@@ -282,7 +282,7 @@ namespace Invector.CharacterController
                 {
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime * 1000);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime);
                 }               
             }
         }
@@ -552,6 +552,14 @@ namespace Invector.CharacterController
                 var right = keepDirection ? referenceTransform.right : referenceTransform.TransformDirection(Vector3.right);
 
                 // determine the direction the player will face based on input and the referenceTransform's right and forward directions
+                float thresholdX = 0;
+                float thresholdY = 0;
+
+                if (Input.GetKey(KeyCode.A)) { thresholdX = -1; }
+                else if (Input.GetKey(KeyCode.D)) { thresholdX = 1; }
+                if (Input.GetKey(KeyCode.W)) { thresholdY = 1; }
+                else if (Input.GetKey(KeyCode.S)) { thresholdY = -1; }
+                
                 targetDirection = input.x * right + input.y * forward;
             }
             else

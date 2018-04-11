@@ -56,6 +56,8 @@ public class DarkenScreen : MonoBehaviour {
 			{
 				t = 0f;
 				fadingIn = false;
+				Input.ResetInputAxes();
+				Camera.main.GetComponent<vThirdPersonCamera>().lockCamera = false;
 			}
 		}
 	}

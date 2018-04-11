@@ -13,11 +13,16 @@ public class JumpManager : MonoBehaviour {
 	private float _originalJumpLength;
 	private float _originalJumpTime;
 
+	private float _minJumpTime = 0.1f;
+	private bool _reachedApex = false;
+	private bool _releasedJumpKey = false;
 	private float _jumpStartPositionY;
 	private float _jumpCounter = 0;
 	private vThirdPersonController _controller;
 	private bool _jumping = false;
 	private bool _jumped = false;
+
+	public bool _isRegularJump = true;
 
 	public float JumpHeight
 	{
@@ -75,34 +80,68 @@ public class JumpManager : MonoBehaviour {
 		{
 			if (!_jumped)
 			{
-				_regularJumpSound.Play();
+				if (_isRegularJump)
+				{
+					_regularJumpSound.Play();	
+				}
 				_jumped = true;
 			}
 			_jumpCounter += Time.deltaTime;
 			HandleJumpVelocity();
-
-			if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _jumpTime / 2)
-			{
-				_jumpCounter = _jumpTime / 2f;
-				_jumpTime = _jumpTime * 1.2f;
-			}
+			HandleVariableHeightJump();
 		}
 		_controller.jumpForward = _jumpLength;
+	}
+
+	private void HandleVariableHeightJump()
+	{
+		if (!_isRegularJump)
+		{
+			return;
+		}
+
+		if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _minJumpTime)
+		{
+			_releasedJumpKey = true;
+		}
+
+		if (_releasedJumpKey)
+		{
+			if (_jumpCounter > _minJumpTime)
+			{
+				//Debug.Log("min: " + (transform.position.y - _jumpStartPositionY));
+				float newJumpCounter = _jumpTime / 2.0f;
+				float newJumpTime = _jumpTime * 1.2f;
+				_jumpCounter = _jumpTime / 2.5f;
+				//_jumpTime = _jumpTime * 1.2f;
+				_releasedJumpKey = false;
+			}
+		}
+
+		else if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _jumpTime / 2 && _jumpCounter > _minJumpTime)
+		{
+			//Debug.Log("notmin: " + (transform.position.y - _jumpStartPositionY));
+			float newJumpCounter = _jumpTime / 2.0f;
+			float newJumpTime = _jumpTime * 1.2f;
+			_jumpCounter = _jumpTime / 2.5f;
+			//_jumpTime = _jumpTime * 1.2f;
+		}
 	}
 
 	private void HandleJumpVelocity ()
 	{
 		Vector3 velocity = _controller._rigidbody.velocity;
 		Vector3 position = _controller._rigidbody.position;
-		// -2h/t^2
 		float gravity = ( -2.0f * _jumpHeight ) / ( Mathf.Pow((_jumpTime / 2.0f), 2) );
 		float initialVelocity = ( 2 * _jumpHeight ) / ( _jumpTime / 2.0f );
 		//velocity.y = 0.5f * ( gravity * Mathf.Pow(_jumpCounter, 2) ) + initialVelocity * _jumpCounter;
 		velocity.y = gravity * _jumpCounter + initialVelocity;
-		//velocity.y = velocity.y * (_jumpTime / _jumpCounter);
-		//if (velocity.y < -30) velocity.y = -30;
-		Debug.Log(velocity.y);
 		_controller._rigidbody.velocity = velocity;
+		if (!_reachedApex && velocity.y < 0)
+		{
+			_reachedApex = true;
+			Debug.Log("min: " + (transform.position.y - _jumpStartPositionY));
+		}
 	}
 
 	public void RevertToOriginalSettings()
@@ -110,22 +149,32 @@ public class JumpManager : MonoBehaviour {
 		_jumpHeight = _originalJumpHeight;
 		_jumpLength = _originalJumpLength;
 		_jumpTime = _originalJumpTime;
+		_isRegularJump = true;
 	}
 
 	public void SetNormalJumpPadJump()
 	{
-		_jumpHeight = _originalJumpHeight * 2.5f;
-		_jumpTime = _originalJumpTime * 1.5f;
-	}
-
-	public void SetSuperJumpPadJump()
-	{
+		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 1.8f;
 		_jumpTime = _originalJumpTime * 1.3f;
 	}
 
+	public void SetSuperJumpPadJump()
+	{
+		_isRegularJump = false;
+		_jumpHeight = _originalJumpHeight * 2.5f;
+		_jumpTime = _originalJumpTime * 1.5f;
+	}
+
+	public void SetEdgeJump()
+	{
+		_isRegularJump = false;
+		_jumpHeight = _originalJumpHeight * 0.7f;
+	}
+
 	public void SetBubbleJump()
 	{
+		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 1.6f;
 		_jumpTime = _jumpTime * 1.6f;
 	}
@@ -135,6 +184,8 @@ public class JumpManager : MonoBehaviour {
 		_jumped = false;
 		_jumping = false;
 		_jumpCounter = 0.0f;
+		_isRegularJump = true;
+		_reachedApex = false;
 	}
 
 	public void ScaleJump(float scale)

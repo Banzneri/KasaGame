@@ -19,7 +19,7 @@ public class Bubble : MonoBehaviour {
     void Update () {
 
         RaycastHit hit;
-        Ray downward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, -0.5f, 0)));
+        Ray downward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, -0.1f, 0)));
 
         if (Physics.Raycast(downward, out hit, 1f))
         {

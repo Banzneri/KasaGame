@@ -30,6 +30,7 @@ public class JumpPad : MonoBehaviour {
             if (hit.collider.gameObject == this.gameObject)
             {
                 _jumpManager.RevertToOriginalSettings();
+                _jumpManager.StopJumping();
                 if (Input.GetButton("Jump"))
                 {
                     _jumpManager.SetSuperJumpPadJump();
@@ -50,7 +51,6 @@ public class JumpPad : MonoBehaviour {
                         _anim.Play("PadJump");
                     }
                 }
-                _jumpManager.StopJumping();
                 _player.GetComponent<vThirdPersonController>().SpecialJump();
             }
         }

@@ -19,7 +19,7 @@ public class ModeOnAir : ClimbingMode
         
         if (Jump)
         {
-            Host.Player.GetComponent<JumpManager>().JumpHeight = Host.Player.GetComponent<JumpManager>().JumpHeight * 0.7f;
+            Host.Player.GetComponent<JumpManager>().SetEdgeJump();
             Host.VController.isGrounded = true;
             Host.VController.Jump();
             Host.VController.isGrounded = false;
