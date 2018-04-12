@@ -156,8 +156,8 @@ public class vThirdPersonCamera : MonoBehaviour
 
     public void SetCameraBehindPlayer()
     {
-        mouseY = currentTarget.eulerAngles.x;
-        mouseX = currentTarget.eulerAngles.y;
+        mouseY = 0.0f;
+        mouseX = currentTarget.root.localEulerAngles.y;
     }
 
     void SetMaterialTransparent(Material[] materials)

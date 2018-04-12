@@ -33,7 +33,7 @@ public class JumpPad : MonoBehaviour {
                 _jumpManager.StopJumping();
                 if (Input.GetButton("Jump"))
                 {
-                    _jumpManager.SetSuperJumpPadJump();
+                    _jumpManager.SuperJumpPadJump();
 
                     if (!_superJump.isPlaying)
                     {
@@ -43,7 +43,7 @@ public class JumpPad : MonoBehaviour {
                 }
                 else
                 {
-                    _jumpManager.SetNormalJumpPadJump();
+                    _jumpManager.NormalJumpPadJump();
 
                     if (!_jump.isPlaying)
                     {

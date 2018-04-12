@@ -50,7 +50,7 @@ public class JumpManager : MonoBehaviour {
 
 	void Start () 
 	{
-		_controller = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>();
+		_controller = GetComponent<vThirdPersonController>();
 		_originalJumpHeight = _jumpHeight;
 		_originalJumpLength = _jumpLength;
 		_originalJumpTime = _jumpTime;
@@ -64,6 +64,11 @@ public class JumpManager : MonoBehaviour {
 
 	private void HandleJumping()
 	{
+		if (_controller.GetComponent<MyCharManager>().Health < 1)
+		{
+			return;
+		}
+		
 		if (_controller.isJumping && !_jumping)
 		{
 			_jumpStartPositionY = _controller._rigidbody.position.y;
@@ -80,10 +85,7 @@ public class JumpManager : MonoBehaviour {
 		{
 			if (!_jumped)
 			{
-				if (_isRegularJump)
-				{
-					_regularJumpSound.Play();	
-				}
+				if (_isRegularJump) _regularJumpSound.Play();
 				_jumped = true;
 			}
 			_jumpCounter += Time.deltaTime;
@@ -95,10 +97,7 @@ public class JumpManager : MonoBehaviour {
 
 	private void HandleVariableHeightJump()
 	{
-		if (!_isRegularJump)
-		{
-			return;
-		}
+		if (!_isRegularJump) return;
 
 		if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _minJumpTime)
 		{
@@ -136,12 +135,14 @@ public class JumpManager : MonoBehaviour {
 		float initialVelocity = ( 2 * _jumpHeight ) / ( _jumpTime / 2.0f );
 		//velocity.y = 0.5f * ( gravity * Mathf.Pow(_jumpCounter, 2) ) + initialVelocity * _jumpCounter;
 		velocity.y = gravity * _jumpCounter + initialVelocity;
+		//velocity.y = Mathf.Clamp(velocity.y, -70.0f, 100.0f);
 		_controller._rigidbody.velocity = velocity;
 		if (!_reachedApex && velocity.y < 0)
 		{
 			_reachedApex = true;
 			Debug.Log("min: " + (transform.position.y - _jumpStartPositionY));
 		}
+		Debug.Log(velocity.y);
 	}
 
 	public void RevertToOriginalSettings()
@@ -152,27 +153,39 @@ public class JumpManager : MonoBehaviour {
 		_isRegularJump = true;
 	}
 
-	public void SetNormalJumpPadJump()
+	public void NormalJump()
+	{
+		_jumpHeight = _originalJumpHeight;
+		_jumpLength = _originalJumpLength;
+		_jumpTime = _originalJumpTime;
+		_isRegularJump = true;
+		GetComponent<vThirdPersonController>().Jump();
+	}
+
+	public void NormalJumpPadJump()
 	{
 		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 1.8f;
 		_jumpTime = _originalJumpTime * 1.3f;
+		GetComponent<vThirdPersonController>().Jump();
 	}
 
-	public void SetSuperJumpPadJump()
+	public void SuperJumpPadJump()
 	{
 		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 2.5f;
 		_jumpTime = _originalJumpTime * 1.5f;
+		GetComponent<vThirdPersonController>().Jump();
 	}
 
-	public void SetEdgeJump()
+	public void EdgeJump()
 	{
 		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 0.7f;
+		GetComponent<vThirdPersonController>().Jump();
 	}
 
-	public void SetBubbleJump()
+	public void BubbleJump()
 	{
 		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 1.6f;

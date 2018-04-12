@@ -6,6 +6,8 @@ using UnityEngine;
 public class LightsOutCube : MonoBehaviour {
     public LightsOutCube[] adjacents;
     public bool activated;
+    public Material _inactiveMaterial;
+    public Material _activeMaterial;
     private Light _light;
     private MeshRenderer _renderer;
     private GameObject _player;
@@ -26,12 +28,12 @@ public class LightsOutCube : MonoBehaviour {
         if (activated)
         {
             _light.enabled = true;
-            _renderer.material.color = Color.green;
+            _renderer.material = _activeMaterial;
         }
         else
         {
             _light.enabled = false;
-            _renderer.material.color = Color.grey;
+            _renderer.material = _inactiveMaterial;
         }
     }
 
@@ -46,7 +48,7 @@ public class LightsOutCube : MonoBehaviour {
             }
             activated = false;
             _light.enabled = false;
-            _renderer.material.color = Color.grey;
+            _renderer.material = _inactiveMaterial;
             _manager.activeCubes--;
         }
         else
@@ -57,7 +59,7 @@ public class LightsOutCube : MonoBehaviour {
             }
             activated = true;
             _light.enabled = true;
-            _renderer.material.color = Color.green;
+            _renderer.material = _activeMaterial;
             _manager.activeCubes++;
         }
     }
@@ -71,7 +73,9 @@ public class LightsOutCube : MonoBehaviour {
 
         if (Physics.Raycast(downward, out hit, 1))
         {
-            if (hit.collider == transform.GetComponent<BoxCollider>() && _player.GetComponent<Rigidbody>().velocity.y < -1)
+            if (hit.collider == transform.GetComponent<BoxCollider>() && 
+                _player.GetComponent<Rigidbody>().velocity.y < -1 &&
+                _player.GetComponent<JumpManager>().Jumping)
             {
                 _playerOnTop = true;
             }

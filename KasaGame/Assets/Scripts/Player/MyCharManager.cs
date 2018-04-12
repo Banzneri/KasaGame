@@ -316,7 +316,6 @@ public class MyCharManager : MonoBehaviour {
 		_currentHealth = _maxHealth;
 		ReturnToClosestCheckpoint();
 		Camera.main.GetComponent<vThirdPersonCamera>().SetCameraBehindPlayer();
-		Camera.main.GetComponent<vThirdPersonCamera>().lockCamera = true;
 	}
 
 	private void PlayDeathSound()
