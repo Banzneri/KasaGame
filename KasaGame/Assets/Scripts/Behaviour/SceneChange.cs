@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneChange : MonoBehaviour {
-	[SerializeField] private int level = 1;
+	[SerializeField] private string level;
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Player")
 		{
-			Object.FindObjectOfType<MySceneManager>().LoadLevel("Level" + level);
+			Object.FindObjectOfType<MySceneManager>().LoadLevel(level);
 		}
 	}
 }

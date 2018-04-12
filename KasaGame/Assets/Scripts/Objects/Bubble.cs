@@ -19,15 +19,15 @@ public class Bubble : MonoBehaviour {
     void Update () {
 
         RaycastHit hit;
-        Ray downward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, -0.5f, 0)));
+        Ray downward = new Ray(_player.transform.position, _player.transform.TransformDirection(new Vector3(0, -0.1f, 0)));
 
         if (Physics.Raycast(downward, out hit, 1f))
         {
             if (hit.collider == GetComponent<SphereCollider>())
             {
                 originSpawner.PlayEffect();
-                _player.GetComponent<vThirdPersonController>().jumpHeight = _originalJumpHeight * 1.8f;
-                _player.GetComponent<vThirdPersonController>().SpecialJump();
+                _player.GetComponent<JumpManager>().StopJumping();
+                _player.GetComponent<JumpManager>().BubbleJump();
                 GameObject.Destroy(gameObject);
             }
         }

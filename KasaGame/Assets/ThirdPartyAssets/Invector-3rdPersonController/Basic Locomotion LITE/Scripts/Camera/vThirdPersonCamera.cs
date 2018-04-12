@@ -109,7 +109,7 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null || targetLookAt == null) return;
 
         CameraMovement();
-        //HandlePlayerTransparency();        
+        HandlePlayerTransparency();        
     }
 
     void HandlePlayerTransparency()
@@ -152,6 +152,12 @@ public class vThirdPersonCamera : MonoBehaviour
         */
 
         //Debug.Log("targetRenderer.material.color.a =" + targetRenderer.material.color.a + ", distanceToPlayer = " + distanceToPlayer);
+    }
+
+    public void SetCameraBehindPlayer()
+    {
+        mouseY = 0.0f;
+        mouseX = currentTarget.root.localEulerAngles.y;
     }
 
     void SetMaterialTransparent(Material[] materials)

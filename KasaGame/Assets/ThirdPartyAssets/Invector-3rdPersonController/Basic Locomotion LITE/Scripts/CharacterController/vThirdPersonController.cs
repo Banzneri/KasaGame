@@ -52,7 +52,7 @@ namespace Invector.CharacterController
         public virtual void Jump()
         {
             // conditions to do this action
-            bool jumpConditions = !isJumping && isGrounded;
+            bool jumpConditions = !isJumping && isGrounded && mc.Health > 0;
             // return if jumpCondigions is false
             if (!jumpConditions) return;
             // trigger jump behaviour

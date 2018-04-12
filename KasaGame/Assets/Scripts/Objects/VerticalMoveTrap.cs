@@ -40,7 +40,6 @@ public class VerticalMoveTrap : MonoBehaviour, IActionObject {
         }
         else if (_damage.enabled)
         {
-            Debug.Log("DamageDisabled");
             _damage._doesDamage = false;
         }
     }
