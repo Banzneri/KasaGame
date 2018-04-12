@@ -38,6 +38,7 @@ public class ModeOnEdge : ClimbingMode
             Host.ChangeMode(new ModeOnAir(Host, false));
             return;
         }
+        if (Host.VController.isFlying) { Host.VController.isFlying = false; }
         Host.Player.GetComponent<JumpManager>().RevertToOriginalSettings();
         Host.Player.GetComponent<JumpManager>().StopJumping();
         Host.EnableDefaultControllingSystem(false);

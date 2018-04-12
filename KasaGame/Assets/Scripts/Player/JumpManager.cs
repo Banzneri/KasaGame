@@ -189,7 +189,8 @@ public class JumpManager : MonoBehaviour {
 	{
 		_isRegularJump = false;
 		_jumpHeight = _originalJumpHeight * 1.6f;
-		_jumpTime = _jumpTime * 1.6f;
+		_jumpTime = _originalJumpTime * 1.6f;
+		GetComponent<vThirdPersonController>().SpecialJump();
 	}
 
 	public void StopJumping()

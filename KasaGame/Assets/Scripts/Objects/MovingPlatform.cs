@@ -109,22 +109,6 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
         }
     }
 
-	void OnCollisionEnter(Collision other)
-	{
-		if (other.gameObject.tag == "Player")
-		{
-			other.gameObject.transform.parent = transform;
-		}
-	}
-
-	void OnCollisionExit(Collision other)
-	{
-		if (other.gameObject.tag == "Player")
-		{
-			other.gameObject.transform.parent = null;
-		}		
-	}
-
     public void Action()
     {
         if (goingToEndLoc && !automatic)
