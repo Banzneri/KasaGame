@@ -10,7 +10,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 	[SerializeField] private float waitTime;
     [SerializeField] private bool automatic;
     private bool goingToEndLoc = true; //Used only if the platform is not automatic.
-
+    public ParticleSystem splasher;
     [SerializeField] Screw[] automaticScrews;
 
     private Vector3 currentDestination;
@@ -19,7 +19,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 
 	// Use this for initialization
 	void Start () {
-		currentDestination = new Vector3(startLocation.position.x, startLocation.position.y, startLocation.position.z);
+        currentDestination = new Vector3(startLocation.position.x, startLocation.position.y, startLocation.position.z);
 	}
 	
     void MoveToVector3(Vector3 target)
@@ -50,8 +50,8 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
         return b;
     }
 
-	// Update is called once per frame
-	void FixedUpdate () {
+    // Update is called once per frame
+    void FixedUpdate () {
 		Vector3 trajectory = Vector3.MoveTowards(transform.position, currentDestination, speed * Time.deltaTime);
 
         MoveToVector3(trajectory);
@@ -98,7 +98,16 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
         {
             GetComponent<AudioSource>().Stop();
         }
-	}
+
+        if (splasher != null && !splasher.isPlaying && transform.position != currentDestination)
+        {
+            splasher.Play();
+        }
+        else if (splasher != null && transform.position == currentDestination)
+        {
+            splasher.Stop();
+        }
+    }
 
 	void OnCollisionEnter(Collision other)
 	{
