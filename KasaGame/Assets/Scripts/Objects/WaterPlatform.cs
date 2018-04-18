@@ -41,9 +41,7 @@ public class WaterPlatform : MonoBehaviour
                 {
                     _soundEffect.Play();
                 }
-                _player.GetComponent<JumpManager>().StopJumping();
-                _player.GetComponent<JumpManager>().ScaleJump(1.5f);
-                _player.GetComponent<vThirdPersonController>().SpecialJump();
+                _player.GetComponent<JumpManager>().BubbleJump();
                 _goDown = true;
             }
         }

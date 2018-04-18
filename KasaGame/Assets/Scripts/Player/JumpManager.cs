@@ -8,21 +8,37 @@ public class JumpManager : MonoBehaviour {
 	[SerializeField] private float _jumpLength = 10.0f;
 	[SerializeField] private float _jumpHeight = 14.0f;
 	[SerializeField] private AudioSource _regularJumpSound;
+	[SerializeField] private float _fallCooldown = 0.2f;
+	[SerializeField] private float _jumpHeightFromGround = 1f;
+	[SerializeField] private Projector _blobShadow;
 
 	private float _originalJumpHeight;
 	private float _originalJumpLength;
 	private float _originalJumpTime;
+	private vThirdPersonController _controller;
 
 	private float _minJumpTime = 0.1f;
+	private float _startVelocity = 0.0f;
 	private bool _reachedApex = false;
+	private bool _pressedJumpKey = false;
 	private bool _releasedJumpKey = false;
+	private bool _releasedEarly = false;
+	private bool _alreadyReleased = false;
+	private bool _wantsToJump = false;
+	private bool _wantsToReleaseJumpKey = false;
 	private float _jumpStartPositionY;
-	private float _jumpCounter = 0;
-	private vThirdPersonController _controller;
+	private float _jumpCounter = 0.0f;
+	private float _variableJumpCounter = 0.0f;
 	private bool _jumping = false;
 	private bool _jumped = false;
+	private bool _startedFalling = false;
+	private float _fallCounter = 0.0f;
+	private bool _alreadyFell = true;
+	private float _timeInApex = 8.0f;
+	private float _timeInApexCounter = 0.0f;
 
 	public bool _isRegularJump = true;
+	public bool _jumpedWhileFalling = false;
 
 	public float JumpHeight
 	{
@@ -48,6 +64,11 @@ public class JumpManager : MonoBehaviour {
 		set { _jumping = value; }
 	}
 
+	public bool CanJump
+	{
+		get { return (_startedFalling) || _controller.GroundDistance < _jumpHeightFromGround; }
+	}
+
 	void Start () 
 	{
 		_controller = GetComponent<vThirdPersonController>();
@@ -57,92 +78,168 @@ public class JumpManager : MonoBehaviour {
 		_controller.jumpForward = _jumpLength;
 	}
 	
-	void LateUpdate () 
+	void FixedUpdate () 
+	{
+		HandleJumpVelocity();
+	}
+
+	void Update ()
 	{
 		HandleJumping();
+		HandleVariableHeightJump();
+		HandleFalling();
+		GetInput();
+	}
+
+	public void GetInput()
+	{
+		_pressedJumpKey = Input.GetKeyDown(KeyCode.Space);
+		_releasedJumpKey = Input.GetKeyUp(KeyCode.Space);
+
+		if (!_wantsToReleaseJumpKey && _releasedJumpKey)
+		{
+			_wantsToReleaseJumpKey = true;
+		}
+
+		if (!_wantsToJump && _pressedJumpKey && CanJump)
+		{
+			_wantsToJump = true;	
+		}
+	}
+
+	public void StartJumping(bool isRegularJump)
+	{
+		StopJumping();
+		DisableRealShadows();
+		_isRegularJump = isRegularJump;
+		if (_isRegularJump) _regularJumpSound.Play();
+		_jumping = true;
+		_jumpStartPositionY = _controller._rigidbody.position.y;
+		if (_controller._rigidbody.velocity.magnitude < 1)
+			GetComponent<Animator>().CrossFadeInFixedTime("Jump", 0.01f);
+		else
+			GetComponent<Animator>().CrossFadeInFixedTime("JumpMove", 0.1f);
+	}
+
+	public void StopJumping()
+	{
+		EnableRealShadows();
+		RevertToOriginalSettings();
+		_jumped = false;
+		_jumping = false;
+		_jumpCounter = 0.0f;
+		_variableJumpCounter = 0.0f;
+		_timeInApexCounter = 0.0f;
+		_reachedApex = false;
+		_wantsToJump = false;
+		_alreadyReleased = false;
+		_wantsToReleaseJumpKey = false;
+		_releasedEarly = false;
 	}
 
 	private void HandleJumping()
 	{
-		if (_controller.GetComponent<MyCharManager>().Health < 1)
+		if (_controller.isGrounded && _wantsToJump)
 		{
-			return;
+			NormalJump();
 		}
-		
-		if (_controller.isJumping && !_jumping)
-		{
-			_jumpStartPositionY = _controller._rigidbody.position.y;
-			_jumping = true;
-		}
-
-		else if (_controller.isGrounded && !_controller.isJumping && _jumping)
+		else if (_controller.isGrounded && _jumpCounter > _jumpTime / 2)
 		{
 			StopJumping();
-			RevertToOriginalSettings();
-		}
-
-		if (_jumping)
-		{
-			if (!_jumped)
-			{
-				if (_isRegularJump) _regularJumpSound.Play();
-				_jumped = true;
-			}
-			_jumpCounter += Time.deltaTime;
-			HandleJumpVelocity();
-			HandleVariableHeightJump();
 		}
 		_controller.jumpForward = _jumpLength;
 	}
 
+	private void HandleFalling()
+	{
+		GetComponent<Animator>().SetBool("IsFalling", !CanJump);
+		if (Jumping  || _controller.isGrounded)
+		{
+			StopFalling();
+			_alreadyFell = true;
+			return;
+		}
+
+		if (!_startedFalling && _alreadyFell && !_controller.isGrounded && !Jumping)
+		{
+			_startedFalling = true;
+		}
+
+		if (_startedFalling)
+		{
+			_fallCounter += Time.deltaTime;
+			Debug.Log(_fallCounter);
+			if (_wantsToJump) NormalJump();
+			if (_fallCounter > _fallCooldown) StopFalling();
+		}
+	}
+
+	private void StartFalling()
+	{
+		_fallCounter = 0.0f;
+		_startedFalling = true;
+		_alreadyFell = true;
+	}
+
+	private void StopFalling()
+	{
+		_fallCounter = 0.0f;
+		_startedFalling = false;
+		_alreadyFell = false;
+	}
+
 	private void HandleVariableHeightJump()
 	{
-		if (!_isRegularJump) return;
+		if (!_isRegularJump || !Jumping || _alreadyReleased) return;
+		
+		_variableJumpCounter += Time.deltaTime;
 
-		if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _minJumpTime)
+		if (_wantsToReleaseJumpKey && _variableJumpCounter < _minJumpTime)
 		{
-			_releasedJumpKey = true;
+			_releasedEarly = true;
 		}
 
-		if (_releasedJumpKey)
+		if (_releasedEarly && _variableJumpCounter > _minJumpTime)
 		{
-			if (_jumpCounter > _minJumpTime)
-			{
-				//Debug.Log("min: " + (transform.position.y - _jumpStartPositionY));
-				float newJumpCounter = _jumpTime / 2.0f;
-				float newJumpTime = _jumpTime * 1.2f;
-				_jumpCounter = _jumpTime / 2.5f;
-				//_jumpTime = _jumpTime * 1.2f;
-				_releasedJumpKey = false;
-			}
+			_alreadyReleased = true;
+		}
+		else if (!_releasedEarly && _wantsToReleaseJumpKey && _variableJumpCounter < _jumpTime / 2)
+		{
+			_alreadyReleased = true;
 		}
 
-		else if (Input.GetKeyUp(KeyCode.Space) && _jumpCounter < _jumpTime / 2 && _jumpCounter > _minJumpTime)
+		if (_alreadyReleased)
 		{
-			//Debug.Log("notmin: " + (transform.position.y - _jumpStartPositionY));
-			float newJumpCounter = _jumpTime / 2.0f;
-			float newJumpTime = _jumpTime * 1.2f;
-			_jumpCounter = _jumpTime / 2.5f;
-			//_jumpTime = _jumpTime * 1.2f;
+			_jumpCounter = _jumpTime * 0.45f;
+			_jumpTime = _jumpTime * 1.1f;
 		}
 	}
 
 	private void HandleJumpVelocity ()
 	{
+		if (!_jumping) return;
+
+		_jumpCounter += Time.fixedDeltaTime;
 		Vector3 velocity = _controller._rigidbody.velocity;
-		Vector3 position = _controller._rigidbody.position;
 		float gravity = ( -2.0f * _jumpHeight ) / ( Mathf.Pow((_jumpTime / 2.0f), 2) );
 		float initialVelocity = ( 2 * _jumpHeight ) / ( _jumpTime / 2.0f );
-		//velocity.y = 0.5f * ( gravity * Mathf.Pow(_jumpCounter, 2) ) + initialVelocity * _jumpCounter;
 		velocity.y = gravity * _jumpCounter + initialVelocity;
-		//velocity.y = Mathf.Clamp(velocity.y, -70.0f, 100.0f);
-		_controller._rigidbody.velocity = velocity;
-		if (!_reachedApex && velocity.y < 0)
+
+		if (!_reachedApex && velocity.y <= 5)
 		{
 			_reachedApex = true;
-			Debug.Log("min: " + (transform.position.y - _jumpStartPositionY));
+			_alreadyReleased = true;
+			if (_isRegularJump)
+			{
+				_jumpTime = _jumpTime * 1.1f;
+			}
 		}
-		Debug.Log(velocity.y);
+
+		if (_jumpCounter > _jumpTime * 0.66f && _isRegularJump && _reachedApex)
+		{
+			_jumpTime = _originalJumpTime;
+		}
+		_controller._rigidbody.velocity = velocity;
 	}
 
 	public void RevertToOriginalSettings()
@@ -150,62 +247,71 @@ public class JumpManager : MonoBehaviour {
 		_jumpHeight = _originalJumpHeight;
 		_jumpLength = _originalJumpLength;
 		_jumpTime = _originalJumpTime;
-		_isRegularJump = true;
 	}
 
 	public void NormalJump()
 	{
+		StartJumping(true);
+		Debug.Log("NormalJump");
 		_jumpHeight = _originalJumpHeight;
 		_jumpLength = _originalJumpLength;
 		_jumpTime = _originalJumpTime;
-		_isRegularJump = true;
-		GetComponent<vThirdPersonController>().Jump();
 	}
 
 	public void NormalJumpPadJump()
 	{
-		_isRegularJump = false;
+		StartJumping(false);
 		_jumpHeight = _originalJumpHeight * 1.8f;
 		_jumpTime = _originalJumpTime * 1.3f;
-		GetComponent<vThirdPersonController>().Jump();
 	}
 
 	public void SuperJumpPadJump()
 	{
-		_isRegularJump = false;
+		StartJumping(false);
 		_jumpHeight = _originalJumpHeight * 2.5f;
 		_jumpTime = _originalJumpTime * 1.5f;
-		GetComponent<vThirdPersonController>().Jump();
 	}
 
 	public void EdgeJump()
 	{
-		_isRegularJump = false;
-		_jumpHeight = _originalJumpHeight * 0.7f;
-		GetComponent<vThirdPersonController>().Jump();
+		StartJumping(false);
+		_jumpHeight = _originalJumpHeight * 0.5f;
 	}
 
 	public void BubbleJump()
 	{
-		_isRegularJump = false;
+		StartJumping(false);
 		_jumpHeight = _originalJumpHeight * 1.6f;
 		_jumpTime = _originalJumpTime * 1.6f;
-		GetComponent<vThirdPersonController>().SpecialJump();
 	}
 
-	public void StopJumping()
+	public void EnableRealShadows()
 	{
-		_jumped = false;
-		_jumping = false;
-		_jumpCounter = 0.0f;
-		_isRegularJump = true;
-		_reachedApex = false;
+		Renderer[] renderers = GetComponentsInChildren<Renderer>();
+		foreach (var renderer in renderers)
+		{
+			renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+		}
+		_blobShadow.enabled = false;
 	}
 
-	public void ScaleJump(float scale)
+	public void DisableRealShadows()
 	{
-		RevertToOriginalSettings();
-		_jumpHeight = _jumpHeight * scale;
-		_jumpTime = _jumpTime * scale;
+		Renderer[] renderers = GetComponentsInChildren<Renderer>();
+		foreach (var renderer in renderers)
+		{
+			renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+		}
+		_blobShadow.enabled = true;
+	}
+
+	private void JumpDebug()
+	{
+		Debug.Log("AlreadyFell: " + _alreadyFell);
+		Debug.Log("VariableCounter: " + _variableJumpCounter);
+		Debug.Log("Jumping: " + _jumping);
+		Debug.Log("AlreadyReleased: " + _alreadyReleased);
+		Debug.Log("ReleasedEarly: " + _releasedEarly);
+		Debug.Log("JumpCounter: " + _jumpCounter);
 	}
 }

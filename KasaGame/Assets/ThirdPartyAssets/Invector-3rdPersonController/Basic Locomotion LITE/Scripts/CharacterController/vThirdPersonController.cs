@@ -52,17 +52,15 @@ namespace Invector.CharacterController
         public virtual void Jump()
         {
             // conditions to do this action
-            bool jumpConditions = !isJumping && isGrounded && mc.Health > 0;
+            bool jumpConditions = !isJumping && mc.Health > 0 && (isGrounded || mc.GetComponent<JumpManager>().CanJump);
             // return if jumpCondigions is false
             if (!jumpConditions) return;
             // trigger jump behaviour
+            mc.GetComponent<JumpManager>().StartJumping(false);
             jumpCounter = jumpTimer;            
             isJumping = true;
             // trigger jump animations            
-            if (_rigidbody.velocity.magnitude < 1)
-                animator.CrossFadeInFixedTime("Jump", 0.05f);
-            else
-                animator.CrossFadeInFixedTime("JumpMove", 0.1f);
+            
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)

@@ -270,7 +270,7 @@ namespace Invector.CharacterController
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
                         
-            if (input != Vector2.zero && targetDirection.magnitude > 0.01f)
+            if (input != Vector2.zero && targetDirection.magnitude > 0.0001f)
             {
                 Vector3 lookDirection = targetDirection.normalized;
                 freeRotation = Quaternion.LookRotation(lookDirection, transform.up);
@@ -331,7 +331,7 @@ namespace Invector.CharacterController
 
         protected void ControlJumpBehaviour()
         {
-            if (!isJumping) return;
+            if (!GetComponent<JumpManager>().Jumping) return;
 
             jumpCounter -= Time.deltaTime;
             if (jumpCounter <= 0)
@@ -424,10 +424,10 @@ namespace Invector.CharacterController
                     // check vertical velocity
                     verticalVelocity = _rigidbody.velocity.y;
                     // apply extra gravity when falling
-                    if (!onStep && !isJumping)
+                    if (!onStep && !GetComponent<JumpManager>().Jumping)
                         _rigidbody.AddForce(transform.up * extraGravity * Time.deltaTime, ForceMode.VelocityChange);
                 }
-                else if (!onStep && !isJumping)
+                else if (!onStep && !GetComponent<JumpManager>().Jumping)
                 {
                     _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
                 }
@@ -444,8 +444,8 @@ namespace Invector.CharacterController
                 // position of the SphereCast origin starting at the base of the capsule
                 Vector3 pos = transform.position + Vector3.up * (_capsuleCollider.radius);
                 // ray for RayCast
-                Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
-                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
+                Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight, 0), Vector3.down * 3);
+                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight, 0), Vector3.down * 3);
                 // ray for SphereCast
                 Ray ray2 = new Ray(pos, -Vector3.up);
                 // raycast for check the ground distance
@@ -542,6 +542,10 @@ namespace Invector.CharacterController
         {
             if (referenceTransform)
             {
+                if (!IsMoving())
+                {
+                    return;
+                }
                 var forward = keepDirection ? referenceTransform.forward : referenceTransform.TransformDirection(Vector3.forward);
                 forward.y = 0;
 
@@ -555,10 +559,10 @@ namespace Invector.CharacterController
                 float thresholdX = 0;
                 float thresholdY = 0;
 
-                if (Input.GetKey(KeyCode.A)) { thresholdX = -1; }
-                else if (Input.GetKey(KeyCode.D)) { thresholdX = 1; }
-                if (Input.GetKey(KeyCode.W)) { thresholdY = 1; }
-                else if (Input.GetKey(KeyCode.S)) { thresholdY = -1; }
+                if (Input.GetKey(KeyCode.A)) { thresholdX = -0.1f; }
+                else if (Input.GetKey(KeyCode.D)) { thresholdX = 0.1f; }
+                if (Input.GetKey(KeyCode.W)) { thresholdY = 0.1f; }
+                else if (Input.GetKey(KeyCode.S)) { thresholdY = -0.1f; }
                 
                 targetDirection = input.x * right + input.y * forward;
             }

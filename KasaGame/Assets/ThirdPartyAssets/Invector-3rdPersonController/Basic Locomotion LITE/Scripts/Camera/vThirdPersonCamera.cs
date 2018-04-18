@@ -104,7 +104,7 @@ public class vThirdPersonCamera : MonoBehaviour
 
     Renderer[] targetRenderers;
 
-    void LateUpdate()
+    void Update()
     {
         if (target == null || targetLookAt == null) return;
 

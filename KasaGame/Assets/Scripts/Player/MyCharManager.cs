@@ -60,7 +60,6 @@ public class MyCharManager : MonoBehaviour {
 							set {_currentStamina = value; } }
 	public float MaxStamina { get { return _maxStamina; } }
 	public bool Immune { get { return _immuneToDamage; } }
-
 	public bool IsHitting { get { return hitCounter < hitTime; } }
 
 	void Awake () {
