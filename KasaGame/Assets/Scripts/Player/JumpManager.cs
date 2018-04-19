@@ -66,7 +66,7 @@ public class JumpManager : MonoBehaviour {
 
 	public bool CanJump
 	{
-		get { return (_startedFalling) || _controller.GroundDistance < _jumpHeightFromGround; }
+		get { return _startedFalling || _controller.GroundDistance < _jumpHeightFromGround; }
 	}
 
 	void Start () 
@@ -172,13 +172,6 @@ public class JumpManager : MonoBehaviour {
 			if (_wantsToJump) NormalJump();
 			if (_fallCounter > _fallCooldown) StopFalling();
 		}
-	}
-
-	private void StartFalling()
-	{
-		_fallCounter = 0.0f;
-		_startedFalling = true;
-		_alreadyFell = true;
 	}
 
 	private void StopFalling()

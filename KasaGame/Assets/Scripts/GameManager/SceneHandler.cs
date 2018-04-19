@@ -76,6 +76,11 @@ public class SceneHandler : MonoBehaviour {
 			CheckPointData data = new CheckPointData(screw, screw.GetComponent<Screw>().down);
 			sceneData.screws.Add(data);
 		}
+		Vector3 loc = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
+		Quaternion rot = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().rotation;
+
+		sceneData.currentLocation = new MyVector3(loc.x, loc.y, loc.z);
+		sceneData.currentRotation = new MyQuaternion(rot.x, rot.y, rot.z, rot.w);
 
 		// GameObject curCheckpoint = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>().GetClosestCheckpoint();
 		// sceneData.currentCheckpoint = new CheckPointData(curCheckpoint, curCheckpoint.GetComponent<RotateGear>().isActivated);
@@ -175,6 +180,9 @@ public class SceneHandler : MonoBehaviour {
 			screws[i].GetComponent<Screw>().loaded = true;
 		}
 		//ClearAll();
+
+		player.transform.position = TranslateMyVector3ToVector3(data.currentLocation);
+		player.transform.rotation = TranslateMyQuaternionToQuaternion(data.currentRotation);
 
 		Debug.Log(checkpoints.Count);
 	}

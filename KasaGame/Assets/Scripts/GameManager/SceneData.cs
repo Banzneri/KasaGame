@@ -12,6 +12,8 @@ public class SceneData {
 	public List<DoorData> doors = new List<DoorData>();
 	public List<ItemData> pickableItems = new List<ItemData>();
 	public List<CheckPointData> screws = new List<CheckPointData>();
+	public MyVector3 currentLocation;
+	public MyQuaternion currentRotation;
 }
 
 [System.Serializable]
