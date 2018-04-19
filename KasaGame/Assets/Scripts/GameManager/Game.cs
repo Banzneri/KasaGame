@@ -9,7 +9,7 @@ public class Game : MonoBehaviour {
 	private MyCharManager _player;
 	public SceneHandler _currentScene;
 
-	public GameData GetGameData()
+	static public GameData GetGameData()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
 		try
