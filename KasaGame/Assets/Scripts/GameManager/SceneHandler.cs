@@ -22,6 +22,7 @@ public class SceneHandler : MonoBehaviour {
 	void Awake () {
 		Init();
 		LoadScene();
+		LoadPlayer();
 	}
 
 	private void Init() {
@@ -106,10 +107,6 @@ public class SceneHandler : MonoBehaviour {
 		gameData.hasPlayed = true;
 		gameData.health = (int)player.Health;
 		gameData.currentSceneName = SceneManager.GetActiveScene().name;
-		Vector3 pos = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
-		Quaternion rot = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().rotation;
-		gameData.currentPosition = new MyVector3(pos.x, pos.y, pos.z);
-		gameData.currentRotation = new MyQuaternion(rot.x, rot.y, rot.z, rot.w);
 		bf.Serialize(fs, gameData);
 		fs.Close();
 	}
@@ -125,14 +122,12 @@ public class SceneHandler : MonoBehaviour {
 				BinaryFormatter bf = new BinaryFormatter();
 				data = (SceneData)bf.Deserialize(file);
 				file.Close();
-				LoadPlayer();
             }
         }
         catch (System.Exception ex)
         {
 			Debug.Log("Save not found, creating new!");
 			data = CreateSceneDataObject();
-			LoadPlayer();
 			player.gameObject.transform.position = defaultStartPosition;
         }
 
@@ -181,10 +176,16 @@ public class SceneHandler : MonoBehaviour {
 		}
 		//ClearAll();
 
-		player.transform.position = TranslateMyVector3ToVector3(data.currentLocation);
-		player.transform.rotation = TranslateMyQuaternionToQuaternion(data.currentRotation);
-
 		Debug.Log(checkpoints.Count);
+	}
+
+	public SceneData GetSceneData ()
+	{
+		FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open);
+		BinaryFormatter bf = new BinaryFormatter();
+		SceneData data = (SceneData)bf.Deserialize(file);
+		file.Close();
+		return data;
 	}
 
 	public void LoadPlayer()
@@ -193,8 +194,8 @@ public class SceneHandler : MonoBehaviour {
 		FileStream file = File.Open(Application.persistentDataPath + "/PlayerData", FileMode.Open);
 		GameData data = (GameData)bf.Deserialize(file);
 		player.Health = data.health;
-		player.transform.position = TranslateMyVector3ToVector3(data.currentPosition);
-		player.transform.rotation = TranslateMyQuaternionToQuaternion(data.currentRotation);
+		player.transform.position = TranslateMyVector3ToVector3(GetSceneData().currentLocation);
+		player.transform.rotation = TranslateMyQuaternionToQuaternion(GetSceneData().currentRotation);
 		file.Close();
 	}
 
