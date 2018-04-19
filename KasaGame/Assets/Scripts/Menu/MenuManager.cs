@@ -7,12 +7,9 @@ public class MenuManager : MonoBehaviour {
 	[SerializeField] private GameObject menuCanvasObj;
 	[SerializeField] private Button resumeButton;
 	[SerializeField] private Button quitButton;
+	[SerializeField] private Button hubButton;
 
 	public static bool isPaused = false;
-	// Use this for initialization
-	void Awake () {
-		resumeButton.onClick.AddListener(CloseGameMenu);
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,6 +34,13 @@ public class MenuManager : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
+	public void ReturnToHub()
+	{
+		Time.timeScale = 1f;
+		isPaused = false;
+		MySceneManager.LoadLevel("Level_Hub 1");
+	}
+
 	private void HandleMenu()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -56,7 +60,6 @@ public class MenuManager : MonoBehaviour {
 	{
 		Time.timeScale = 1f;
 		isPaused = false;
-		MySceneManager manager = Object.FindObjectOfType<MySceneManager>();
-		manager.LoadMainMenu();
+		MySceneManager.LoadMainMenu();
 	}
 }

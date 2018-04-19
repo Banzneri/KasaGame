@@ -9,7 +9,7 @@ public class SceneChange : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			Object.FindObjectOfType<MySceneManager>().LoadLevel(level);
+			MySceneManager.LoadLevel(level);
 		}
 	}
 }

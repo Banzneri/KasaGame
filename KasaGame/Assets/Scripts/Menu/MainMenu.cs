@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
 
 	private void StartGame()
 	{
-		sceneManager.LoadLevel(Object.FindObjectOfType<Game>().GetGameData().currentSceneName);
+		MySceneManager.LoadLevel(Object.FindObjectOfType<Game>().GetGameData().currentSceneName);
 	}
 
 	private void ActivateSettings()

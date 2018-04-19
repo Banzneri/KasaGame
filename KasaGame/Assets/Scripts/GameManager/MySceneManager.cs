@@ -16,17 +16,17 @@ public class MySceneManager : MonoBehaviour {
 		
 	}
 
-	public void LoadMainMenu()
+	static public void LoadMainMenu()
 	{
 		SceneManager.LoadScene("MainMenu");
 	}
 
-	public void LoadLevel(string level)
+	static public void LoadLevel(string level)
 	{
 		SceneManager.LoadScene(level);
 	}
 
-	public void LoadSettingsMenu()
+	static public void LoadSettingsMenu()
 	{
 		SceneManager.LoadScene("SettingsMenu");
 	}

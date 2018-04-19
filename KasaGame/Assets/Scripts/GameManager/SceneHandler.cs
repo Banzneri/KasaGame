@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour {
 	private MyCharManager player;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		Init();
 		LoadScene();
 		LoadPlayer();
@@ -113,23 +113,7 @@ public class SceneHandler : MonoBehaviour {
 
 	public void LoadScene()
 	{
-		SceneData data = null;
-
-		try
-        {
-            using (FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open))
-            {
-				BinaryFormatter bf = new BinaryFormatter();
-				data = (SceneData)bf.Deserialize(file);
-				file.Close();
-            }
-        }
-        catch (System.Exception ex)
-        {
-			Debug.Log("Save not found, creating new!");
-			data = CreateSceneDataObject();
-			player.gameObject.transform.position = defaultStartPosition;
-        }
+		SceneData data = GetSceneData();
 
 		for (int i = 0; i < data.checkPoints.Count; i++)
 		{
@@ -174,17 +158,33 @@ public class SceneHandler : MonoBehaviour {
 			screws[i].GetComponent<Screw>().down = data.screws[i].isActivated;
 			screws[i].GetComponent<Screw>().loaded = true;
 		}
-		//ClearAll();
 
 		Debug.Log(checkpoints.Count);
 	}
 
 	public SceneData GetSceneData ()
 	{
-		FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open);
-		BinaryFormatter bf = new BinaryFormatter();
-		SceneData data = (SceneData)bf.Deserialize(file);
-		file.Close();
+		SceneData data = null;
+		bool firstTime = false;
+
+		try
+        {
+            using (FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open))
+            {
+				BinaryFormatter bf = new BinaryFormatter();
+				data = (SceneData)bf.Deserialize(file);
+				file.Close();
+            }
+        }
+        catch (System.Exception ex)
+        {
+			Debug.Log("Save not found, creating new!");
+			data = CreateSceneDataObject();
+			firstTime = true;
+        }
+
+		if (firstTime) SaveScene();
+
 		return data;
 	}
 

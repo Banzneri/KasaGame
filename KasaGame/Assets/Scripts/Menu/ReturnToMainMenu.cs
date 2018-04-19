@@ -12,7 +12,6 @@ public class ReturnToMainMenu : MonoBehaviour {
     }
 	void Return()
 	{
-		MySceneManager manager = Object.FindObjectOfType<MySceneManager>();
-		manager.LoadMainMenu();
+		MySceneManager.LoadMainMenu();
 	}
 }
