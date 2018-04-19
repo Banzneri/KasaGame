@@ -1591,7 +1591,7 @@ MonoBehaviour:
   _jumpHeight: 6
   _regularJumpSound: {fileID: 82821816982853238}
   _fallCooldown: 0.2
-  _jumpHeightFromGround: 1
+  _jumpHeightFromGround: 2
   _blobShadow: {fileID: 119511988904399832}
   _isRegularJump: 1
   _jumpedWhileFalling: 0

@@ -444,8 +444,8 @@ namespace Invector.CharacterController
                 // position of the SphereCast origin starting at the base of the capsule
                 Vector3 pos = transform.position + Vector3.up * (_capsuleCollider.radius);
                 // ray for RayCast
-                Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight, 0), Vector3.down * 3);
-                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight, 0), Vector3.down * 3);
+                Ray ray1 = new Ray(transform.position + new Vector3(0, colliderHeight + 0.5f, 0), Vector3.down * 3);
+                Debug.DrawRay(transform.position + new Vector3(0, colliderHeight + 0.5f, 0), Vector3.down * 3);
                 // ray for SphereCast
                 Ray ray2 = new Ray(pos, -Vector3.up);
                 // raycast for check the ground distance
