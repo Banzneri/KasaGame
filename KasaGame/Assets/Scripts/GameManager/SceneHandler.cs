@@ -190,13 +190,10 @@ public class SceneHandler : MonoBehaviour {
 
 	public void LoadPlayer()
 	{
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Open(Application.persistentDataPath + "/PlayerData", FileMode.Open);
-		GameData data = (GameData)bf.Deserialize(file);
+		GameData data = Game.GetGameData();
 		player.Health = data.health;
 		player.transform.position = TranslateMyVector3ToVector3(GetSceneData().currentLocation);
 		player.transform.rotation = TranslateMyQuaternionToQuaternion(GetSceneData().currentRotation);
-		file.Close();
 	}
 
 	public Vector3 TranslateMyVector3ToVector3(MyVector3 myVector3) {
