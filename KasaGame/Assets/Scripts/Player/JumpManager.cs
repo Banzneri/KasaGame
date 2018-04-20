@@ -168,7 +168,6 @@ public class JumpManager : MonoBehaviour {
 		if (_startedFalling)
 		{
 			_fallCounter += Time.deltaTime;
-			Debug.Log(_fallCounter);
 			if (_wantsToJump) NormalJump();
 			if (_fallCounter > _fallCooldown) StopFalling();
 		}
@@ -268,7 +267,7 @@ public class JumpManager : MonoBehaviour {
 	public void EdgeJump()
 	{
 		StartJumping(false);
-		_jumpHeight = _originalJumpHeight * 0.5f;
+		_jumpHeight = _originalJumpHeight * 0.7f;
 	}
 
 	public void BubbleJump()

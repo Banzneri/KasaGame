@@ -11969,7 +11969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a101a5deff488644986c2f79a0f2818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: ValtteriNow
+  level: Entrance
 --- !u!23 &366553676
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53098,7 +53098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a101a5deff488644986c2f79a0f2818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: ValtteriNow
+  level: Entrance
 --- !u!23 &823609776
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -79901,7 +79901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a101a5deff488644986c2f79a0f2818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: ValtteriNow
+  level: Entrance
 --- !u!23 &1500534938
 MeshRenderer:
   m_ObjectHideFlags: 0

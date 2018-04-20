@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour {
@@ -31,10 +32,13 @@ public class MySceneManager : MonoBehaviour {
 		SceneManager.LoadScene("SettingsMenu");
 	}
 
+	static public void RemoveSave(string sceneName)
+	{
+		File.Delete(Application.persistentDataPath + "/" + sceneName);
+	}
+
 	public void LaunchPauseMenu()
 	{
 		
 	}
-
-
 }

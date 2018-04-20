@@ -21,5 +21,5 @@ EditorBuildSettings:
     path: Assets/Scenes/BuildScenes/Levels/LevelKaiProto.unity
     guid: 43f784e70e46274419c5d8c2d2e3e4cc
   - enabled: 1
-    path: Assets/Scenes/BuildScenes/Levels/ValtteriNow.unity
-    guid: 144850e89bd338c4abb366df311cac94
+    path: Assets/Scenes/LavaRuins/Scenes/Entrance.unity
+    guid: d8ea85226ca1c304193cebfa97cf579d

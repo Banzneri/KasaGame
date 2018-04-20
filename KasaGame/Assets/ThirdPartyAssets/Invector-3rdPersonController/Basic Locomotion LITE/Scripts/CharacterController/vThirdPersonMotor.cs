@@ -250,20 +250,6 @@ namespace Invector.CharacterController
 
         public virtual void FreeMovement()
         {
-            // set speed to both vertical and horizontal inputs
-            float xInput = 0;
-            float yInput = 0;
-
-            /*
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
-            {
-                yInput = 1;
-            }
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-            {
-                xInput = 1;
-            }
-            */
             speed = Mathf.Abs(input.x * 50) + Mathf.Abs(input.y * 50);
             if (!IsMoving()) 
                 speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
@@ -395,7 +381,9 @@ namespace Invector.CharacterController
             CheckGroundDistance();
 
             // change the physics material to very slip when not grounded or maxFriction when is
-            if (isGrounded && input == Vector2.zero)
+            if (isSliding)
+                _capsuleCollider.material = slippyPhysics;
+            else if (isGrounded && input == Vector2.zero)
                 _capsuleCollider.material = maxFrictionPhysics;
             else if (isGrounded && input != Vector2.zero)
                 _capsuleCollider.material = frictionPhysics;
@@ -481,14 +469,15 @@ namespace Invector.CharacterController
                 groundAngleTwo = Vector3.Angle(Vector3.up, hitinfo.normal);
             }
 
+            Debug.Log(GroundAngle());
+
             if (GroundAngle() > slopeLimit + 1f && GroundAngle() <= 85 &&
-                groundAngleTwo > slopeLimit + 1f && groundAngleTwo <= 85 &&
                 groundDistance <= 1f)
             {
                 isSliding = true;
                 isGrounded = false;
-                var slideVelocity = (GroundAngle() - slopeLimit) * 40f;
-                slideVelocity = Mathf.Clamp(slideVelocity, 0, 10);
+                var slideVelocity = (GroundAngle() - slopeLimit) * 40;
+                slideVelocity = Mathf.Clamp(slideVelocity, 0, 30);
                 _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, -slideVelocity, _rigidbody.velocity.z);
             }
             else

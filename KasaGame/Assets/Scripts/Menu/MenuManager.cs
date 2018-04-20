@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour {
 	[SerializeField] private GameObject menuCanvasObj;
@@ -39,6 +40,14 @@ public class MenuManager : MonoBehaviour {
 		Time.timeScale = 1f;
 		isPaused = false;
 		MySceneManager.LoadLevel("Level_Hub 1");
+	}
+
+	public void RestartCurrentLevel()
+	{
+		Time.timeScale = 1f;
+		isPaused = false;
+		MySceneManager.RemoveSave(SceneManager.GetActiveScene().name);
+		MySceneManager.LoadLevel(SceneManager.GetActiveScene().name);
 	}
 
 	private void HandleMenu()
