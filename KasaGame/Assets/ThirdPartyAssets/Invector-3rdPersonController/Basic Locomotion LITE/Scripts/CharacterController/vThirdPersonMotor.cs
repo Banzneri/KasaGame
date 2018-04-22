@@ -219,7 +219,7 @@ namespace Invector.CharacterController
             get
             {
                 if (locomotionType.Equals(LocomotionType.OnlyStrafe)) isStrafing = true;
-                return !isStrafing && !locomotionType.Equals(LocomotionType.OnlyStrafe) || locomotionType.Equals(LocomotionType.OnlyFree);
+                return (!isStrafing && !locomotionType.Equals(LocomotionType.OnlyStrafe) || locomotionType.Equals(LocomotionType.OnlyFree));
             }
         }
 
@@ -250,9 +250,7 @@ namespace Invector.CharacterController
 
         public virtual void FreeMovement()
         {
-            speed = Mathf.Abs(input.x * 50) + Mathf.Abs(input.y * 50);
-            if (!IsMoving()) 
-                speed = Mathf.Abs(input.x / 5) + Mathf.Abs(input.y / 5);
+            speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
                         
@@ -280,6 +278,7 @@ namespace Invector.CharacterController
             bool dPressed = Input.GetKey(KeyCode.D);
             return wPressed || aPressed || sPressed || dPressed;
         }
+
         protected void ControlSpeed(float velocity)
         {
             if (Time.deltaTime == 0) return;
@@ -317,14 +316,8 @@ namespace Invector.CharacterController
 
         protected void ControlJumpBehaviour()
         {
-            if (!GetComponent<JumpManager>().Jumping) return;
+            if (!isJumping) return;
 
-            jumpCounter -= Time.deltaTime;
-            if (jumpCounter <= 0)
-            {
-                jumpCounter = 0;
-                isJumping = false;
-            }
             // apply extra force to the jump height   
             /*var vel = _rigidbody.velocity;
             vel.y = jumpHeight;
@@ -468,8 +461,6 @@ namespace Invector.CharacterController
             {
                 groundAngleTwo = Vector3.Angle(Vector3.up, hitinfo.normal);
             }
-
-            Debug.Log(GroundAngle());
 
             if (GroundAngle() > slopeLimit + 1f && GroundAngle() <= 85 &&
                 groundDistance <= 1f)

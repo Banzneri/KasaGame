@@ -36,9 +36,11 @@ public class JumpManager : MonoBehaviour {
 	private bool _alreadyFell = true;
 	private float _timeInApex = 8.0f;
 	private float _timeInApexCounter = 0.0f;
+	private Vector3 _jumpHorizontalVelocity = Vector3.zero;
 
 	public bool _isRegularJump = true;
 	public bool _jumpedWhileFalling = false;
+	public bool _canJump = true;
 
 	public float JumpHeight
 	{
@@ -66,7 +68,7 @@ public class JumpManager : MonoBehaviour {
 
 	public bool CanJump
 	{
-		get { return _startedFalling || _controller.GroundDistance < _jumpHeightFromGround; }
+		get { return (_startedFalling || _controller.GroundDistance < _jumpHeightFromGround) && _canJump; }
 	}
 
 	void Start () 
@@ -115,6 +117,8 @@ public class JumpManager : MonoBehaviour {
 		if (_isRegularJump) _regularJumpSound.Play();
 		_jumping = true;
 		_jumpStartPositionY = _controller._rigidbody.position.y;
+		_controller.isJumping = true;
+		//_controller.freeRotationSpeed = 2;
 		if (_controller._rigidbody.velocity.magnitude < 1)
 			GetComponent<Animator>().CrossFadeInFixedTime("Jump", 0.01f);
 		else
@@ -135,6 +139,9 @@ public class JumpManager : MonoBehaviour {
 		_alreadyReleased = false;
 		_wantsToReleaseJumpKey = false;
 		_releasedEarly = false;
+		_controller.isJumping = false;
+		_controller.input = Vector2.zero;
+		//_controller.freeRotationSpeed = 100;
 	}
 
 	private void HandleJumping()
@@ -213,9 +220,12 @@ public class JumpManager : MonoBehaviour {
 
 		_jumpCounter += Time.fixedDeltaTime;
 		Vector3 velocity = _controller._rigidbody.velocity;
+		Vector3 horizontalVelocity = _controller._rigidbody.velocity;
+		horizontalVelocity.y = 0.0f;
 		float gravity = ( -2.0f * _jumpHeight ) / ( Mathf.Pow((_jumpTime / 2.0f), 2) );
 		float initialVelocity = ( 2 * _jumpHeight ) / ( _jumpTime / 2.0f );
 		velocity.y = gravity * _jumpCounter + initialVelocity;
+		velocity += horizontalVelocity;
 
 		if (!_reachedApex && velocity.y <= 5)
 		{

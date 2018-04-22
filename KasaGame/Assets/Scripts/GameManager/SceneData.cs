@@ -56,7 +56,14 @@ public class SwitchData : SaveableObject {
 
 [System.Serializable]
 public class MovableObjectData : SaveableObject {
-	public MovableObjectData(GameObject obj): base(obj) { }
+	public MyVector3 currentLocation;
+	public bool goingToEndLoc;
+
+	public MovableObjectData(GameObject obj, bool goingToEnd): base(obj) 
+	{ 
+		currentLocation = new MyVector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z);
+		goingToEndLoc = goingToEnd;
+	}
 }
 
 [System.Serializable]

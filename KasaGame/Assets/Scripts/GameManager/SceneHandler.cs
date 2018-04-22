@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour {
 	private MyCharManager player;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		Init();
 		LoadScene();
 		LoadPlayer();
@@ -50,13 +50,13 @@ public class SceneHandler : MonoBehaviour {
 
 		foreach (var box in movableBoxes)
 		{
-			MovableObjectData data = new MovableObjectData(box);
+			MovableObjectData data = new MovableObjectData(box, false);
 			sceneData.pushableBoxes.Add(data);
 		}
 
 		foreach (var platform in movingPlatforms)
 		{
-			MovableObjectData data = new MovableObjectData(platform);
+			MovableObjectData data = new MovableObjectData(platform, platform.GetComponent<MovingPlatform>().goingToEndLoc);
 			sceneData.movingPlatforms.Add(data);
 		}
 
@@ -129,8 +129,9 @@ public class SceneHandler : MonoBehaviour {
 
 		for (int i = 0; i < data.movingPlatforms.Count; i++)
 		{
-			movingPlatforms[i].transform.position = TranslateMyVector3ToVector3(data.movingPlatforms[i].pos);
+			movingPlatforms[i].GetComponent<MovingPlatform>().savedLocation = TranslateMyVector3ToVector3(data.movingPlatforms[i].currentLocation);
 			movingPlatforms[i].transform.rotation = TranslateMyQuaternionToQuaternion(data.movingPlatforms[i].rot);
+			movingPlatforms[i].GetComponent<MovingPlatform>().goingToEndLoc = data.movingPlatforms[i].goingToEndLoc;
 		}
 
 		for (int i = 0; i < data.pickableItems.Count; i++)

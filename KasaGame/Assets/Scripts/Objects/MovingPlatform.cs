@@ -9,17 +9,20 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 	[SerializeField] private float speed;
 	[SerializeField] private float waitTime;
     [SerializeField] private bool automatic;
-    private bool goingToEndLoc = true; //Used only if the platform is not automatic.
+    public bool goingToEndLoc = true; //Used only if the platform is not automatic.
     public ParticleSystem splasher;
     [SerializeField] Screw[] automaticScrews;
 
     private Vector3 currentDestination;
 	private float waitCounter = 0;
 	private float minDistance = 0.1f;
+    public Vector3 savedLocation = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
-        currentDestination = new Vector3(startLocation.position.x, startLocation.position.y, startLocation.position.z);
+        Vector3 startLoc = goingToEndLoc ? startLocation.position : endLocation.position;
+        currentDestination = startLoc;
+        transform.position = startLoc;
 	}
 	
     void MoveToVector3(Vector3 target)

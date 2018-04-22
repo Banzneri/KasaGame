@@ -12,6 +12,8 @@ namespace Invector.CharacterController
         [Header("Default Inputs")]
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
+        public string horizontalJumpInput = "HorizontalJump";
+        public string verticalJumpInput = "VerticalJump";
 
         public bool onlyCameraInput = false;
         public KeyCode jumpInput = KeyCode.Space;
@@ -108,8 +110,8 @@ namespace Invector.CharacterController
 
         protected virtual void MoveCharacter()
         {            
-            cc.input.x = Input.GetAxis(horizontalInput);
-            cc.input.y = Input.GetAxis(verticallInput);
+            cc.input.x = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? horizontalJumpInput : horizontalInput);
+            cc.input.y = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? verticalJumpInput : verticallInput);
         }
 
         protected virtual void StrafeInput()
