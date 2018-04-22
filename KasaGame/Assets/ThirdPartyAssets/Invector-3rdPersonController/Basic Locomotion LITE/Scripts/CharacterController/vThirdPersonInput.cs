@@ -110,8 +110,8 @@ namespace Invector.CharacterController
 
         protected virtual void MoveCharacter()
         {            
-            cc.input.x = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? horizontalJumpInput : horizontalInput);
-            cc.input.y = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? verticalJumpInput : verticallInput);
+            cc.input.x = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? horizontalInput : horizontalInput);
+            cc.input.y = Input.GetAxis(cc.isJumping && GetComponent<JumpManager>()._isRegularJump ? verticallInput : verticallInput);
         }
 
         protected virtual void StrafeInput()
