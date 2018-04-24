@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667546, g: 0.48427135, b: 0.5645225, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -282,6 +282,56 @@ Transform:
   m_Father: {fileID: 525185180}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &30189267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 30189269}
+  - component: {fileID: 30189268}
+  m_Layer: 0
+  m_Name: HubController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &30189268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 30189267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8469f6d99b4d3a4db0912bb9b56c9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelTeleporters:
+  - {fileID: 46215447}
+  - {fileID: 2126424217}
+  - {fileID: 753263525}
+  - {fileID: 1546002862}
+  - {fileID: 1904091373}
+  - {fileID: 1044061136}
+  - {fileID: 1681473312}
+  - {fileID: 122926574}
+  - {fileID: 68304723}
+--- !u!4 &30189269
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 30189267}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &32151934
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +442,7 @@ Transform:
   - {fileID: 459530832}
   - {fileID: 1392600768}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!1 &68082732
 GameObject:
@@ -525,7 +575,7 @@ Transform:
   - {fileID: 88072324}
   - {fileID: 935604271}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!1 &88072323
 GameObject:
@@ -4093,7 +4143,7 @@ Transform:
   - {fileID: 337680646}
   - {fileID: 965196977}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!1 &144031375
 GameObject:
@@ -4189,7 +4239,7 @@ Transform:
   m_LocalScale: {x: 320, y: 1, z: 320}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &156902519
 GameObject:
@@ -8303,6 +8353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LevelKaiProto
+  teleporterEnabled: 1
 --- !u!23 &331091758
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11970,6 +12021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: Entrance
+  teleporterEnabled: 1
 --- !u!23 &366553676
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12168,7 +12220,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -612613562
+  randomSeed: 1632759821
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15630,7 +15682,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4604333824035270, guid: 9520a8dcd79159d4b8fc74fad44ee2c6, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9520a8dcd79159d4b8fc74fad44ee2c6, type: 2}
@@ -45166,7 +45218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495600354
 GameObject:
@@ -52939,7 +52991,7 @@ Transform:
   - {fileID: 1647037166}
   - {fileID: 509636714}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!1001 &811367790
 Prefab:
@@ -52978,7 +53030,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4456402716090530, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1661338183244550, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_Name
@@ -53099,6 +53151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: Entrance
+  teleporterEnabled: 1
 --- !u!23 &823609776
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53227,7 +53280,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4033904480971306, guid: 6f34021f23877164b8f0ef82d7c800f7, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f34021f23877164b8f0ef82d7c800f7, type: 2}
@@ -67529,7 +67582,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4456402716090530, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1661338183244550, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_Name
@@ -67587,6 +67640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: CaveTemple
+  teleporterEnabled: 1
 --- !u!23 &1020733048
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67942,7 +67996,7 @@ Transform:
   - {fileID: 212680085}
   - {fileID: 1716269864}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1045133454
 GameObject:
@@ -68145,6 +68199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LevelKaiProto
+  teleporterEnabled: 1
 --- !u!23 &1094631887
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -72562,7 +72617,7 @@ Transform:
   - {fileID: 525185180}
   - {fileID: 32151935}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353142900
 GameObject:
@@ -72681,12 +72736,12 @@ Prefab:
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 470.5
+      value: 578
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 459.5
+      value: 325
       objectReference: {fileID: 0}
     - target: {fileID: 224277684180499102, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
@@ -72732,6 +72787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: CaveTemple
+  teleporterEnabled: 1
 --- !u!23 &1378055896
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -72943,7 +72999,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 875289757
+  randomSeed: -850235333
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -76255,7 +76311,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4456402716090530, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1661338183244550, guid: 1fe67d278e338544184b9b1a39fd45d0, type: 2}
       propertyPath: m_Name
@@ -79869,7 +79925,7 @@ Transform:
   - {fileID: 181506337}
   - {fileID: 816892955}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1500534936
 GameObject:
@@ -79902,6 +79958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: Entrance
+  teleporterEnabled: 1
 --- !u!23 &1500534938
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -80025,7 +80082,7 @@ Transform:
   - {fileID: 1405726830}
   - {fileID: 1289480284}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1563633311
 GameObject:
@@ -84079,7 +84136,7 @@ Transform:
   - {fileID: 864944311}
   - {fileID: 522242875}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!1 &1687664220
 GameObject:
@@ -84208,7 +84265,7 @@ Transform:
   - {fileID: 1157119648}
   - {fileID: 94659918}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1716269861
 GameObject:
@@ -87666,7 +87723,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4737227217512254, guid: d64eb4e02815a7b4196fbf76e0691105, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 23011871267031934, guid: d64eb4e02815a7b4196fbf76e0691105,
         type: 2}
@@ -91521,6 +91578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LevelKaiProto
+  teleporterEnabled: 1
 --- !u!23 &1884728631
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -91631,7 +91689,7 @@ Transform:
   - {fileID: 877229316}
   - {fileID: 2087568255}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1932115827
 Prefab:
@@ -91670,7 +91728,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4305328434481434, guid: 8e5d0f37d40ea6344a853f9acfa13529, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e5d0f37d40ea6344a853f9acfa13529, type: 2}
@@ -91794,6 +91852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: CaveTemple
+  teleporterEnabled: 1
 --- !u!23 &1970059632
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99078,14 +99137,14 @@ Transform:
   - {fileID: 481610103}
   - {fileID: 2124782067}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!43 &2131734638
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh509470
+  m_Name: pb_Mesh22962
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
