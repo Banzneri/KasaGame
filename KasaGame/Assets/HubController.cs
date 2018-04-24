@@ -8,18 +8,17 @@ public class HubController : MonoBehaviour {
     GameObject[] levelTeleporters;
     
 	void Start () {
+        // Todo: Add logic that checks which levels have been completed, and enable/disable
+        // corresponding teleporters
+
+        //Testing methods, these should probably be done with a loop
         ToggleTeleporter(levelTeleporters[3], false);
         ToggleTeleporter(levelTeleporters[4], false);
         ToggleTeleporter(levelTeleporters[5], false);
-
         ToggleTeleporter(6, false);
         ToggleTeleporter(7, false);
         ToggleTeleporter(8, false);
     }
-	
-	void Update () {
-		
-	}
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)
     {
@@ -38,9 +37,9 @@ public class HubController : MonoBehaviour {
         }
     }
 
-    public void ToggleTeleporter(GameObject teleporter, bool onOff)
+    public void ToggleTeleporter(GameObject teleporterPrefab, bool onOff)
     {
-        FindSceneChange(teleporter).ToggleTeleporter(onOff);
+        FindSceneChange(teleporterPrefab).ToggleTeleporter(onOff);
     }
 
     public void ToggleTeleporter(int teleporterIndex, bool onOff)
@@ -50,5 +49,17 @@ public class HubController : MonoBehaviour {
             return;
         }
         FindSceneChange(teleporterIndex).ToggleTeleporter(onOff);
+    }
+
+    public bool GetTeleporterEnabled(GameObject teleporterPrefab)
+    {
+        bool tEnabled = FindSceneChange(teleporterPrefab).GetTeleporterEnabled();
+        return tEnabled;
+    }
+
+    public bool GetTeleporterEnabled(int teleporterIndex)
+    {
+        bool tEnabled = FindSceneChange(teleporterIndex).GetTeleporterEnabled();
+        return tEnabled;
     }
 }

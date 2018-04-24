@@ -6,9 +6,9 @@ public class SceneChange : MonoBehaviour {
 	[SerializeField] private string level;
 
     [SerializeField]
-    bool teleporterEnabled = true;
-
-	void OnTriggerEnter(Collider other)
+    private bool teleporterEnabled = true;
+    
+    void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Player" && teleporterEnabled)
 		{
@@ -24,5 +24,10 @@ public class SceneChange : MonoBehaviour {
         }else {
             GetComponent<MeshRenderer>().enabled = false;
         }
+    }
+
+    public bool GetTeleporterEnabled()
+    {
+        return teleporterEnabled;
     }
 }
