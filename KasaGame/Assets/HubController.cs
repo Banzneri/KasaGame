@@ -6,7 +6,10 @@ public class HubController : MonoBehaviour {
 
     [SerializeField]
     GameObject[] levelTeleporters;
-    
+
+    [SerializeField]
+    GameObject[] mcGuffins;
+
 	void Start () {
         // Todo: Add logic that checks which levels have been completed, and enable/disable
         // corresponding teleporters
@@ -18,6 +21,11 @@ public class HubController : MonoBehaviour {
         ToggleTeleporter(6, false);
         ToggleTeleporter(7, false);
         ToggleTeleporter(8, false);
+
+        //Set all mcGuffins to false
+        for (int i = 0; i < mcGuffins.Length; i++) {
+            ToggleMcGuffin(i, false);
+        }
     }
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)
@@ -45,7 +53,7 @@ public class HubController : MonoBehaviour {
     public void ToggleTeleporter(int teleporterIndex, bool onOff)
     {
         if(teleporterIndex > levelTeleporters.Length - 1 ) {
-            Debug.LogError("Attempted to toggle teleporter index " + teleporterIndex + " when there are " + (levelTeleporters.Length - 1) + " indexes");
+            Debug.LogError("Attempted to toggle teleporter index " + teleporterIndex + " when the highest index is " + (levelTeleporters.Length - 1));
             return;
         }
         FindSceneChange(teleporterIndex).ToggleTeleporter(onOff);
@@ -62,4 +70,19 @@ public class HubController : MonoBehaviour {
         bool tEnabled = FindSceneChange(teleporterIndex).GetTeleporterEnabled();
         return tEnabled;
     }
+
+    public void ToggleMcGuffin(GameObject mcGuffinPrefab, bool visible)
+    {
+        mcGuffinPrefab.GetComponent<MeshRenderer>().enabled = visible;
+    }
+
+    public void ToggleMcGuffin(int mcGuffinIndex, bool visible)
+    {
+        if (mcGuffinIndex > mcGuffins.Length - 1) {
+            Debug.LogError("Attempted to toggle McGuffin at index " + mcGuffinIndex + " when the highest index is " + (mcGuffins.Length - 1));
+            return;
+        }
+        mcGuffins[mcGuffinIndex].GetComponent<MeshRenderer>().enabled = visible;
+    }
+
 }
