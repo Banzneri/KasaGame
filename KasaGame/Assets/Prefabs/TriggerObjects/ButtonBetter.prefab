@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 65217964099744594}
   - component: {fileID: 82535589035412812}
   - component: {fileID: 114163180851235366}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ButtonBetter
   m_TagString: Button
   m_Icon: {fileID: 0}

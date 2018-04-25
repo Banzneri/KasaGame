@@ -18,7 +18,7 @@ public class BubbleSpawner : MonoBehaviour, IActionObject {
 	// Use this for initialization
 	void Start () {
         _player = GameObject.FindGameObjectWithTag("Player");
-        originalPlayerJumpHeight = _player.GetComponent<vThirdPersonController>().jumpHeight;
+        originalPlayerJumpHeight = _player.GetComponent<JumpManager>().JumpHeight;
         _timeCounter = summonTime - delay;
         _popSound = GetComponent<AudioSource>();
     }

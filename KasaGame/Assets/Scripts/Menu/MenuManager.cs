@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour {
 		isPaused = true;
 		Time.timeScale = 0f;
 		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	public void CloseGameMenu()
@@ -33,6 +34,7 @@ public class MenuManager : MonoBehaviour {
 		isPaused = false;
 		Time.timeScale = 1f;
 		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	private void HandleMenu()

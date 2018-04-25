@@ -21,6 +21,10 @@ public class Checkpoint : MonoBehaviour {
 	void Start () {
 		SetMaterials();
 		_player = GameObject.FindGameObjectWithTag("Player");
+		if (_gear.GetComponent<RotateGear>().isActivated)
+		{
+			Activate();
+		}
 	}
 	
 	void Update () {

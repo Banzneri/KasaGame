@@ -61,7 +61,6 @@ namespace Invector.CharacterController
         protected virtual void LateUpdate()
         {
             if (cc == null) return;             // returns if didn't find the controller		    
-            InputHandle();                      // update input methods
             UpdateCameraStates();               // update camera states
         }
 
@@ -74,7 +73,8 @@ namespace Invector.CharacterController
         protected virtual void Update()
         {
             cc.UpdateMotor();                   // call ThirdPersonMotor methods               
-            cc.UpdateAnimator();                // call ThirdPersonAnimator methods		               
+            cc.UpdateAnimator();                // call ThirdPersonAnimator methods
+            InputHandle();                      // update input methods 
         }
 
         protected virtual void InputHandle()
@@ -98,7 +98,7 @@ namespace Invector.CharacterController
                 MoveCharacter();
                 SprintInput();
                 StrafeInput();
-                JumpInput();
+                //JumpInput();
                 AttackInput();
                 QuickSaveInput();
             }

@@ -14,12 +14,15 @@ public class ThrowWeapon : MonoBehaviour {
 	private Transform hand;
 	private bool comingBack = false;
 	private bool hasActivated = false;
+	private AudioSource _throwSound;
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>();
 		hand = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>()._hand.transform;
 		destination = player.transform.forward;
 		hasActivated = false;
+		_throwSound = gameObject.GetComponent<AudioSource>();
+		_throwSound.Play();
 	}
 	
 	// Update is called once per frame

@@ -15,6 +15,7 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
 
     private Vector3 currentDestination;
 	private float waitCounter = 0;
+	private float minDistance = 0.1f;
 
 	// Use this for initialization
 	void Start () {
@@ -62,21 +63,22 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
             }
         }
 
-		if (transform.position == startLocation.position && automatic)
+		if (Vector3.Distance(transform.position, startLocation.position) < minDistance && automatic)
 		{
 			if (waitCounter == 0)
 			{
 				GetComponent<AudioSource>().Stop();
 			}
 			waitCounter += Time.deltaTime;
+
 			if (waitCounter > waitTime)
 			{
 				currentDestination = endLocation.position;
 				waitCounter = 0;
 				GetComponent<AudioSource>().Play();
 			}
-		} 
-		else if (transform.position == endLocation.position && automatic)
+		}
+		else if (Vector3.Distance(transform.position, endLocation.position) < minDistance && automatic)
 		{
 			if (waitCounter == 0)
 			{
@@ -106,22 +108,6 @@ public class MovingPlatform : MonoBehaviour, IActionObject {
             splasher.Stop();
         }
     }
-
-	void OnCollisionEnter(Collision other)
-	{
-		if (other.gameObject.tag == "Player")
-		{
-			other.gameObject.transform.parent = transform;
-		}
-	}
-
-	void OnCollisionExit(Collision other)
-	{
-		if (other.gameObject.tag == "Player")
-		{
-			other.gameObject.transform.parent = null;
-		}		
-	}
 
     public void Action()
     {

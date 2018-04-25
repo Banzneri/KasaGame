@@ -20,6 +20,9 @@ public class MyCharManager : MonoBehaviour {
 	[SerializeField] private GameObject _hat;
 	[SerializeField] private float attackTime = 1f;
 	[SerializeField] private float hitTime = 0.5f;
+	[SerializeField] private AudioSource _gruntSound;
+	[SerializeField] private AudioSource _deathSound;
+	[SerializeField] private ClimbingBehaviour _climbingBehaviour;
 	
 	private float attackCounter = 0f;
 	private float hitCounter = 0f;
@@ -57,7 +60,6 @@ public class MyCharManager : MonoBehaviour {
 							set {_currentStamina = value; } }
 	public float MaxStamina { get { return _maxStamina; } }
 	public bool Immune { get { return _immuneToDamage; } }
-
 	public bool IsHitting { get { return hitCounter < hitTime; } }
 
 	void Awake () {
@@ -70,11 +72,6 @@ public class MyCharManager : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
 		HandleDamageCooldown();
-		AltHandleJumpFrames();
-		if (!cc.lockMovement)
-		{
-			HandleFallSpeed();
-		}
 		HandleDying();
 		HandleWeapon();
 	}
@@ -137,27 +134,10 @@ public class MyCharManager : MonoBehaviour {
 		_back.GetComponent<MeshRenderer>().gameObject.SetActive(false);
 	}
 
-	private void HandleFallSpeed()
-	{
-		if (!cc.isGrounded)
-		{
-			Vector3 vel = _rigidbody.velocity;
-			
-			if (_rigidbody.velocity.y < 0)
-			{
-				vel.y -= _extraFallSpeed / 2;
-			}
-			if (_rigidbody.velocity.y < 5f)
-			{
-				vel.y -= _extraFallSpeed;
-			}
-			vel.y = Mathf.Clamp(vel.y, -50, 100);
-			_rigidbody.velocity = vel;
-		} 
-	}
-
 	public void ReturnToClosestCheckpoint() {
-		transform.position = GetClosestCheckpoint().GetComponent<RotateGear>().spawnPoint.position;
+		RotateGear checkpoint = GetClosestCheckpoint().GetComponent<RotateGear>();
+		transform.position = checkpoint.spawnPoint.position;
+		transform.rotation = checkpoint.spawnPoint.rotation;
 	}
 
 	public GameObject GetClosestCheckpoint() {
@@ -193,9 +173,12 @@ public class MyCharManager : MonoBehaviour {
 	public void TakeDamage() {
 		if (!_immuneToDamage)
 		{
+			_climbingBehaviour.ChangeMode(new ModeOnAir(_climbingBehaviour, false));
 			if (_currentHealth > 1)
 			{
 				GetComponent<Animator>().SetTrigger("Stun");
+				_gruntSound.time = 0.5f;
+				_gruntSound.Play();
 			}
 			if (_currentHealth > 0f)
 			{
@@ -313,6 +296,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public void Die()
 	{
+		PlayDeathSound();
 		GetComponent<Animator>().SetBool("Alive", false);
 		_currentHealth = 0f;
 		cc.isMovable = false;
@@ -325,46 +309,25 @@ public class MyCharManager : MonoBehaviour {
 
 	private void Respawn()
 	{
+		PlayRespawnSound();
 		cc.isMovable = true;
 		_deathCounter = 0f;
 		_currentHealth = _maxHealth;
 		ReturnToClosestCheckpoint();
+		Camera.main.GetComponent<vThirdPersonCamera>().SetCameraBehindPlayer();
 	}
 
-	public void AltHandleJumpFrames()
+	private void PlayDeathSound()
 	{
-		Vector3 vel = _rigidbody.velocity;
-		if (Input.GetKeyDown(KeyCode.Space) && CanJump())
-		{
-			_lastJumpTime = Time.time;
-			_yBeforeJump = _rigidbody.position.y;
-			_pressingJump = true;
-		}
+		_deathSound.time = 0.0f;
+		_deathSound.pitch = 1.0f;
+		_deathSound.Play();
+	}
 
-		if (Input.GetKeyUp(KeyCode.Space))
-		{
-			_pressingJump = false;
-			_jumpCounter = 0f;
-		}
-
-		if (_pressingJump)
-		{
-			_jumpCounter += Time.deltaTime;
-			if (_jumpCounter < cc.jumpTimer)
-			{
-				_jumpForce = _jumpCounter;
-			}
-			else
-			{
-				_jumpForce = cc.jumpTimer;
-				_jumpForce = 0f;
-				_pressingJump = false;
-				_jumpCounter = 0f;
-			}
-			vel.y +=  _jumpForce * 50f;
-			_rigidbody.velocity = vel;
-		}
-		//Debug.Log(_jumping);
-		//Debug.Log(vel.y);
+	private void PlayRespawnSound()
+	{
+		_deathSound.time = 2.4f;
+		_deathSound.pitch = -1.2f;
+		_deathSound.Play();
 	}
 }

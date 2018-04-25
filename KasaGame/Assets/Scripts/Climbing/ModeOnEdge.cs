@@ -33,6 +33,14 @@ public class ModeOnEdge : ClimbingMode
 
     public override void Enter()
     {
+        if (Host.Player.GetComponent<MyCharManager>().Health == 0)
+        {
+            Host.ChangeMode(new ModeOnAir(Host, false));
+            return;
+        }
+        if (Host.VController.isFlying) { Host.VController.isFlying = false; }
+        Host.Player.GetComponent<JumpManager>().RevertToOriginalSettings();
+        Host.Player.GetComponent<JumpManager>().StopJumping();
         Host.EnableDefaultControllingSystem(false);
         _SidePosition = Host.SidePositionOnEdge(Host.Player.transform, _Edge, true);
 

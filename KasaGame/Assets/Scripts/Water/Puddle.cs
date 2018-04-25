@@ -13,7 +13,7 @@ public class Puddle : MonoBehaviour {
 	void Start () {
         _splashIn = GetComponent<AudioSource>();
 		_player = GameObject.FindGameObjectWithTag("Player");
-        _particleObj = transform.FindChild("ParticleSystem").gameObject;
+        _particleObj = transform.Find("ParticleSystem").gameObject;
         _particleSys = _particleObj.GetComponent<ParticleSystem>();
     }
 

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 82281689807264526}
   - component: {fileID: 95122657155603918}
   - component: {fileID: 114938205862553624}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Launcher
   m_TagString: JumpPad
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6d681f851d0ad834c90001983d822068, type: 2}
+  - {fileID: 2100000, guid: 2725f2e5e645416469d706a05666f8ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,7 +155,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 490474d0c1a4bcb45ba1c71b6c0bddfa, type: 2}
+  - {fileID: 2100000, guid: b4d6928c2b1964a4395453648405eb9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
