@@ -21,11 +21,6 @@ public class HubController : MonoBehaviour {
         ToggleTeleporter(6, false);
         ToggleTeleporter(7, false);
         ToggleTeleporter(8, false);
-
-        //Set all mcGuffins to false
-        for (int i = 0; i < mcGuffins.Length; i++) {
-            ToggleMcGuffin(i, false);
-        }
     }
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)

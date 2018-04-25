@@ -7,26 +7,42 @@ public class McGuffinScript : MonoBehaviour {
     [SerializeField]
     private float rotationSpeed;
 
-    enum McGuffinOrigin { Level1, Level2, Level3 };
+    public enum McGuffinOrigin { Level1, Level2, Level3 };
 
     [SerializeField]
-    McGuffinOrigin mcGuffinOrigin;
+    public McGuffinOrigin mcGuffinOrigin;
 
     Renderer renderer;
+
+    public bool found = false;
 
     // Use this for initialization
     void Start () {
 
         renderer = GetComponent<Renderer>();
 
-        if (mcGuffinOrigin == McGuffinOrigin.Level1) {
-            renderer.material.color = Color.red;
-        } else if(mcGuffinOrigin == McGuffinOrigin.Level2) {
-            renderer.material.color = Color.green;
-        } else {
-            renderer.material.color = Color.blue;
-        }
+        Init();
 	}
+
+    private void Init()
+    {
+        switch (mcGuffinOrigin)
+        {
+            case McGuffinOrigin.Level1:
+                found = Game.GetGameData().redMacGuffin;
+                renderer.material.color = Color.red;
+                break;
+            case McGuffinOrigin.Level2:
+                found = Game.GetGameData().greenMacGuffin;
+                renderer.material.color = Color.green;
+                break;
+            case McGuffinOrigin.Level3:
+                found = Game.GetGameData().blueMacGuffin;
+                renderer.material.color = Color.blue;
+                break;
+        }
+        renderer.enabled = found;
+    }
 	
 	// Update is called once per frame
 	void Update () {

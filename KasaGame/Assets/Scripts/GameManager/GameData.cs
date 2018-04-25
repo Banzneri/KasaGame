@@ -9,4 +9,8 @@ public class GameData {
 	public MyVector3 currentPosition = new MyVector3(0, 0, 0);
 	public MyQuaternion currentRotation = new MyQuaternion(0, 0, 0, 0);
 	public bool hasPlayed = false;
+	public int levelsUnlocked = 1;
+	public bool redMacGuffin = false;
+	public bool greenMacGuffin = true;
+	public bool blueMacGuffin = false;
 }
