@@ -12,6 +12,8 @@ public class SceneChange : MonoBehaviour {
 	{
 		if (other.tag == "Player" && teleporterEnabled)
 		{
+			GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
+			GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
 			MySceneManager.LoadLevel(level);
 		}
 	}

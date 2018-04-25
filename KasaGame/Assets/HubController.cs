@@ -21,11 +21,6 @@ public class HubController : MonoBehaviour {
         ToggleTeleporter(6, false);
         ToggleTeleporter(7, false);
         ToggleTeleporter(8, false);
-
-        //Set all mcGuffins to false
-        for (int i = 0; i < mcGuffins.Length; i++) {
-            ToggleMcGuffin(i, false);
-        }
     }
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)
@@ -48,6 +43,8 @@ public class HubController : MonoBehaviour {
     public void ToggleTeleporter(GameObject teleporterPrefab, bool onOff)
     {
         FindSceneChange(teleporterPrefab).ToggleTeleporter(onOff);
+        ToggleParticles(teleporterPrefab, onOff);
+        ToggleLights(teleporterPrefab, onOff);
     }
 
     public void ToggleTeleporter(int teleporterIndex, bool onOff)
@@ -57,6 +54,8 @@ public class HubController : MonoBehaviour {
             return;
         }
         FindSceneChange(teleporterIndex).ToggleTeleporter(onOff);
+        ToggleParticles(levelTeleporters[teleporterIndex], onOff);
+        ToggleLights(levelTeleporters[teleporterIndex], onOff);
     }
 
     public bool GetTeleporterEnabled(GameObject teleporterPrefab)
@@ -83,6 +82,28 @@ public class HubController : MonoBehaviour {
             return;
         }
         mcGuffins[mcGuffinIndex].GetComponent<MeshRenderer>().enabled = visible;
+    }
+
+    void ToggleParticles(GameObject teleporterPrefab, bool onOff)
+    {
+        ParticleSystem[] parSystems;
+        parSystems = teleporterPrefab.GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem ps in parSystems)
+        {
+            if (!onOff)
+            {
+                ps.Stop();
+            }
+            else
+            {
+                ps.Play();
+            }
+        }
+    }
+
+    void ToggleLights(GameObject teleporterPrefab, bool onOff)
+    {
+        teleporterPrefab.GetComponentInChildren<Light>().enabled = onOff;
     }
 
 }
