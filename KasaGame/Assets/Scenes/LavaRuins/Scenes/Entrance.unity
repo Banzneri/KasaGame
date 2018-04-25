@@ -43,7 +43,11 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
+<<<<<<< HEAD
   m_GIWorkflowMode: 1
+=======
+  m_GIWorkflowMode: 0
+>>>>>>> Kai_2.0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -55,8 +59,13 @@ LightmapSettings:
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 9
+<<<<<<< HEAD
     m_Resolution: 1.1
     m_BakeResolution: 0.33
+=======
+    m_Resolution: 2
+    m_BakeResolution: 40
+>>>>>>> Kai_2.0
     m_TextureWidth: 1024
     m_TextureHeight: 1024
     m_AO: 0
@@ -88,8 +97,12 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
+<<<<<<< HEAD
   m_LightingDataAsset: {fileID: 112000018, guid: bdba9e6dc536f64408b3482a1a2a3475,
     type: 2}
+=======
+  m_LightingDataAsset: {fileID: 0}
+>>>>>>> Kai_2.0
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -1888,7 +1901,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2285,7 +2302,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2543,6 +2564,7 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 2.4719834
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 114079591987128154, guid: cfb2623348c4b604196361f560372fe7,
         type: 2}
       propertyPath: isActivated
@@ -2593,6 +2615,8 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.99999
       objectReference: {fileID: 0}
+=======
+>>>>>>> Kai_2.0
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cfb2623348c4b604196361f560372fe7, type: 2}
   m_IsPrefabParent: 0
@@ -3349,7 +3373,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3409,6 +3437,7 @@ Prefab:
       propertyPath: _jumpHeight
       value: 6
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 114059060297703458, guid: d64eb4e02815a7b4196fbf76e0691105,
         type: 2}
       propertyPath: _jumpLength
@@ -3444,6 +3473,8 @@ Prefab:
       propertyPath: jumpAirControl
       value: 0
       objectReference: {fileID: 0}
+=======
+>>>>>>> Kai_2.0
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d64eb4e02815a7b4196fbf76e0691105, type: 2}
   m_IsPrefabParent: 0
@@ -4890,7 +4921,10 @@ Transform:
   - {fileID: 843947414}
   - {fileID: 1370491487}
   - {fileID: 359970589}
+<<<<<<< HEAD
   - {fileID: 1801691060}
+=======
+>>>>>>> Kai_2.0
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5590,7 +5624,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -6317,7 +6355,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7142,7 +7184,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7280,12 +7326,20 @@ Prefab:
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.x
+<<<<<<< HEAD
       value: 845.5122
+=======
+      value: 483.0122
+>>>>>>> Kai_2.0
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.y
+<<<<<<< HEAD
       value: 454.01147
+=======
+      value: 430.01147
+>>>>>>> Kai_2.0
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
@@ -7811,7 +7865,11 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1478869750}
+<<<<<<< HEAD
   m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+=======
+  m_Material: {fileID: 13400000, guid: ba92fb44336020f40bdf294bb66bc9da, type: 2}
+>>>>>>> Kai_2.0
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -10078,7 +10136,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -10089,6 +10151,7 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+<<<<<<< HEAD
 --- !u!1001 &1801691059
 Prefab:
   m_ObjectHideFlags: 0
@@ -10136,6 +10199,8 @@ Transform:
   m_PrefabParentObject: {fileID: 4716074716205414, guid: c9f4e453e68cda04ea9dbdb7cbff08dd,
     type: 2}
   m_PrefabInternal: {fileID: 1801691059}
+=======
+>>>>>>> Kai_2.0
 --- !u!1001 &1804350657
 Prefab:
   m_ObjectHideFlags: 0
@@ -10778,7 +10843,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -11059,7 +11128,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -11390,7 +11463,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -11623,7 +11700,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -11884,7 +11965,11 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
+<<<<<<< HEAD
   m_RenderMode: 1
+=======
+  m_RenderMode: 0
+>>>>>>> Kai_2.0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

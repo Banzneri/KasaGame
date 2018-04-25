@@ -316,7 +316,7 @@ namespace Invector.CharacterController
 
         protected void ControlJumpBehaviour()
         {
-            if (!isJumping) return;
+            if (!GetComponent<JumpManager>().Jumping) return;
 
             // apply extra force to the jump height   
             /*var vel = _rigidbody.velocity;

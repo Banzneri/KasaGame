@@ -1551,6 +1551,25 @@ Animator:
     animation clip 'Take 001'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114059060297703458
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908532817791000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d00f6f0fb66ac45960d77129f489a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpTime: 0.8
+  _jumpLength: 19
+  _jumpHeight: 9
+  _regularJumpSound: {fileID: 82821816982853238}
+  _fallCooldown: 0.2
+  _jumpHeightFromGround: 3
+  _isRegularJump: 1
+  _jumpedWhileFalling: 0
 --- !u!114 &114138816597207792
 MonoBehaviour:
   m_ObjectHideFlags: 1

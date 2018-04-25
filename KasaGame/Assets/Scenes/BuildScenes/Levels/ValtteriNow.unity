@@ -1411,6 +1411,7 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2.0912457
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 114079591987128154, guid: cfb2623348c4b604196361f560372fe7,
         type: 2}
       propertyPath: isActivated
@@ -1421,6 +1422,8 @@ Prefab:
       propertyPath: _isActivated
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> Kai_2.0
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cfb2623348c4b604196361f560372fe7, type: 2}
   m_IsPrefabParent: 0
@@ -2465,6 +2468,7 @@ Transform:
   m_PrefabParentObject: {fileID: 4033904480971306, guid: 6f34021f23877164b8f0ef82d7c800f7,
     type: 2}
   m_PrefabInternal: {fileID: 843947413}
+<<<<<<< HEAD
 --- !u!1001 &886875158
 Prefab:
   m_ObjectHideFlags: 0
@@ -2512,6 +2516,8 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c72433f18886df4e816416d11d6a35f, type: 2}
   m_IsPrefabParent: 0
+=======
+>>>>>>> Kai_2.0
 --- !u!1 &915210955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2758,7 +2764,11 @@ Transform:
   - {fileID: 1370491487}
   - {fileID: 520565852}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 3
+=======
+  m_RootOrder: 2
+>>>>>>> Kai_2.0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1044678783
 GameObject:
@@ -4830,7 +4840,11 @@ Prefab:
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
       propertyPath: m_LocalPosition.x
+<<<<<<< HEAD
       value: 470.5
+=======
+      value: 503.5
+>>>>>>> Kai_2.0
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
@@ -5250,7 +5264,11 @@ Transform:
   - {fileID: 1901027173}
   - {fileID: 931092696}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 4
+=======
+  m_RootOrder: 3
+>>>>>>> Kai_2.0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1502444470
 Prefab:
@@ -5269,7 +5287,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4737227217512254, guid: d64eb4e02815a7b4196fbf76e0691105, type: 2}
       propertyPath: m_LocalPosition.z
+<<<<<<< HEAD
       value: 0.21
+=======
+      value: 5.91
+>>>>>>> Kai_2.0
       objectReference: {fileID: 0}
     - target: {fileID: 4737227217512254, guid: d64eb4e02815a7b4196fbf76e0691105, type: 2}
       propertyPath: m_LocalRotation.x
