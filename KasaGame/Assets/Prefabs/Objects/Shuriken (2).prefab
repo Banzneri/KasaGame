@@ -283,7 +283,10 @@ MonoBehaviour:
   speed: 20
   waitTime: 0
   automatic: 1
+  goingToEndLoc: 1
+  splasher: {fileID: 0}
   automaticScrews: []
+  savedLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &114532622787924126
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -18,8 +18,5 @@ EditorBuildSettings:
     path: Assets/Scenes/BuildScenes/Levels/CaveTemple.unity
     guid: 2c905f1deb8a98a43809efb39ef6f696
   - enabled: 1
-    path: Assets/Scenes/BuildScenes/Levels/LevelKaiProto.unity
-    guid: 43f784e70e46274419c5d8c2d2e3e4cc
-  - enabled: 1
-    path: Assets/Scenes/BuildScenes/Levels/ValtteriNow.unity
-    guid: 144850e89bd338c4abb366df311cac94
+    path: Assets/Scenes/BuildScenes/Levels/TropicEasy.unity
+    guid: af282a147e210b648a403aed127249f3

@@ -38,9 +38,11 @@ public class ModeOnEdge : ClimbingMode
             Host.ChangeMode(new ModeOnAir(Host, false));
             return;
         }
+        
         if (Host.VController.isFlying) { Host.VController.isFlying = false; }
         Host.Player.GetComponent<JumpManager>().RevertToOriginalSettings();
         Host.Player.GetComponent<JumpManager>().StopJumping();
+        Host.Player.GetComponent<JumpManager>()._canJump = false;
         Host.EnableDefaultControllingSystem(false);
         _SidePosition = Host.SidePositionOnEdge(Host.Player.transform, _Edge, true);
 
@@ -70,6 +72,7 @@ public class ModeOnEdge : ClimbingMode
             Transition();
             return;
         }
+        Host.Player.GetComponent<JumpManager>()._canJump = true;        
 		
 		Host.AnimatorComp.SetBool("IsMovingWhileClimbing", false);
 

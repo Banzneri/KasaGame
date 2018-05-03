@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour {
 	[SerializeField] private GameObject menuCanvasObj;
 	[SerializeField] private Button resumeButton;
 	[SerializeField] private Button quitButton;
+	[SerializeField] private Button hubButton;
 
 	public static bool isPaused = false;
-	// Use this for initialization
-	void Awake () {
-		resumeButton.onClick.AddListener(CloseGameMenu);
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,7 +23,7 @@ public class MenuManager : MonoBehaviour {
 		isPaused = true;
 		Time.timeScale = 0f;
 		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.None;
 	}
 
 	public void CloseGameMenu()
@@ -35,6 +33,21 @@ public class MenuManager : MonoBehaviour {
 		Time.timeScale = 1f;
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
+	}
+
+	public void ReturnToHub()
+	{
+		Time.timeScale = 1f;
+		isPaused = false;
+		MySceneManager.LoadLevel("Level_Hub 1");
+	}
+
+	public void RestartCurrentLevel()
+	{
+		Time.timeScale = 1f;
+		isPaused = false;
+		MySceneManager.RemoveSave(SceneManager.GetActiveScene().name);
+		MySceneManager.LoadLevel(SceneManager.GetActiveScene().name);
 	}
 
 	private void HandleMenu()
@@ -56,7 +69,6 @@ public class MenuManager : MonoBehaviour {
 	{
 		Time.timeScale = 1f;
 		isPaused = false;
-		MySceneManager manager = Object.FindObjectOfType<MySceneManager>();
-		manager.LoadMainMenu();
+		MySceneManager.LoadMainMenu();
 	}
 }

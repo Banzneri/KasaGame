@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour {
 	[SerializeField] private float _actDistance = 5.0f;
 
 	private GameObject _player;
+	private bool _hasBeenActivated = false;
 
 	bool WithinDistance {
 		get {
@@ -21,13 +22,14 @@ public class Checkpoint : MonoBehaviour {
 	void Start () {
 		SetMaterials();
 		_player = GameObject.FindGameObjectWithTag("Player");
-		if (_gear.GetComponent<RotateGear>().isActivated)
-		{
-			Activate();
-		}
+		_isActivated = _gear.GetComponent<RotateGear>().isActivated;
 	}
 	
 	void Update () {
+		if (!_hasBeenActivated && _isActivated)
+		{
+			Activate();
+		}
 		Interact ();
 	}
 
@@ -63,5 +65,6 @@ public class Checkpoint : MonoBehaviour {
 		_gear.GetComponent<AudioSource>().Play();
 		_isActivated = true;
 		SetMaterials();
+		_hasBeenActivated = true;
 	}
 }

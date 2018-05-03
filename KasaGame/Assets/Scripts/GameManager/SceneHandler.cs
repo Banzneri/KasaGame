@@ -22,6 +22,7 @@ public class SceneHandler : MonoBehaviour {
 	void Awake () {
 		Init();
 		LoadScene();
+		LoadPlayer();
 	}
 
 	private void Init() {
@@ -49,13 +50,13 @@ public class SceneHandler : MonoBehaviour {
 
 		foreach (var box in movableBoxes)
 		{
-			MovableObjectData data = new MovableObjectData(box);
+			MovableObjectData data = new MovableObjectData(box, false);
 			sceneData.pushableBoxes.Add(data);
 		}
 
 		foreach (var platform in movingPlatforms)
 		{
-			MovableObjectData data = new MovableObjectData(platform);
+			MovableObjectData data = new MovableObjectData(platform, platform.GetComponent<MovingPlatform>().goingToEndLoc);
 			sceneData.movingPlatforms.Add(data);
 		}
 
@@ -76,6 +77,11 @@ public class SceneHandler : MonoBehaviour {
 			CheckPointData data = new CheckPointData(screw, screw.GetComponent<Screw>().down);
 			sceneData.screws.Add(data);
 		}
+		Vector3 loc = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
+		Quaternion rot = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().rotation;
+
+		sceneData.currentLocation = new MyVector3(loc.x, loc.y, loc.z);
+		sceneData.currentRotation = new MyQuaternion(rot.x, rot.y, rot.z, rot.w);
 
 		// GameObject curCheckpoint = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>().GetClosestCheckpoint();
 		// sceneData.currentCheckpoint = new CheckPointData(curCheckpoint, curCheckpoint.GetComponent<RotateGear>().isActivated);
@@ -101,35 +107,13 @@ public class SceneHandler : MonoBehaviour {
 		gameData.hasPlayed = true;
 		gameData.health = (int)player.Health;
 		gameData.currentSceneName = SceneManager.GetActiveScene().name;
-		Vector3 pos = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().position;
-		Quaternion rot = player.GetClosestCheckpoint().GetComponent<RotateGear>().GetSpawnPoint().rotation;
-		gameData.currentPosition = new MyVector3(pos.x, pos.y, pos.z);
-		gameData.currentRotation = new MyQuaternion(rot.x, rot.y, rot.z, rot.w);
 		bf.Serialize(fs, gameData);
 		fs.Close();
 	}
 
 	public void LoadScene()
 	{
-		SceneData data = null;
-
-		try
-        {
-            using (FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open))
-            {
-				BinaryFormatter bf = new BinaryFormatter();
-				data = (SceneData)bf.Deserialize(file);
-				file.Close();
-				LoadPlayer();
-            }
-        }
-        catch (System.Exception ex)
-        {
-			Debug.Log("Save not found, creating new!");
-			data = CreateSceneDataObject();
-			LoadPlayer();
-			player.gameObject.transform.position = defaultStartPosition;
-        }
+		SceneData data = GetSceneData();
 
 		for (int i = 0; i < data.checkPoints.Count; i++)
 		{
@@ -145,8 +129,9 @@ public class SceneHandler : MonoBehaviour {
 
 		for (int i = 0; i < data.movingPlatforms.Count; i++)
 		{
-			movingPlatforms[i].transform.position = TranslateMyVector3ToVector3(data.movingPlatforms[i].pos);
+			movingPlatforms[i].GetComponent<MovingPlatform>().savedLocation = TranslateMyVector3ToVector3(data.movingPlatforms[i].currentLocation);
 			movingPlatforms[i].transform.rotation = TranslateMyQuaternionToQuaternion(data.movingPlatforms[i].rot);
+			movingPlatforms[i].GetComponent<MovingPlatform>().goingToEndLoc = data.movingPlatforms[i].goingToEndLoc;
 		}
 
 		for (int i = 0; i < data.pickableItems.Count; i++)
@@ -174,20 +159,42 @@ public class SceneHandler : MonoBehaviour {
 			screws[i].GetComponent<Screw>().down = data.screws[i].isActivated;
 			screws[i].GetComponent<Screw>().loaded = true;
 		}
-		//ClearAll();
 
 		Debug.Log(checkpoints.Count);
 	}
 
+	public SceneData GetSceneData ()
+	{
+		SceneData data = null;
+		bool firstTime = false;
+
+		try
+        {
+            using (FileStream file = File.Open(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name, FileMode.Open))
+            {
+				BinaryFormatter bf = new BinaryFormatter();
+				data = (SceneData)bf.Deserialize(file);
+				file.Close();
+            }
+        }
+        catch (System.Exception ex)
+        {
+			Debug.Log("Save not found, creating new!");
+			data = CreateSceneDataObject();
+			firstTime = true;
+        }
+
+		if (firstTime) SaveScene();
+
+		return data;
+	}
+
 	public void LoadPlayer()
 	{
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Open(Application.persistentDataPath + "/PlayerData", FileMode.Open);
-		GameData data = (GameData)bf.Deserialize(file);
+		GameData data = Game.GetGameData();
 		player.Health = data.health;
-		player.transform.position = TranslateMyVector3ToVector3(data.currentPosition);
-		player.transform.rotation = TranslateMyQuaternionToQuaternion(data.currentRotation);
-		file.Close();
+		player.transform.position = TranslateMyVector3ToVector3(GetSceneData().currentLocation);
+		player.transform.rotation = TranslateMyQuaternionToQuaternion(GetSceneData().currentRotation);
 	}
 
 	public Vector3 TranslateMyVector3ToVector3(MyVector3 myVector3) {

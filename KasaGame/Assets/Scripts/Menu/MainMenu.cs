@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour {
 		settings.onClick.AddListener(ActivateSettings);
 		quit.onClick.AddListener(QuitGame);
 		back.onClick.AddListener(ActivateMainMenu);
-		if (Object.FindObjectOfType<Game>().GetGameData().hasPlayed)
+		if (Game.GetGameData().hasPlayed)
 		{
 			start.GetComponent<Text>().text = "Continue";
 		}
@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
 
 	private void StartGame()
 	{
-		sceneManager.LoadLevel(Object.FindObjectOfType<Game>().GetGameData().currentSceneName);
+		MySceneManager.LoadLevel(Game.GetGameData().currentSceneName);
 	}
 
 	private void ActivateSettings()

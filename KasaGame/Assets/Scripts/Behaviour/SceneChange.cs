@@ -5,11 +5,31 @@ using UnityEngine;
 public class SceneChange : MonoBehaviour {
 	[SerializeField] private string level;
 
-	void OnTriggerEnter(Collider other)
+    [SerializeField]
+    private bool teleporterEnabled = true;
+    
+    void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Player")
+		if (other.tag == "Player" && teleporterEnabled)
 		{
-			Object.FindObjectOfType<MySceneManager>().LoadLevel(level);
+			GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SaveScene();
+			GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
+			MySceneManager.LoadLevel(level);
 		}
 	}
+
+    public void ToggleTeleporter(bool onOff)
+    {
+        teleporterEnabled = onOff;
+        if (teleporterEnabled) {
+            GetComponent<MeshRenderer>().enabled = true;
+        }else {
+            GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    public bool GetTeleporterEnabled()
+    {
+        return teleporterEnabled;
+    }
 }

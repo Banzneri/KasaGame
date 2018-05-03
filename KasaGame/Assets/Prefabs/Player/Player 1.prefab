@@ -459,9 +459,8 @@ GameObject:
   - component: {fileID: 54995783490969450}
   - component: {fileID: 136675335554115658}
   - component: {fileID: 114620827759955098}
+  - component: {fileID: 114324131287555306}
   - component: {fileID: 81735235188680942}
-  - component: {fileID: 114688137989860710}
-  - component: {fileID: 114059060297703458}
   - component: {fileID: 82821816982853238}
   - component: {fileID: 82417356145997270}
   - component: {fileID: 82291200000681354}
@@ -935,7 +934,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908532817791000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.973986, y: 0.2674874, z: -23.052273}
+  m_LocalPosition: {x: 0.22250868, y: 0.26748765, z: -2.9096441}
   m_LocalScale: {x: 1, y: 1, z: 1.0044593}
   m_Children:
   - {fileID: 4829479460755978}
@@ -1551,25 +1550,6 @@ Animator:
     animation clip 'Take 001'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114059060297703458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1908532817791000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78d00f6f0fb66ac45960d77129f489a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _jumpTime: 0.8
-  _jumpLength: 19
-  _jumpHeight: 9
-  _regularJumpSound: {fileID: 82821816982853238}
-  _fallCooldown: 0.2
-  _jumpHeightFromGround: 3
-  _isRegularJump: 1
-  _jumpedWhileFalling: 0
 --- !u!114 &114138816597207792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1583,6 +1563,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalInput: Horizontal
   verticallInput: Vertical
+  horizontalJumpInput: HorizontalJump
+  verticalJumpInput: VerticalJump
   onlyCameraInput: 0
   jumpInput: 32
   strafeInput: 9
@@ -1594,6 +1576,27 @@ MonoBehaviour:
   changeCameraState: 0
   smoothCameraState: 0
   keepDirection: 0
+--- !u!114 &114324131287555306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908532817791000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d00f6f0fb66ac45960d77129f489a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpTime: 0.8
+  _jumpLength: 19
+  _jumpHeight: 6
+  _regularJumpSound: {fileID: 82821816982853238}
+  _fallCooldown: 0.2
+  _jumpHeightFromGround: 2
+  _blobShadow: {fileID: 119511988904399832}
+  _isRegularJump: 1
+  _jumpedWhileFalling: 0
+  _canJump: 1
 --- !u!114 &114552212542747736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1661,20 +1664,6 @@ MonoBehaviour:
   attackHitting: 0
   attacking: 0
   hitting: 0
---- !u!114 &114688137989860710
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1908532817791000}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99d7d1535bb813d4c807366a77d26647, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerYLevel: -200
-  returnPoint: {fileID: 0}
-  stageLights: {fileID: 0}
 --- !u!114 &114925446183721496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1720,7 +1709,7 @@ MonoBehaviour:
   strafeSprintSpeed: 4
   stepOffsetEnd: 0.45
   stepOffsetStart: 0.05
-  stepSmooth: 10
+  stepSmooth: 18.27
   slopeLimit: 45
   extraGravity: -100
   isGrounded: 0
@@ -1757,7 +1746,7 @@ Projector:
   serializedVersion: 2
   m_NearClipPlane: 4.43
   m_FarClipPlane: 28.8
-  m_FieldOfView: 11.3
+  m_FieldOfView: 16.18
   m_AspectRatio: 1
   m_Orthographic: 0
   m_OrthographicSize: 2
