@@ -15,8 +15,17 @@ EditorBuildSettings:
     path: Assets/Scenes/BuildScenes/Levels/Level_Hub 1.unity
     guid: e12823a0ce0e8174ea8eaa54a9471f99
   - enabled: 1
-    path: Assets/Scenes/BuildScenes/Levels/CaveTemple.unity
+    path: Assets/Scenes/BuildScenes/Levels/CaveTemple/CaveTemple1.unity
     guid: 2c905f1deb8a98a43809efb39ef6f696
   - enabled: 1
     path: Assets/Scenes/BuildScenes/Levels/TropicEasy.unity
     guid: af282a147e210b648a403aed127249f3
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Levels/CaveTemple/CaveTemple2.unity
+    guid: d1ca37ac6bfa3244896c65ac2b78986e
+  - enabled: 1
+    path: Assets/LavaRuins/Scenes/LavaRuins1.unity
+    guid: f7d554d72dfdd0f43a08629eaf4fc19f
+  - enabled: 1
+    path: Assets/LavaRuins/Scenes/Entrance.unity
+    guid: d8ea85226ca1c304193cebfa97cf579d

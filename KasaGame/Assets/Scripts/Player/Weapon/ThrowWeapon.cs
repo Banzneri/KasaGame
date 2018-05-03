@@ -20,9 +20,15 @@ public class ThrowWeapon : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>();
 		hand = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCharManager>()._hand.transform;
 		destination = player.transform.forward;
+		destination.z = Camera.main.transform.forward.z;
+		destination.x = Camera.main.transform.forward.x;
+		player.transform.forward = destination;
 		hasActivated = false;
 		_throwSound = gameObject.GetComponent<AudioSource>();
 		_throwSound.Play();
+		Vector3 pos = transform.position;
+		pos.y += 0.3f;
+		transform.position = pos;
 	}
 	
 	// Update is called once per frame
@@ -63,5 +69,13 @@ public class ThrowWeapon : MonoBehaviour {
 			other.gameObject.GetComponent<ITriggerObject<IActionObject>>().TriggerAll();
 			hasActivated = true;
 		}
+		if (other.gameObject.tag == "Rock")
+		{
+			other.gameObject.GetComponent<Rock>().DestroyRock();
+		}
+	}
+
+	private void OnCollisionEnter(Collision other) {
+		
 	}
 }

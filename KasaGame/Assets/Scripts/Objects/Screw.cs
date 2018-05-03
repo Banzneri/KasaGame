@@ -28,7 +28,7 @@ public class Screw : MonoBehaviour, ITriggerObject<IActionObject> {
 
 	public void Trigger(IActionObject obj)
 	{
-		
+		obj.Action();
 	}
 
     public bool GetDown()
@@ -42,6 +42,10 @@ public class Screw : MonoBehaviour, ITriggerObject<IActionObject> {
 		{
 			anim.SetTrigger("down");
 			down = true;
+			for(int i = 0; i < gameObjects.Length; i++)
+			{
+				Trigger(gameObjects[i].GetComponent<IActionObject>());
+			}
 		}
 	}
 }

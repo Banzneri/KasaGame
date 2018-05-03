@@ -43,7 +43,7 @@ public class JumpPad : MonoBehaviour {
                 }
                 else
                 {
-                    _jumpManager.NormalJumpPadJump();
+                    _jumpManager.SuperJumpPadJump();
 
                     if (!_jump.isPlaying)
                     {

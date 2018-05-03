@@ -23,6 +23,7 @@ TagManager:
   - JumpPad
   - UI
   - Shuriken
+  - Rock
   layers:
   - Default
   - TransparentFX
