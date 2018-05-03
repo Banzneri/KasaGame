@@ -109,7 +109,7 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null || targetLookAt == null) return;
 
         CameraMovement();
-        HandlePlayerTransparency();        
+        //HandlePlayerTransparency();        
     }
 
     void HandlePlayerTransparency()

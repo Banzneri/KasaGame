@@ -71,4 +71,14 @@ public class MenuManager : MonoBehaviour {
 		isPaused = false;
 		MySceneManager.LoadMainMenu();
 	}
+
+	public void QuitGame()
+	{
+		Application.Quit();
+	}
+
+	public void LaunchGame()
+	{
+
+	}
 }
