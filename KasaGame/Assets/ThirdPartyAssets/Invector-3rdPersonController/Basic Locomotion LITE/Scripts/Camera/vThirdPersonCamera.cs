@@ -74,6 +74,8 @@ public class vThirdPersonCamera : MonoBehaviour
     private float cullingHeight = 0.2f;
     private float cullingMinDist = 0.1f;
 
+    private bool playerVisible = true;
+
     #endregion
 
     void Start()
@@ -109,7 +111,7 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null || targetLookAt == null) return;
 
         CameraMovement();
-        //HandlePlayerTransparency();        
+        HandlePlayerTransparency();        
     }
 
     void HandlePlayerTransparency()
@@ -127,15 +129,18 @@ public class vThirdPersonCamera : MonoBehaviour
         foreach(Renderer r in targetRenderers) {
             Material[] rMaterials = r.materials;
 
-            if (distanceToPlayer <= 2) {
-                SetMaterialTransparent(rMaterials);
+            if (distanceToPlayer <= 1) {
+                playerVisible = false;
+                SetRenderersEnabled(false);
+                //SetMaterialTransparent(rMaterials);
 
-                r.material.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, (distanceToPlayer - 1) / 2));
+                /*r.material.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, (distanceToPlayer - 1) / 2));
                 if (r.material.color.a <= 0.1f) {
                     r.material.color = new Color(1, 1, 1, 0.1f);
                 }
-            } else {
-                SetMaterialOpaque(rMaterials);
+                */
+            } else if (!playerVisible){
+                SetRenderersEnabled(true);
             }
         }
 
@@ -171,6 +176,14 @@ public class vThirdPersonCamera : MonoBehaviour
             m.EnableKeyword("_ALPHABLEND_ON");
             m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
             m.renderQueue = 3000;
+        }
+    }
+
+    void SetRenderersEnabled(bool enabled)
+    {
+        foreach (Renderer renderer in targetRenderers)
+        {
+            renderer.enabled = enabled;
         }
     }
 

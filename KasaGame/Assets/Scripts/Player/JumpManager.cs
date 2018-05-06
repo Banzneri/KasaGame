@@ -68,7 +68,7 @@ public class JumpManager : MonoBehaviour {
 
 	public bool CanJump
 	{
-		get { return (_startedFalling || _controller.GroundDistance < _jumpHeightFromGround) && _canJump; }
+		get { return (_startedFalling || _controller.GroundDistance < _jumpHeightFromGround) && _canJump && GetComponent<MyCharManager>().Health > 0; }
 	}
 
 	void Start () 

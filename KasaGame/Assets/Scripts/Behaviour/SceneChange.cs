@@ -22,9 +22,9 @@ public class SceneChange : MonoBehaviour {
     {
         teleporterEnabled = onOff;
         if (teleporterEnabled) {
-            GetComponent<MeshRenderer>().enabled = true;
+            //GetComponent<MeshRenderer>().enabled = true;
         }else {
-            GetComponent<MeshRenderer>().enabled = false;
+            //GetComponent<MeshRenderer>().enabled = false;
         }
     }
 

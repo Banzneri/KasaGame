@@ -53,6 +53,7 @@ public class MyCharManager : MonoBehaviour {
 	public bool attackHitting = false;
 	public bool attacking = false;
 	public bool hitting = false;
+	public bool climbing = false;
 
 	public float Health { get { return _currentHealth; } 
 							set {_currentHealth = value; } }
@@ -265,7 +266,7 @@ public class MyCharManager : MonoBehaviour {
 		{
 			wantsToHit = true;
 		}
-		if (!throwing  && !hitting && !GetComponent<Animator>().GetBool("pushing"))
+		if (!throwing  && !hitting && !GetComponent<Animator>().GetBool("pushing") && Health > 0)
 		{
 			attacking = true;
 			hitting = true;
@@ -279,7 +280,7 @@ public class MyCharManager : MonoBehaviour {
 
 	public void ThrowWeapon()
 	{
-		if (!throwing)
+		if (!throwing && Health > 0)
 		{
 			Instantiate(_weapon, _hand.transform.position, Quaternion.Euler(Vector3.zero));
 			WeaponFlying();

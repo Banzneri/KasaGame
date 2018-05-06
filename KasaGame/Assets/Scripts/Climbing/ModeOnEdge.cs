@@ -43,6 +43,7 @@ public class ModeOnEdge : ClimbingMode
         Host.Player.GetComponent<JumpManager>().RevertToOriginalSettings();
         Host.Player.GetComponent<JumpManager>().StopJumping();
         Host.Player.GetComponent<JumpManager>()._canJump = false;
+        Host.Player.GetComponent<MyCharManager>().climbing = true;
         Host.EnableDefaultControllingSystem(false);
         _SidePosition = Host.SidePositionOnEdge(Host.Player.transform, _Edge, true);
 
@@ -61,6 +62,7 @@ public class ModeOnEdge : ClimbingMode
         Host.PreviousEdge = _Edge;
         Host.Player.transform.rotation = Quaternion.LookRotation(_Edge.TransformToVectorInWorld(_Edge.ForwardDirection, true));
         Host.AnimatorComp.SetBool("IsClimbing", false);
+        Host.Player.GetComponent<MyCharManager>().climbing = false;
     }
 
     public override void Run()

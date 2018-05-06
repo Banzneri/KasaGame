@@ -100,15 +100,12 @@ public class SceneHandler : MonoBehaviour {
 
 	public void SavePlayer()
 	{
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream fs = File.Create(Application.persistentDataPath + "/PlayerData");
-		GameData gameData = new GameData();
+		GameData gameData = Game.GetGameData();
 
 		gameData.hasPlayed = true;
 		gameData.health = (int)player.Health;
 		gameData.currentSceneName = SceneManager.GetActiveScene().name;
-		bf.Serialize(fs, gameData);
-		fs.Close();
+		Game.SetGameData(gameData);
 	}
 
 	public void LoadScene()

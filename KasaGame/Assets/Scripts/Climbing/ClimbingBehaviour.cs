@@ -129,6 +129,10 @@ public class ClimbingBehaviour : MonoBehaviour {
 
     // Current mode of player
     private ClimbingMode _CurrentMode;
+    public ClimbingMode CurrentMode
+    {
+        get { return _CurrentMode; }
+    }
 
     // List of Frames found in Update
     private Collider[] _Frames;

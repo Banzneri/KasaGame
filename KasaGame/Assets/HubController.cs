@@ -6,21 +6,32 @@ public class HubController : MonoBehaviour {
 
     [SerializeField]
     GameObject[] levelTeleporters;
+    [SerializeField] GameObject endGameTeleporter;
 
     [SerializeField]
     GameObject[] mcGuffins;
 
-	void Start () {
+	void Awake () {
         // Todo: Add logic that checks which levels have been completed, and enable/disable
         // corresponding teleporters
 
         //Testing methods, these should probably be done with a loop
-        ToggleTeleporter(levelTeleporters[3], false);
-        ToggleTeleporter(levelTeleporters[4], false);
-        ToggleTeleporter(levelTeleporters[5], false);
-        ToggleTeleporter(6, false);
-        ToggleTeleporter(7, false);
-        ToggleTeleporter(8, false);
+        GameData data = Game.GetGameData();
+        Debug.Log("LevelsUnlocked: " + data.levelsUnlocked);
+        for (int i = 3; i < 10; i++)
+        {
+            ToggleTeleporter(i, false);
+        }
+        if (data.level1done && data.level2done && data.level3done)
+        {
+            Debug.Log("Unlcosda");
+            int max = data.level4done && data.level5done && data.level6done ? 9: 6;
+            for (int i = 3; i < max; i++) 
+                ToggleTeleporter(i, true);
+        }
+        Debug.Log("level1done: " + data.level1done);
+        Debug.Log("level2done: " + data.level2done);
+        Debug.Log("level3done: " + data.level3done);
     }
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)

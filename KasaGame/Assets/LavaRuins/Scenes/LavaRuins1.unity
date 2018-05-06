@@ -8529,7 +8529,68 @@ Prefab:
       propertyPath: level
       value: Level_Hub 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: randomSeed
+      value: -2002156205
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: randomSeed
+      value: 311949412
+      objectReference: {fileID: 0}
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198927623188438166, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222114847885330, guid: 4c72433f18886df4e816416d11d6a35f,
+        type: 2}
+      propertyPath: TrailModule.colorOverLifetime.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114979907221743548, guid: 4c72433f18886df4e816416d11d6a35f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4c72433f18886df4e816416d11d6a35f, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1060887008 stripped
@@ -8537,6 +8598,22 @@ Transform:
   m_PrefabParentObject: {fileID: 4092100020925084, guid: 4c72433f18886df4e816416d11d6a35f,
     type: 2}
   m_PrefabInternal: {fileID: 1060887007}
+--- !u!1 &1060887009 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1656786054094516, guid: 4c72433f18886df4e816416d11d6a35f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1060887007}
+--- !u!114 &1060887010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1060887009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2221d2fd05b0b44a67009d467d23fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1086015788
 GameObject:
   m_ObjectHideFlags: 0

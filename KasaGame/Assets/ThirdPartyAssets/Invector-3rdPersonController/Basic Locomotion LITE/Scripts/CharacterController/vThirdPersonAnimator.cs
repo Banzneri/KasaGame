@@ -35,7 +35,8 @@ namespace Invector.CharacterController
 
             if (!GetComponent<MyCharManager>().throwing)
             {
-                if (Input.GetButtonDown("Throw"))
+                bool canThrow = !GetComponent<MyCharManager>().climbing && !animator.GetBool("pushing") && GetComponent<MyCharManager>().Health > 0;
+                if (Input.GetButtonDown("Throw") && canThrow)
                 {
                     if (speed < 1 && isGrounded) 
                     {

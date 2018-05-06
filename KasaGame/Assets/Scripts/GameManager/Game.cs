@@ -31,4 +31,12 @@ public class Game : MonoBehaviour {
         }
 		//ClearAll();
 	}
+
+	static public void SetGameData(GameData data)
+	{
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath + "/PlayerData");
+		bf.Serialize(file, data);
+		file.Close();
+	}
 }
