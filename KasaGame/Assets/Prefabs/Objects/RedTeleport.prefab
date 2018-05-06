@@ -672,6 +672,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LavaRuins1
+  completedObjs:
+  - {fileID: 1983319236780550}
+  - {fileID: 1943048602449934}
+  - {fileID: 1209011306849960}
+  - {fileID: 1038866154576792}
+  completedMaterial: {fileID: 2100000, guid: 490474d0c1a4bcb45ba1c71b6c0bddfa, type: 2}
   teleporterEnabled: 1
 --- !u!136 &136143334839421440
 CapsuleCollider:

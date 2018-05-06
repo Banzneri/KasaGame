@@ -17,21 +17,29 @@ public class HubController : MonoBehaviour {
 
         //Testing methods, these should probably be done with a loop
         GameData data = Game.GetGameData();
-        Debug.Log("LevelsUnlocked: " + data.levelsUnlocked);
         for (int i = 3; i < 10; i++)
         {
             ToggleTeleporter(i, false);
         }
         if (data.level1done && data.level2done && data.level3done)
         {
-            Debug.Log("Unlcosda");
             int max = data.level4done && data.level5done && data.level6done ? 9: 6;
             for (int i = 3; i < max; i++) 
                 ToggleTeleporter(i, true);
         }
-        Debug.Log("level1done: " + data.level1done);
-        Debug.Log("level2done: " + data.level2done);
-        Debug.Log("level3done: " + data.level3done);
+        SetCompletedPortals();
+    }
+
+    private void SetCompletedPortals()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (Game.HasFinishedLevel(i+1))
+            {
+                Debug.Log("HAS FINISHED!!!");
+                FindSceneChange(i).SetTeleporterCompleted();
+            }
+        }
     }
 
     SceneChange FindSceneChange(GameObject teleporterPrefab)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SceneChange : MonoBehaviour {
 	[SerializeField] private string level;
+    [SerializeField] private GameObject[] completedObjs;
+    [SerializeField] private Material completedMaterial;
 
     [SerializeField]
     private bool teleporterEnabled = true;
@@ -25,6 +27,14 @@ public class SceneChange : MonoBehaviour {
             //GetComponent<MeshRenderer>().enabled = true;
         }else {
             //GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    public void SetTeleporterCompleted()
+    {
+        foreach (var item in completedObjs)
+        {
+            item.GetComponent<Renderer>().material = completedMaterial;
         }
     }
 

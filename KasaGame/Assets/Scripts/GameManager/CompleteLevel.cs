@@ -9,7 +9,7 @@ public class CompleteLevel : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			if (!HasFinishedLevel(SceneManager.GetActiveScene().name))
+			if (!Game.HasFinishedLevel(SceneManager.GetActiveScene().name))
 			{
 				Debug.Log("NotHasFinished");
 				Complete(SceneManager.GetActiveScene().name);
@@ -18,35 +18,6 @@ public class CompleteLevel : MonoBehaviour {
 			GameObject.FindGameObjectWithTag("SceneHandler").GetComponent<SceneHandler>().SavePlayer();
 			MySceneManager.LoadLevel("Level_Hub 1");
 		}
-	}
-
-	static bool HasFinishedLevel(string levelName)
-	{
-		GameData data = Game.GetGameData();
-
-		switch (levelName)
-		{
-			case "LavaRuins1":
-				return data.level1done;
-			case "TropicEasy":
-				return data.level2done;
-			case "CaveTemple2":
-				return data.level3done;
-			case "LavaRuins2":
-				return data.level4done;
-			case "TropicMedium":
-				return data.level5done;
-			case "CaveTemple1":
-				return data.level6done;
-			case "LavaRuins3":
-				return data.level7done;
-			case "TropicHard":
-				return data.level8done;
-			case "CaveTemple3":
-				return data.level9done;
-		}
-
-		return false;
 	}
 
 	private void Complete(string levelName)
