@@ -8,6 +8,9 @@ public class Door : MonoBehaviour, IActionObject
 
     public bool doorKey;
     public bool open;
+    public GameObject noKeyPrompt;
+
+    private bool showingNoKey = false;
 
     public int dir = 1;
     private bool inTrigger;
@@ -66,12 +69,16 @@ public class Door : MonoBehaviour, IActionObject
             }
             else if (!open & !doorKey)
             {
-                GUI.Box(new Rect(450, 400, 200, 25), "You need a key!");
+                noKeyPrompt.SetActive(true);
             }
             else if (open & !doorKey)
             {
                 //GUI.Box(new Rect(450, 400, 200, 25), "Can't close");
             }
+        }
+        else if (noKeyPrompt.activeSelf)
+        {
+            noKeyPrompt.SetActive(false);
         }
     }
 

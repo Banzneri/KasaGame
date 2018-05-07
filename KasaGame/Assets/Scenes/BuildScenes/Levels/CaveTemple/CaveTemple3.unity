@@ -31407,6 +31407,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3763eaf6d4834014faad8a7c72415491, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &672219072 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1249408684632696, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
+    type: 2}
+  m_PrefabInternal: {fileID: 759433273}
 --- !u!1 &672863847
 GameObject:
   m_ObjectHideFlags: 0
@@ -34917,6 +34922,16 @@ Prefab:
     - target: {fileID: 4150762698782646, guid: fd1589a11e3f3e2478bea9d5dc26ff50, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224277684180499102, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -719
+      objectReference: {fileID: 0}
+    - target: {fileID: 224277684180499102, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 439.5
       objectReference: {fileID: 0}
     - target: {fileID: 224009716504350070, guid: fd1589a11e3f3e2478bea9d5dc26ff50,
         type: 2}
@@ -100988,7 +101003,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh221162
+  m_Name: pb_Mesh296114
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -107375,6 +107390,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 27f36200030b7744096fcf25c8ae8534, type: 2}
+    - target: {fileID: 114033392667379940, guid: 0a56fb226ece17e4abd854aa76d7fc98,
+        type: 2}
+      propertyPath: noKeyPrompt
+      value: 
+      objectReference: {fileID: 672219072}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a56fb226ece17e4abd854aa76d7fc98, type: 2}
   m_IsPrefabParent: 0
@@ -119168,6 +119188,30 @@ Prefab:
     - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 32aafb358d61bd14b9b27ed0871fe43b, type: 2}
       propertyPath: ShapeModule.radiusThickness

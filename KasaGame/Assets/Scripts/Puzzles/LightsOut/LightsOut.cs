@@ -11,6 +11,11 @@ public class LightsOut : MonoBehaviour, ITriggerObject<IActionObject>
     public GameObject[] actionObjects;
     private AudioSource _successSound;
 
+    public bool Completed
+    {
+        get { return _unlocked; }
+    }
+
     private void Start()
     {
         _successSound = GetComponent<AudioSource>();
@@ -36,8 +41,8 @@ public class LightsOut : MonoBehaviour, ITriggerObject<IActionObject>
         }
         else if(activeCubes != _cubes.Count && _unlocked == true)
         {
-            _unlocked = false;
-            TriggerAll();
+            //_unlocked = false;
+            //TriggerAll();
         }
     }
 

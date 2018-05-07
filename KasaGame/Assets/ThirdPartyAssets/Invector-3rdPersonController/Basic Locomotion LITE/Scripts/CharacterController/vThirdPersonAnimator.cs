@@ -28,11 +28,6 @@ namespace Invector.CharacterController
                 animator.SetFloat("InputHorizontal", direction, 0.1f, Time.deltaTime);
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                animator.SetTrigger("Wave");
-            }
-
             if (!GetComponent<MyCharManager>().throwing)
             {
                 bool canThrow = !GetComponent<MyCharManager>().climbing && !animator.GetBool("pushing") && GetComponent<MyCharManager>().Health > 0;

@@ -11,6 +11,7 @@ public class BoxMover : MonoBehaviour {
     private CapsuleCollider _PlayerCol;
     private AudioSource _NoiseEffect;
     private bool _playerFacesToBox = false;
+    public GameObject leftMouseButtonPrompt;
 
     private void Start()
     {
@@ -33,15 +34,21 @@ public class BoxMover : MonoBehaviour {
             if (hit.collider == _BoxCol)
             {
                 _playerFacesToBox = true;
+                leftMouseButtonPrompt.SetActive(true);
             }
         }
         else
         {
             _playerFacesToBox = false;
+            if (leftMouseButtonPrompt.activeSelf)
+            {
+                leftMouseButtonPrompt.SetActive(false);
+            }
         }
 
         if (Input.GetButton("Attack") && _playerFacesToBox)
         {
+            leftMouseButtonPrompt.SetActive(false);
             transform.SetParent(_player.transform);
             _player.GetComponent<vThirdPersonController>().isStrafing = true;
             _player.GetComponent<vThirdPersonController>().strafeRotationSpeed = 0;

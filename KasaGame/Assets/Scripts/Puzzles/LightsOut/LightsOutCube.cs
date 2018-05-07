@@ -86,7 +86,7 @@ public class LightsOutCube : MonoBehaviour {
             _playerJustEntered = false;
         }
 
-        if (_playerOnTop == true && _playerJustEntered == false)
+        if (_playerOnTop == true && _playerJustEntered == false && !_manager.Completed)
         {
             _playerJustEntered = true;
             Change();
