@@ -37,14 +37,7 @@ public class Checkpoint : MonoBehaviour {
 	{
 		foreach (var side in _sides)
 		{
-			if (_isActivated)
-			{
-				side.GetComponent<MeshRenderer>().material = _activeMaterial;
-			}
-			else
-			{
-				side.GetComponent<MeshRenderer>().material = _inactiveMaterial;
-			}
+			side.GetComponent<MeshRenderer>().material = _isActivated ? _activeMaterial : _inactiveMaterial;
 		}
 	}
 
